@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -31,7 +32,7 @@ public class FXMLController implements Initializable {
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         Stage window = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginTeacher.fxml"));
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
@@ -58,5 +59,17 @@ public class FXMLController implements Initializable {
 
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.close();
+
+        
+        
+        
+        Stage dialog = new Stage();
+        Parent f = FXMLLoader.load(getClass().getResource("/fxml/FXMLRegister.fxml"));
+        dialog.setScene(new Scene(f));
+        dialog.setTitle("My modal window");
+        dialog.initModality(Modality.WINDOW_MODAL);
+        dialog.initOwner(
+                ((Node) event.getSource()).getScene().getWindow());
+        dialog.show();
     }
 }
