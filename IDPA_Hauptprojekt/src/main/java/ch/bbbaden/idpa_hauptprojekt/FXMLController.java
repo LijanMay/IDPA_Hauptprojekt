@@ -57,17 +57,5 @@ public class FXMLController implements Initializable {
 
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.close();
-
-        
-        
-        
-        Stage dialog = new Stage();
-        Parent f = FXMLLoader.load(getClass().getResource("/fxml/FXMLRegister.fxml"));
-        dialog.setScene(new Scene(f));
-        dialog.setTitle("My modal window");
-        dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(
-                ((Node) event.getSource()).getScene().getWindow());
-        dialog.show();
     }
 }
