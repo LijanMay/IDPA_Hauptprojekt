@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.CreateTopicController">
+   <children>
+      <Label layoutX="40.0" layoutY="30.0" prefHeight="18.0" prefWidth="310.0" text="Wie soll Ihr neues Themengebiet heissen?" />
+      <TextField layoutX="40.0" layoutY="59.0" prefHeight="26.0" prefWidth="192.0" />
+   </children>
+</AnchorPane>

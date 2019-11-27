@@ -7,7 +7,10 @@ package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -15,6 +18,13 @@ import javafx.fxml.Initializable;
  * @author denni
  */
 public class LoginTeacherController implements Initializable {
+
+    @FXML
+    private Button chooseTopic;
+    @FXML
+    private Button newTopic;
+    @FXML
+    private Button expandTopic;
 
     /**
      * Initializes the controller class.
@@ -24,5 +34,17 @@ public class LoginTeacherController implements Initializable {
         // TODO
         System.out.println("test");
     }    
+
+    @FXML
+    private void handleChooseTopic(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleNewTopic(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleExpandTopic(ActionEvent event) {
+    }
     
 }
