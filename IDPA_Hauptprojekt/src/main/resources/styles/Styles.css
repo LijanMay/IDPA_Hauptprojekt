@@ -1,9 +1,4 @@
 .button {
     -fx-font-weight: bold;
-    background-color:#C2B9B0;
-    color: red;
-    
-    
+    -fx-background-color: #C2B9B0;    
 }
-
-
