@@ -1,9 +1,15 @@
 .button {
     -fx-font-weight: bold;
-    background-color:#C2B9B0;
-    color: red;
+    -fx-background-color:#376E6F;
+    
+    
+  
     
     
 }
 
 
+.AnchorPane {
+    -fx-background-color: #363636;
+    
+}
