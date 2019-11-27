@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="631.0" prefWidth="856.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.NewQuestionTeacherController">
+   <children>
+      <Label layoutX="43.0" layoutY="39.0" text="Was für eine Frage wollen Sie erstellen?" />
+      <RadioButton layoutX="53.0" layoutY="92.0" mnemonicParsing="false" text="Multiple Choice" />
+      <RadioButton layoutX="53.0" layoutY="150.0" mnemonicParsing="false" text="Antworten per Eingabe" />
+      <RadioButton layoutX="53.0" layoutY="124.0" mnemonicParsing="false" text="Richtig-Falsch" />
+      <TextArea layoutX="53.0" layoutY="209.0" prefHeight="82.0" prefWidth="411.0" />
+      <Label layoutX="53.0" layoutY="180.0" text="Geben Sie Ihre Frage ein:" />
+      <Button fx:id="createQuestion" layoutX="67.0" layoutY="303.0" mnemonicParsing="false" onAction="#hanldeCreateQuestion" text="Frage erstellen" />
+      <Spinner layoutX="161.0" layoutY="88.0" prefHeight="18.0" prefWidth="105.0" />
+      <Label layoutX="157.0" layoutY="70.0" text="Mit wie vielen Fragen" />
+      <Label layoutX="711.0" layoutY="20.0" text="WIQI" textFill="#da7b93">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
