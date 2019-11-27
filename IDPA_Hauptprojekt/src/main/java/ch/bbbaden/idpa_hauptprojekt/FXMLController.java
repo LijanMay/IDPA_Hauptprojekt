@@ -21,8 +21,6 @@ public class FXMLController implements Initializable {
     private Button loginButton;
     @FXML
     private Button registerButton;
-    @FXML
-    private Label label;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

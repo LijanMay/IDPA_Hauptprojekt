@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="459.0" prefWidth="490.0" style="-fx-background-color: #363636;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.FXMLController">
     <children>
-        <Button fx:id="loginButton" layoutX="89.0" layoutY="124.0" onAction="#handleLogin" prefHeight="26.0" prefWidth="110.0" text="Einloggen" />
-      <Button fx:id="registerButton" layoutX="90.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="26.0" prefWidth="110.0" text="Registrieren" />
-      <TextField layoutX="87.0" layoutY="52.0" promptText="Benutzername" />
-      <PasswordField layoutX="86.0" layoutY="88.0" promptText="Passwort" />
+        <Button fx:id="loginButton" layoutX="190.0" layoutY="296.0" onAction="#handleLogin" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #376E6F;" text="Einloggen" />
+      <Button fx:id="registerButton" layoutX="190.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="18.0" prefWidth="110.0" style="-fx-background-color: #376E6F;" text="Registrieren" />
+      <TextField layoutX="135.0" layoutY="181.0" prefHeight="40.0" prefWidth="220.0" promptText="Benutzername" style="-fx-background-color: #C2CAD0;" />
+      <PasswordField layoutX="135.0" layoutY="238.0" prefHeight="40.0" prefWidth="220.0" promptText="Passwort" style="-fx-background-color: #C2CAD0;" />
+      <Label layoutX="370.0" layoutY="24.0" text="WIQI" textFill="#da7b93">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
