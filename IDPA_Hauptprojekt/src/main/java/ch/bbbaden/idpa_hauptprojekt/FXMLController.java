@@ -13,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,16 +24,35 @@ public class FXMLController implements Initializable {
     private Button loginButton;
     @FXML
     private Button registerButton;
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         DatatransferInterface d = new Textfile();
         Brain.getInstance().setDt(d);
-    }
+     }
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
+        boolean correctLogin = false;
+        //Status 0 = Lehrer 1 = Schüler
+        int status;
+        //Mit Klasse und liste oder nur Liste arbeiten tendenzielle nur Liste
+        for(int i = 0; i < users.length();i++){
+            if(users.username == username.getText()|| users.email == username.getText()){
+                if(users.password == password.getText())
+                    correctLogin = true;
+                break;
+            }
+        }
+        if(correctLogin){
+           status = users.getStatus;
+        }
+        
         Stage window = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoggedInTeacher.fxml"));
 
