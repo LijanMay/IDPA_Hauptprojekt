@@ -9,11 +9,12 @@ package ch.bbbaden.idpa_hauptprojekt;
  *
  * @author denni
  */
-public interface Datatransfer {
+public interface DatatransferInterface {
     
     public void createUser();
     public void getData();
     public void createQuiz();
+    public void addTopic(String topic);
     
    
 }
