@@ -28,6 +28,8 @@ public class Brain {
 
     
     private DatatransferInterface dt;
+    private LoggedInTeacherController lit;
+    private FXMLController controller;
 
     public DatatransferInterface getDt() {
         return dt;
@@ -36,5 +38,30 @@ public class Brain {
     public void setDt(DatatransferInterface dt) {
         this.dt = dt;
     }
+
+    public LoggedInTeacherController getLit() {
+        return lit;
+    }
+
+    public void setLit(LoggedInTeacherController lit) {
+        this.lit = lit;
+    }
+    
+    public void hideLit(boolean hide){
+        lit.setHide(hide);
+    }
+
+    public FXMLController getController() {
+        return controller;
+    }
+
+    public void setController(FXMLController controller) {
+        this.controller = controller;
+    }
+    
+    public void hideController(boolean hide){
+        controller.setHide(hide);
+    }
+    
 
 }

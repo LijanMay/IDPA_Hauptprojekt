@@ -3,9 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="ch.bbbaden.idpa_hauptprojekt.FXMLRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.FXMLRegisterController">
    <children>
-      <Button layoutX="258.0" layoutY="215.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="register" layoutX="150.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleRegister" text="Registrieren" />
+      <Button fx:id="cancel" layoutX="311.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleCancel" text="Abbrechen" />
    </children>
 </AnchorPane>

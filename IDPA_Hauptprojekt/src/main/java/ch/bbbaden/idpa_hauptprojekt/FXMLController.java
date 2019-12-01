@@ -1,5 +1,6 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
+import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Textfile;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,12 +26,14 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        DatatransferInterface d = new Textfile();
+        Brain.getInstance().setDt(d);
     }
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         Stage window = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginTeacher.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoggedInTeacher.fxml"));
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
@@ -54,8 +57,17 @@ public class FXMLController implements Initializable {
         window.setScene(scene);
 
         window.show();
+        setHide(true);
+    }
 
-        Stage stage = (Stage) loginButton.getScene().getWindow();
-        stage.close();
+    public void setHide(boolean hide) {
+        if (hide) {
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.hide();
+        } else {
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.show();
+        }
+
     }
 }
