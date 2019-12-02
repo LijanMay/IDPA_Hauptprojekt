@@ -34,7 +34,7 @@ public class FXMLController implements Initializable {
         // TODO
         DatatransferInterface d = new Textfile();
         Brain.getInstance().setDt(d);
-     }
+    }
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
@@ -42,29 +42,44 @@ public class FXMLController implements Initializable {
         //Status 0 = Lehrer 1 = Schüler
         int status;
         //Mit Klasse und liste oder nur Liste arbeiten tendenzielle nur Liste
-        for(int i = 0; i < users.length();i++){
-            if(users.username == username.getText()|| users.email == username.getText()){
-                if(users.password == password.getText())
+        for (int i = 0; i < users.length(); i++) {
+            if (users.username == username.getText() || users.email == username.getText()) {
+                if (users.password == password.getText()) {
                     correctLogin = true;
+                }
                 break;
             }
         }
-        if(correctLogin){
-           status = users.getStatus;
+        if (correctLogin) {
+            status = users.getStatus;
         }
-        
-        Stage window = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoggedInTeacher.fxml"));
+        if (status == 0) {
+            Stage window = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoggedInTeacher.fxml"));
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
-        window.setTitle("Eingeloggt");
-        window.setScene(scene);
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
+            window.setTitle("Lehrer");
+            window.setScene(scene);
 
-        window.show();
+            window.show();
 
-        Stage stage = (Stage) loginButton.getScene().getWindow();
-        stage.close();
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.close();
+        }else {
+             Stage window = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoggedInSchueler.fxml"));
+
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
+            window.setTitle("Schüler");
+            window.setScene(scene);
+
+            window.show();
+
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML

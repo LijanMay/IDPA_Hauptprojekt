@@ -13,12 +13,8 @@ public class Brain {
 
     private static Brain instance;
 
-    // Verhindere die Erzeugung des Objektes über andere Methoden
     private Brain() {
     }
-    // Eine Zugriffsmethode auf Klassenebene, welches dir '''einmal''' ein konkretes 
-    // Objekt erzeugt und dieses zurückliefert.
-
     public static Brain getInstance() {
         if (Brain.instance == null) {
             Brain.instance = new Brain();
