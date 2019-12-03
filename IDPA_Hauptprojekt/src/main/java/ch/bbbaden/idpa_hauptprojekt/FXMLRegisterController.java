@@ -26,14 +26,13 @@ public class FXMLRegisterController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        register.getScene().getWindow().setOnCloseRequest(event -> {
-            Brain.getInstance().hideController(false);
-         //   event.consume();
-        });
+   
  
     }    
 

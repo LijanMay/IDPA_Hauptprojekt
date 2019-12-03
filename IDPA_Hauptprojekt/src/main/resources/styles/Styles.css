@@ -1,15 +1,14 @@
 .button {
     -fx-font-weight: bold;
     -fx-background-color:#376E6F;
-    
-    
-  
-    
-    
+    -fx-text-fill: white;    
+}
+.label {
+    -fx-text-fill: white;
 }
 
 
-.AnchorPane {
+.root {
     -fx-background-color: #363636;
-    
+
 }

@@ -5,6 +5,8 @@
  */
 package ch.bbbaden.idpa_hauptprojekt;
 
+import javafx.stage.Stage;
+
 /**
  *
  * @author Dennis
@@ -22,11 +24,28 @@ public class Brain {
         return Brain.instance;
     }
 
-    
+    private Stage datatransferinterface;
+    private Stage loggedInLehrer;
     private DatatransferInterface dt;
     private LoggedInTeacherController lit;
     private FXMLController controller;
+    //Am anfang aus lastLogin von Datenbank lesen um Nutzername automatisch einzufügen für angenehmeres Login
+    public String currentUsername = "admin";
 
+    public Stage getDatatransferinterface() {
+        return datatransferinterface;
+    }
+
+    public Stage getLoggedInLehrer() {
+        return loggedInLehrer;
+    }
+
+    public void setLoggedInLehrer(Stage loggedInLehrer) {
+        this.loggedInLehrer = loggedInLehrer;
+    }
+
+    
+    
     public DatatransferInterface getDt() {
         return dt;
     }
@@ -59,5 +78,8 @@ public class Brain {
         controller.setHide(hide);
     }
     
+    public void closeLoggedInLehrer(){
+        loggedInLehrer.close();
+    }
 
 }
