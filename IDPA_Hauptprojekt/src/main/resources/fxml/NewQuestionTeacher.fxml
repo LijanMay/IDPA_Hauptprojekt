@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -16,10 +16,12 @@
       <RadioButton fx:id="trueFalse" layoutX="53.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleTrueFalse" text="Richtig-Falsch" />
       <TextArea fx:id="textarea" layoutX="53.0" layoutY="209.0" prefHeight="82.0" prefWidth="411.0" />
       <Label layoutX="53.0" layoutY="180.0" text="Geben Sie Ihre Frage ein:" />
-      <Button fx:id="createQuestion" layoutX="54.0" layoutY="303.0" mnemonicParsing="false" onAction="#hanldeCreateQuestion" text="Frage erstellen" />
-      <Spinner fx:id="questionSpinner" layoutX="206.0" layoutY="88.0" prefHeight="18.0" prefWidth="105.0" />
-      <Label layoutX="206.0" layoutY="67.0" text="Mit wie vielen Fragen" />
-      <Label layoutX="711.0" layoutY="20.0" text="WIQI" textFill="#da7b93">
+
+      <Button fx:id="createQuestion" layoutX="67.0" layoutY="303.0" mnemonicParsing="false" onAction="#hanldeCreateQuestion" text="Frage erstellen" />
+      <Spinner layoutX="161.0" layoutY="88.0" prefHeight="18.0" prefWidth="105.0" />
+      <Label layoutX="157.0" layoutY="70.0" text="Mit wie vielen Fragen" />
+      <Label fx:id="WIQI" layoutX="706.0" layoutY="20.0" text="WIQI" textFill="#d87b94">
+
          <font>
             <Font size="39.0" />
          </font>
