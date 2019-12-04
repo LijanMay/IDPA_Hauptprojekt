@@ -3,6 +3,7 @@
     -fx-background-color:#376E6F;
     -fx-text-fill: white;    
 }
+
 .label {
     -fx-text-fill: white;
 }
@@ -12,3 +13,16 @@
     -fx-background-color: #363636;
 
 }
+#WIQI {
+ -fx-text-fill:#d87b94;
+ -fx-font-size:39px;
+-fx-font:system;
+
+
+   
+   }
+   
+   .radiobutton{
+       -fx-text-fill:white;
+       
+   }
