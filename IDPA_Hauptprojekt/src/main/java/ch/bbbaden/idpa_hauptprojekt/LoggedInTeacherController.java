@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.DragEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -39,6 +40,8 @@ public class LoggedInTeacherController implements Initializable {
     private Label topicLabel;
 
     private Brain br;
+    @FXML
+    private Label WIQI;
 
     /**
      * Initializes the controller class.
@@ -101,6 +104,11 @@ public class LoggedInTeacherController implements Initializable {
             stage.show();
         }
 
+    }
+
+    @FXML
+    private void changecolor(DragEvent event) {
+        
     }
 
 }

@@ -9,15 +9,15 @@
 <AnchorPane id="AnchorPane" prefHeight="631.0" prefWidth="496.0" style="-fx-background-color: #363636;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.LoggedInTeacherController">
    <children>
       <ListView fx:id="listviewTeacher" layoutX="19.0" layoutY="167.0" prefHeight="398.0" prefWidth="462.0" style="-fx-background-color: #C2CAD0;" />
-      <Button fx:id="chooseTopic" layoutX="334.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleChooseTopic" prefHeight="26.0" prefWidth="147.0" style="-fx-background-color: #376E6F;" text="Auswählen" textFill="WHITE" />
-      <Button fx:id="newTopic" layoutX="19.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleNewTopic" style="-fx-background-color: #376E6F;" text="Neues Themengebiet" textFill="WHITE" />
-      <Button fx:id="expandTopic" layoutX="19.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleExpandTopic" prefHeight="26.0" prefWidth="228.0" style="-fx-background-color: #376E6F;" text="vorhandens Themengebiet erweitern" textFill="WHITE" />
+      <Button fx:id="chooseTopic" layoutX="334.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleChooseTopic" onDragOver="#changecolor" prefHeight="26.0" prefWidth="147.0" style="-fx-background-color: #376E6F;" text="Auswählen" textFill="WHITE" />
+      <Button fx:id="newTopic" layoutX="19.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleNewTopic" onDragOver="#changecolor" style="-fx-background-color: #376E6F;" text="Neues Themengebiet" textFill="WHITE" />
+      <Button fx:id="expandTopic" layoutX="19.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleExpandTopic" onDragOver="#changecolor" prefHeight="26.0" prefWidth="228.0" style="-fx-background-color: #376E6F;" text="vorhandens Themengebiet erweitern" textFill="WHITE" />
       <Label fx:id="topicLabel" layoutX="19.0" layoutY="141.0" text="Wählen Sie Ihr gewünschtes Themengbiet aus:" textFill="WHITE" />
       <Label fx:id="WIQI" layoutX="393.0" layoutY="14.0" text="WIQI" textFill="#da7b93">
          <font>
             <Font size="39.0" />
          </font>
       </Label>
-      <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleCreateQuiz" text="Quiz Zusammenstellen" />
+      <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleCreateQuiz" onDragOver="#changecolor" text="Quiz Zusammenstellen" />
    </children>
 </AnchorPane>

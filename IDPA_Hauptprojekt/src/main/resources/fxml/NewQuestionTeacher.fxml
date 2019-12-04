@@ -16,7 +16,7 @@
       <RadioButton layoutX="53.0" layoutY="124.0" mnemonicParsing="false" text="Richtig-Falsch" />
       <TextArea layoutX="53.0" layoutY="209.0" prefHeight="82.0" prefWidth="411.0" />
       <Label layoutX="53.0" layoutY="180.0" text="Geben Sie Ihre Frage ein:" />
-      <Button fx:id="createQuestion" layoutX="67.0" layoutY="303.0" mnemonicParsing="false" onAction="#hanldeCreateQuestion" text="Frage erstellen" />
+      <Button fx:id="createQuestion" layoutX="67.0" layoutY="303.0" mnemonicParsing="false" onAction="#hanldeCreateQuestion" onDragOver="#changecolor" text="Frage erstellen" />
       <Spinner layoutX="161.0" layoutY="88.0" prefHeight="18.0" prefWidth="105.0" />
       <Label layoutX="157.0" layoutY="70.0" text="Mit wie vielen Fragen" />
       <Label fx:id="WIQI" layoutX="706.0" layoutY="20.0" text="WIQI" textFill="#d87b94">
