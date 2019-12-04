@@ -34,6 +34,8 @@ public class FXMLController implements Initializable {
     private PasswordField password;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label WIQI;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

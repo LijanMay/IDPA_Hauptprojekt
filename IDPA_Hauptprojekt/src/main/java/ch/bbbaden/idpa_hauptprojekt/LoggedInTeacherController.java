@@ -37,6 +37,8 @@ public class LoggedInTeacherController implements Initializable {
     private ListView<String> listviewTeacher;
     @FXML
     private Label topicLabel;
+    @FXML
+    private Label WIQI;
 
 
     /**
