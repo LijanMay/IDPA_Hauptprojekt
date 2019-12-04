@@ -38,7 +38,6 @@ public class LoggedInTeacherController implements Initializable {
     @FXML
     private Label topicLabel;
 
-    private Brain br;
 
     /**
      * Initializes the controller class.
@@ -46,7 +45,7 @@ public class LoggedInTeacherController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        br = Brain.getInstance();
+        Brain.getInstance().setLit(this);
         listviewTeacher.setVisible(false);
         topicLabel.setVisible(false);
         chooseTopic.setVisible(false);
@@ -59,8 +58,11 @@ public class LoggedInTeacherController implements Initializable {
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-        window.setTitle("Eingeloggt");
+        window.setTitle("Frage Erstellen");
         window.setScene(scene);
+         window.setOnCloseRequest(event1 -> {
+                Brain.getInstance().hideLit(false);
+            });
 
         window.show();
         setHide(true);
@@ -77,7 +79,7 @@ public class LoggedInTeacherController implements Initializable {
                     JOptionPane.PLAIN_MESSAGE);
         } while (input.equals(""));
         if (input.length() > 0) {
-            br.getDt().addTopic(input);
+            Brain.getInstance().getDt().addTopic(input);
         }
 
     }
@@ -86,10 +88,12 @@ public class LoggedInTeacherController implements Initializable {
     private void handleExpandTopic(ActionEvent event) {
         listviewTeacher.setVisible(true);
         topicLabel.setVisible(true);
+        chooseTopic.setVisible(true);
     }
 
     @FXML
     private void handleCreateQuiz(ActionEvent event) {
+        
     }
 
     public void setHide(boolean hide) {

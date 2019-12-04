@@ -11,6 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.TextArea;
 
 /**
  * FXML Controller class
@@ -21,6 +24,16 @@ public class NewQuestionTeacherController implements Initializable {
 
     @FXML
     private Button createQuestion;
+    @FXML
+    private RadioButton multipleChoice;
+    @FXML
+    private RadioButton insertAnswer;
+    @FXML
+    private RadioButton trueFalse;
+    @FXML
+    private TextArea textarea;
+    @FXML
+    private Spinner<Integer> questionSpinner;
 
     /**
      * Initializes the controller class.
@@ -34,6 +47,18 @@ public class NewQuestionTeacherController implements Initializable {
     private void hanldeCreateQuestion(ActionEvent event) {
         // Frage mit eigenem Neuen Fenster erstellen mit for loop für anzahl mulitple choice fragen etc
         
+    }
+
+    @FXML
+    private void handleMultipleChoice(ActionEvent event) {
+    }
+
+    @FXML
+    private void hanldeInserAnswer(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleTrueFalse(ActionEvent event) {
     }
     
 }
