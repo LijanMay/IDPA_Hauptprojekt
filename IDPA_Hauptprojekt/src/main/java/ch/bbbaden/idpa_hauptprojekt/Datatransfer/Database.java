@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ *  
  * @author Dennis
  */
 public class Database implements DatatransferInterface {
@@ -42,7 +42,7 @@ public class Database implements DatatransferInterface {
     
     public static void createNewDatabase(String wiqiDB) throws ClassNotFoundException, SQLException {
  
-        String url = "jdbc:sqlite:C:\\Users\\lijan\\GitHub\\IDPA_Hauptprojekt\\" + wiqiDB;
+        String url = "jdbc:sqlite:C:.\\" + wiqiDB;
         Class.forName("org.sqlite.JDBC");
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
