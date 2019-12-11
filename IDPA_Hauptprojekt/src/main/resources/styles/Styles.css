@@ -31,9 +31,10 @@ button.ex1:hover, a.ex1:active {
 
 }
 #WIQI {
- -fx-text-fill:random;
+ -fx-text-fill:	#4deeea;
  -fx-font-size:39px;
 -fx-font:system;
+
 
 
    
