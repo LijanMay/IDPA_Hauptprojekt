@@ -40,7 +40,7 @@ public class NewQuestionTeacherController implements Initializable {
     private Label WIQI;
     @FXML
     private Spinner<Integer> spinner;
-    
+
     ArrayList<String> answers = new ArrayList<>();
 
     /**
@@ -64,13 +64,29 @@ public class NewQuestionTeacherController implements Initializable {
         if (textarea.getText().trim().equals("")) {
         } else {
             if (multipleChoice.selectedProperty().get()) {
+                answers.clear();
+                String dialog = "Geben Sie die richtige Antwort ein.";
+                for (int i = 0; i < spinner.getValue(); i++) {
+                    String input;
+                    if(i != 0){
+                        dialog = "Geben Sie eine falsche Antwort ein";
+                    }
+                    do {
+                        input = JOptionPane.showInputDialog(null, dialog,
+                                "Antwort",
+                                JOptionPane.PLAIN_MESSAGE);
+                    } while (input.trim().equals(""));
+                    answers.add(input);
+                }
 
             } else if (trueFalse.selectedProperty().get()) {
+                answers.clear();
 
             } else if (insertAnswer.selectedProperty().get()) {
+                answers.clear();
                 String input;
                 do {
-                    input = JOptionPane.showInputDialog(null, "Geben Sie die richtige Antwert ein.",
+                    input = JOptionPane.showInputDialog(null, "Geben Sie die richtige Antwort ein.",
                             "Antwort",
                             JOptionPane.PLAIN_MESSAGE);
                 } while (input.trim().equals(""));
