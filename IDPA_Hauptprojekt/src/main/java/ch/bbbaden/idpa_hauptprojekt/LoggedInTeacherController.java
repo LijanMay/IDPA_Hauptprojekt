@@ -79,7 +79,7 @@ public class LoggedInTeacherController implements Initializable {
             input = JOptionPane.showInputDialog(null, "Geben Sie den Namen des Themengebietes ein",
                     "Themengebiet",
                     JOptionPane.PLAIN_MESSAGE);
-        } while (input.equals(""));
+        } while (input.trim().equals(""));
         if (input.length() > 0) {
             Brain.getInstance().getDt().addTopic(input);
         }

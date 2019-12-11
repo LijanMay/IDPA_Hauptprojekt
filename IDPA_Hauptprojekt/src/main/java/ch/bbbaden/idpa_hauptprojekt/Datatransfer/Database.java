@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,6 +38,8 @@ public class Database implements DatatransferInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    
+    
     public static void createNewDatabase(String wiqiDB) throws ClassNotFoundException, SQLException {
  
         String url = "jdbc:sqlite:C:\\Users\\lijan\\GitHub\\IDPA_Hauptprojekt\\" + wiqiDB;
@@ -53,6 +56,11 @@ public class Database implements DatatransferInterface {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void addQuestion(String question, int type, ArrayList<String> answers) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

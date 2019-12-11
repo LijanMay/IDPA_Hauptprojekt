@@ -20,8 +20,7 @@ public class MainApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
         stage.setTitle("Login Wirtschaftsquiz");
 
-        createNewDatabase("wiqiDB.db");
-        stage.setTitle("JavaFX and Maven");
+      //  createNewDatabase("wiqiDB.db");
         stage.setScene(scene);
         stage.show();
     }

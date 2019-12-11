@@ -6,6 +6,7 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -38,9 +40,12 @@ public class NewQuestionTeacherController implements Initializable {
     private Label WIQI;
     @FXML
     private Spinner<Integer> spinner;
+    
+    ArrayList<String> answers = new ArrayList<>();
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -51,16 +56,29 @@ public class NewQuestionTeacherController implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 3);
         spinner.setValueFactory(valueFactory);
         spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);
-    }    
+    }
 
     @FXML
     private void hanldeCreateQuestion(ActionEvent event) {
         // Frage mit eigenem Neuen Fenster erstellen mit for loop für anzahl mulitple choice fragen etc
-       if(textarea.getText().equals("")){
-           System.out.println("yes");
-       }else{
-           System.out.println("fuck");
-       }
+        if (textarea.getText().trim().equals("")) {
+        } else {
+            if (multipleChoice.selectedProperty().get()) {
+
+            } else if (trueFalse.selectedProperty().get()) {
+
+            } else if (insertAnswer.selectedProperty().get()) {
+                String input;
+                do {
+                    input = JOptionPane.showInputDialog(null, "Geben Sie die richtige Antwert ein.",
+                            "Antwort",
+                            JOptionPane.PLAIN_MESSAGE);
+                } while (input.trim().equals(""));
+                answers.add(input);
+                Brain.getInstance().getDt().addQuestion(textarea.getText(), 2, answers);
+
+            }
+        }
     }
 
     @FXML
@@ -83,9 +101,9 @@ public class NewQuestionTeacherController implements Initializable {
         multipleChoice.setSelected(false);
         hideButton(true);
     }
-    
-    private void hideButton(boolean hide){
+
+    private void hideButton(boolean hide) {
         createQuestion.setVisible(hide);
     }
-    
+
 }

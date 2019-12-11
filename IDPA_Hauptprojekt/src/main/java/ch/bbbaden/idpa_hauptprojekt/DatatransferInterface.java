@@ -5,6 +5,8 @@
  */
 package ch.bbbaden.idpa_hauptprojekt;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author denni
@@ -15,6 +17,7 @@ public interface DatatransferInterface {
     public void getData();
     public void createQuiz();
     public void addTopic(String topic);
+    public void addQuestion(String question, int type, ArrayList<String> answers);
     
    
 }

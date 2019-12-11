@@ -6,6 +6,7 @@
 package ch.bbbaden.idpa_hauptprojekt.Datatransfer;
 
 import ch.bbbaden.idpa_hauptprojekt.DatatransferInterface;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,6 +31,11 @@ public class Textfile implements DatatransferInterface{
 
     @Override
     public void addTopic(String topic) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addQuestion(String question, int type, ArrayList<String> answers) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
