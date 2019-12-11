@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -23,6 +24,8 @@ public class FXMLRegisterController implements Initializable {
     private Button register;
     @FXML
     private Button cancel;
+    @FXML
+    private Label WIQI;
 
     /**
      * Initializes the controller class.

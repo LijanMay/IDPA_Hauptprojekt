@@ -7,7 +7,9 @@ package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -15,6 +17,9 @@ import javafx.fxml.Initializable;
  * @author natalie1703
  */
 public class CreateTopicController implements Initializable {
+
+    @FXML
+    private Label WIQI;
 
     /**
      * Initializes the controller class.

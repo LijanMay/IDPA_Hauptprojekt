@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.input.DragEvent;
 
 /**
  * FXML Controller class
@@ -21,6 +23,8 @@ public class NewQuestionTeacherController implements Initializable {
 
     @FXML
     private Button createQuestion;
+    @FXML
+    private Label WIQI;
 
     /**
      * Initializes the controller class.
@@ -34,6 +38,10 @@ public class NewQuestionTeacherController implements Initializable {
     private void hanldeCreateQuestion(ActionEvent event) {
         // Frage mit eigenem Neuen Fenster erstellen mit for loop für anzahl mulitple choice fragen etc
         
+    }
+
+    @FXML
+    private void changecolor(DragEvent event) {
     }
     
 }

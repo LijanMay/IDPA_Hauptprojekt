@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 /**
@@ -26,6 +27,8 @@ public class LoggedInSchuelerController implements Initializable {
     private Button startQuiz;
     @FXML
     private Button insertQuiz;
+    @FXML
+    private Label WIQI;
 
     /**
      * Initializes the controller class.
