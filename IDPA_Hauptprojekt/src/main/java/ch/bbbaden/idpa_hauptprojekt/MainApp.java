@@ -1,5 +1,7 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
+import static ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database.createNewDatabase;
+import java.sql.SQLException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +18,10 @@ public class MainApp extends Application {
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-        
         stage.setTitle("Login Wirtschaftsquiz");
+
+        createNewDatabase("wiqiDB.db");
+        stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();
     }
@@ -30,7 +34,8 @@ public class MainApp extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        
         launch(args);
     }
 
