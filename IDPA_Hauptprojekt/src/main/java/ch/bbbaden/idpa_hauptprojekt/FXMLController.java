@@ -1,5 +1,6 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
+import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
 import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Textfile;
 import static java.awt.Color.red;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        DatatransferInterface d = new Textfile();
+        DatatransferInterface d = new Database();
         Brain.getInstance().setDt(d);
         Brain.getInstance().setController(this);
         username.setText(Brain.getInstance().currentUsername);
