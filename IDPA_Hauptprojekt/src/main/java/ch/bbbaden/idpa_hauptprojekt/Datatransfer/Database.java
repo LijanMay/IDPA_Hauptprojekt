@@ -62,5 +62,14 @@ public class Database implements DatatransferInterface {
     public void addQuestion(String question, int type, ArrayList<String> answers) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList<String> getTopics() {
+        ArrayList<String> t = new ArrayList<>();
+        t.add("test");
+        t.add("faggot");
+        t.add("kill me pls");
+        return t;
+    }
     
 }

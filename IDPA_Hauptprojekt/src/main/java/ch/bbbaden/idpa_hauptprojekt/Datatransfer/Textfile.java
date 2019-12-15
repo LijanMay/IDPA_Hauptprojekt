@@ -38,5 +38,10 @@ public class Textfile implements DatatransferInterface{
     public void addQuestion(String question, int type, ArrayList<String> answers) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList<String> getTopics() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

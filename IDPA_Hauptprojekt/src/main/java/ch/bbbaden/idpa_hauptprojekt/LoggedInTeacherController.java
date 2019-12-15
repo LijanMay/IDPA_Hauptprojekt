@@ -7,17 +7,25 @@ package ch.bbbaden.idpa_hauptprojekt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,6 +47,8 @@ public class LoggedInTeacherController implements Initializable {
     @FXML
     private Label WIQI;
 
+    ObservableList<String> items;
+
     /**
      * Initializes the controller class.
      */
@@ -46,24 +56,34 @@ public class LoggedInTeacherController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         Brain.getInstance().setLit(this);
+        updateTopics();
+        listviewTeacher.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                // Your action here
+                expandTopic.setText("Frage zu " + newValue + " hinzufügen");
+            }
+        });
 
     }
 
     @FXML
     private void handleChooseTopic(ActionEvent event) throws IOException {
-        Stage window = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewQuestionTeacher.fxml"));
+        if (listviewTeacher.getSelectionModel().getSelectedItem() != null) {
+            Stage window = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewQuestionTeacher.fxml"));
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
-        window.setTitle("Frage Erstellen");
-        window.setScene(scene);
-        window.setOnCloseRequest(event1 -> {
-            Brain.getInstance().hideLit(false);
-        });
-
-        window.show();
-        setHide(true);
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
+            window.setTitle("Frage Erstellen");
+            window.setScene(scene);
+            window.setOnCloseRequest(event1 -> {
+                Brain.getInstance().hideLit(false);
+            });
+            setHide(true);
+            window.show();
+        }
 
     }
 
@@ -81,37 +101,45 @@ public class LoggedInTeacherController implements Initializable {
         } while (input.trim().equals(""));
         if (input != null) {
             Brain.getInstance().getDt().addTopic(input);
+            updateTopics();
         }
 
     }
-
 
     @FXML
     private void handleCreateQuiz(ActionEvent event) throws IOException {
         Stage window = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewQuestionTeacher.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(""));
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-        window.setTitle("Frage Erstellen");
+        window.setTitle("Quiz Zusammenstellen");
         window.setScene(scene);
         window.setOnCloseRequest(event1 -> {
             Brain.getInstance().hideLit(false);
         });
-
-        window.show();
         setHide(true);
+        window.show();
+
     }
 
     public void setHide(boolean hide) {
         if (hide) {
-            Stage stage = (Stage) expandTopic.getScene().getWindow();
+            Stage stage = (Stage) chooseTopic.getScene().getWindow();
             stage.hide();
         } else {
-            Stage stage = (Stage) expandTopic.getScene().getWindow();
+            Stage stage = (Stage) chooseTopic.getScene().getWindow();
             stage.show();
         }
 
+    }
+
+    private void updateTopics() {
+        items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
+        listviewTeacher.setItems(items);
+        listviewTeacher.setOrientation(Orientation.VERTICAL);
+
+        // list.getSelectionModel().selectedItemProperty()
     }
 
 }

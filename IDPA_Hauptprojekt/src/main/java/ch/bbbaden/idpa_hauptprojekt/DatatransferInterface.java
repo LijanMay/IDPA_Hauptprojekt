@@ -18,6 +18,7 @@ public interface DatatransferInterface {
     public void createQuiz();
     public void addTopic(String topic);
     public void addQuestion(String question, int type, ArrayList<String> answers);
+    public ArrayList<String> getTopics();
     
    
 }
