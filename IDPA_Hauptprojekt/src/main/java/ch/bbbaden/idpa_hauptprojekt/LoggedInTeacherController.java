@@ -31,7 +31,6 @@ public class LoggedInTeacherController implements Initializable {
     private Button chooseTopic;
     @FXML
     private Button newTopic;
-    @FXML
     private Button expandTopic;
     @FXML
     private ListView<String> listviewTeacher;
@@ -40,7 +39,6 @@ public class LoggedInTeacherController implements Initializable {
     @FXML
     private Label WIQI;
 
-
     /**
      * Initializes the controller class.
      */
@@ -48,9 +46,7 @@ public class LoggedInTeacherController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         Brain.getInstance().setLit(this);
-        listviewTeacher.setVisible(false);
-        topicLabel.setVisible(false);
-        chooseTopic.setVisible(false);
+
     }
 
     @FXML
@@ -62,9 +58,9 @@ public class LoggedInTeacherController implements Initializable {
         scene.getStylesheets().add("/styles/Styles.css");
         window.setTitle("Frage Erstellen");
         window.setScene(scene);
-         window.setOnCloseRequest(event1 -> {
-                Brain.getInstance().hideLit(false);
-            });
+        window.setOnCloseRequest(event1 -> {
+            Brain.getInstance().hideLit(false);
+        });
 
         window.show();
         setHide(true);
@@ -79,7 +75,7 @@ public class LoggedInTeacherController implements Initializable {
             input = JOptionPane.showInputDialog(null, "Geben Sie den Namen des Themengebietes ein",
                     "Themengebiet",
                     JOptionPane.PLAIN_MESSAGE);
-            if(input == null){
+            if (input == null) {
                 break;
             }
         } while (input.trim().equals(""));
@@ -89,16 +85,22 @@ public class LoggedInTeacherController implements Initializable {
 
     }
 
-    @FXML
-    private void handleExpandTopic(ActionEvent event) {
-        listviewTeacher.setVisible(true);
-        topicLabel.setVisible(true);
-        chooseTopic.setVisible(true);
-    }
 
     @FXML
-    private void handleCreateQuiz(ActionEvent event) {
-        
+    private void handleCreateQuiz(ActionEvent event) throws IOException {
+        Stage window = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewQuestionTeacher.fxml"));
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/styles/Styles.css");
+        window.setTitle("Frage Erstellen");
+        window.setScene(scene);
+        window.setOnCloseRequest(event1 -> {
+            Brain.getInstance().hideLit(false);
+        });
+
+        window.show();
+        setHide(true);
     }
 
     public void setHide(boolean hide) {
