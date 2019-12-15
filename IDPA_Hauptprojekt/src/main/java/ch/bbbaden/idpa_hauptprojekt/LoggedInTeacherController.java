@@ -47,7 +47,8 @@ public class LoggedInTeacherController implements Initializable {
     @FXML
     private Label WIQI;
 
-    ObservableList<String> items;
+    private ObservableList<String> items;
+    private String windowName;
 
     /**
      * Initializes the controller class.
@@ -62,7 +63,8 @@ public class LoggedInTeacherController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // Your action here
-                expandTopic.setText("Frage zu " + newValue + " hinzufügen");
+                chooseTopic.setText("Frage zu " + newValue + " hinzufügen");
+                windowName = newValue;
             }
         });
 
@@ -76,7 +78,7 @@ public class LoggedInTeacherController implements Initializable {
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/styles/Styles.css");
-            window.setTitle("Frage Erstellen");
+            window.setTitle("Frage zu " + windowName + " hinzufügen");
             window.setScene(scene);
             window.setOnCloseRequest(event1 -> {
                 Brain.getInstance().hideLit(false);
