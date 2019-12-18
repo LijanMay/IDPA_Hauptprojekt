@@ -20,7 +20,7 @@ public class MainApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
         stage.setTitle("Login Wirtschaftsquiz");
 
-        createNewDatabase("wiqiDB.db");
+        createNewDatabase();
         stage.setScene(scene);
         stage.show();
     }
