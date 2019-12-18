@@ -5,10 +5,10 @@
  */
 package ch.bbbaden.idpa_hauptprojekt;
 
+import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,21 +56,24 @@ public class CreateQuizController implements Initializable {
 //   Done
     @FXML
     private Button BFAddAll;
+    
+    Database db = new Database();
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        LVTG.getItems().add("Test");
-        LVTG.getItems().add("Test2");
-        LVTG.getItems().add("Test3");
-        LVTG.getItems().add("Test4");
+    public void initialize(URL url, ResourceBundle rb) {      
+        ArrayList topics = db.getTopics();
+        for (Object o : topics) {
+                LVTG.getItems().add(o);
+            }
     }
 
 //    adds question to ListViewFragen
+
     @FXML
     private void addTG(ActionEvent event) {
         try {
             Object selected = LVTG.getSelectionModel().getSelectedItem();
-            moveTo(LVTG, LVF, selected);
+            moveFromTo(LVTG, LVF, selected);
         } catch (Exception e) {
             System.out.println("no TG selected");
         }
@@ -81,7 +84,7 @@ public class CreateQuizController implements Initializable {
     private void addFrage(ActionEvent event) {
         try {
             Object selected = LVF.getSelectionModel().getSelectedItem();
-            moveTo(LVF, LVDF, selected);
+            moveFromTo(LVF, LVDF, selected);
         } catch (Exception e) {
             System.out.println("nothing selected");
         }
@@ -91,10 +94,9 @@ public class CreateQuizController implements Initializable {
     @FXML
     private void addAlleFragen(ActionEvent event) {
         try {
-            ObservableList<Object> questions;
-            questions = LVF.getSelectionModel().getSelectedItems();
-            for(Object o : questions){
-                moveTo(LVF, LVDF, o);
+            Object[] questions = LVF.getItems().toArray();
+            for (Object o : questions) {
+                moveFromTo(LVF, LVDF, o);
             }
         } catch (Exception e) {
             System.out.println("no questions to add");
@@ -106,14 +108,14 @@ public class CreateQuizController implements Initializable {
     private void deleteFrage(ActionEvent event) {
         try {
             Object selected = LVDF.getSelectionModel().getSelectedItem();
-            moveTo(LVDF, LVF, selected);
+            moveFromTo(LVDF, LVF, selected);
         } catch (Exception e) {
             System.out.println("nothing to remove");
         }
     }
 
 //    move an entry from one listview to another
-    private void moveTo(ListView lv1, ListView lv2, Object o) {
+    private void moveFromTo(ListView lv1, ListView lv2, Object o) {
         if (o != null) {
             lv2.getItems().add(o);
             lv1.getItems().remove(o);

@@ -67,9 +67,12 @@ public class Database implements DatatransferInterface {
     public ArrayList<String> getTopics() {
         ArrayList<String> t = new ArrayList<>();
         t.add("test");
-        t.add("faggot");
-        t.add("kill me pls");
+        t.add("test1");
+        t.add("test2");
+        t.add("test3");
+        t.add("test4");
+        t.add("test5");
         return t;
     }
-    
+
 }
