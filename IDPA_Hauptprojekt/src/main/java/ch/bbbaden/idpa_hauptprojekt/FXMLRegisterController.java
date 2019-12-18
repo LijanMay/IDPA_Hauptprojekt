@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -31,6 +32,8 @@ public class FXMLRegisterController implements Initializable {
     private String password;
     private String confirmpassword;
     private String autouser;
+    boolean confirmcorrect = true;
+    boolean isempty = false;
 
     @FXML
     private Button register;
@@ -71,6 +74,61 @@ public class FXMLRegisterController implements Initializable {
         email = mail.getText();
         password = pswd.getText();
         confirmpassword = pswd2.getText();
+
+        boolean namecorrect = true;
+        boolean passcorrect = true;
+
+        if (surname.getText().isEmpty()) {
+            isempty = true;
+            showAlert("Name");
+        } else if (surname.getText().length() > 20) {
+            showAlert("Name");
+        } else if (prename.getText().isEmpty()) {
+            isempty = true;
+            showAlert("Vorname");
+        } else if (prename.getText().length() > 20) {
+            showAlert("Vorname");
+        } else if (user.getText().isEmpty()) {
+            isempty = true;
+            showAlert("Benutzername");
+        } else if (user.getText().length() > 20) {
+            showAlert("Benutzername");
+        } else if (mail.getText().isEmpty()) {
+            isempty = true;
+            showAlert("Email");
+        } else if (mail.getText().length() > 30) {
+            showAlert("Email");
+        } else if (pswd.getText().isEmpty()) {
+            isempty = true;
+            showAlert("Passwort");
+        } else if (pswd.getText().length() > 100) {
+            showAlert("Passwort");
+        }
+
+        if (confirmpassword.equals(password) == false) {
+            confirmcorrect = false;
+            showAlert("Passwort");
+        }
+//        try {
+//            sa.InitSocket("84.74.61.42", 1757);
+//            sa.send("register:" + namefield.getText() + ";" + BCrypt.hashpw(passwordfield.getText(), BCrypt.gensalt(12)));// send username and hashed password to server
+//            check();
+//        } catch (IOException ex) {
+//            System.out.println("Not connected to server! Please try using a VPN.");
+//        }
+    }
+
+    private void showAlert(String name) {
+        if (isempty = true) {
+            JOptionPane.showMessageDialog(null, name + " muss ausgefüllt werden");
+            isempty = false;
+        } else {
+            JOptionPane.showMessageDialog(null, name + " entspricht nicht den Voraussetzungen");
+        }
+        if (confirmcorrect = false) {
+            JOptionPane.showMessageDialog(null, name + " stimmt nicht überein");
+        }
+
     }
 
     @FXML
