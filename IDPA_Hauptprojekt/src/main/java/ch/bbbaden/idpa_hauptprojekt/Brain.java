@@ -5,6 +5,7 @@
  */
 package ch.bbbaden.idpa_hauptprojekt;
 
+import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
 import javafx.stage.Stage;
 
 /**
@@ -26,7 +27,7 @@ public class Brain {
 
     private Stage datatransferinterface;
     private Stage loggedInLehrer;
-    private DatatransferInterface dt;
+    private Database dt;
     private LoggedInTeacherController lit;
     private FXMLController controller;
     //Am anfang aus lastLogin von Datenbank lesen um Nutzername automatisch einzufügen für angenehmeres Login
@@ -46,11 +47,11 @@ public class Brain {
 
     
     
-    public DatatransferInterface getDt() {
+    public Database getDt() {
         return dt;
     }
 
-    public void setDt(DatatransferInterface dt) {
+    public void setDt(Database dt) {
         this.dt = dt;
     }
 

@@ -41,7 +41,7 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        DatatransferInterface d = new Database();
+        Database d = new Database();
         Brain.getInstance().setDt(d);
         Brain.getInstance().setController(this);
         username.setText(Brain.getInstance().currentUsername);
