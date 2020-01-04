@@ -6,7 +6,12 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,14 +32,24 @@ public class LoggedInSchuelerController implements Initializable {
     @FXML
     private Button insertQuiz;
 
+    private ObservableList<String> items;
+
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
-    }    
+
+        try {
+            // TODO
+            items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
+        } catch (SQLException ex) {
+            Logger.getLogger(LoggedInSchuelerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        listQuizes.setItems(items);
+    }
 
     @FXML
     private void handleStartQuiz(ActionEvent event) {
@@ -44,5 +59,5 @@ public class LoggedInSchuelerController implements Initializable {
     private void handleInsertQuiz(ActionEvent event) {
         Brain.getInstance().getDt().insertQuiz();
     }
-    
+
 }

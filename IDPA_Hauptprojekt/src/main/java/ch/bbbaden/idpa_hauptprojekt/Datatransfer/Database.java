@@ -26,25 +26,11 @@ public class Database {
     private static Connection conn;
 
     public void createUser(String prename, String surname, String username, String password, String email, boolean isTeacher) {
-        final String sql = "CREATE TABLE IF NOT EXISTS Benutzer ("
-                + "ID INTEGER PRIMARY KEY,"
-                + "Benutzername STRING NOT NULL, "
-                + "Name STRING NOT NULL,"
-                + "Vorname STRING NOT NULL,"
-                + "Email STRING NOT NULL,"
-                + "istLehrer BOOLEAN NOT NULL,"
-                + ")";
-
-        try (Statement stm = Database.conn.createStatement()) {
-            stm.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         final String sqlInsert = "INSERT INTO Benutzer (Benutzername, Name, Vorname, Email, Passwort, istLehrer) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Statement stm = Database.conn.createStatement()) {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sqlInsert);
             ps.setString(1, username);
             ps.setString(2, surname);
             ps.setString(3, prename);
@@ -68,7 +54,16 @@ public class Database {
     }
 
     public void addTopic(String topic) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        final String sqlInsert = "INSERT INTO Topics (ID, Name) VALUES (?,?)";
+
+        try (Statement stm = Database.conn.createStatement()) {
+            PreparedStatement ps = conn.prepareStatement(sqlInsert);
+            ps.setString(1, topic);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private static void connect() {
@@ -104,8 +99,19 @@ public class Database {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public ArrayList<String> getTopics() {
+    public ArrayList<String> getTopics() throws SQLException {
+
         ArrayList<String> t = new ArrayList<>();
+        String query = "SELECT * FROM Topics";
+        Statement stm = conn.createStatement();
+        ResultSet rs = stm.executeQuery(query);
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            for (int i = 1; i < columns; i++) {
+                t.add(rs.getString(i));
+            }
+        }
 
         return t;
     }
@@ -132,4 +138,83 @@ public class Database {
         return t;
     }
 
+    public void insertQuiz() {
+        // aus TXT oder so die Statements lesen und in die Datenbank fügen
+    }
+
+    //noch falsch
+    public ArrayList<String> getQuizes() throws SQLException {
+        ArrayList<String> t = new ArrayList();
+
+        String query = "SELECT Topic FROM Quizes";
+        Statement stm = conn.createStatement();
+        ResultSet rs = stm.executeQuery(query);
+        int columns = rs.getMetaData().getColumnCount();
+
+        while (rs.next()) {
+            for (int i = 1; i < columns; i++) {
+                t.add(rs.getString(i));
+            }
+        }
+        t.add("fuck");
+        t.add("my");
+        t.add("life");
+
+        return t;
+    }
+
+    public void createDBStructure() {
+        String dbName = "wiqiDB";
+        
+        //String query0 = "create database if not exists wiqiDB";
+        
+        String query1 = "use wiqiDB";
+        
+        String query2 = "create table if not exists Topics ("
+                + "id integer primary key,"
+                + "name string not null,"
+                + ")";
+        
+        String query3 = "create table if not exists benutzer ( id integer primary key, Benutzername string not null, Name string not null, vorname string not null, email string not null, istLehrer boolean not null,)";
+        //String query0 = "CREATE DATABASE IF NOT EXISTS " + dbName;
+
+        //String query1 = "USE " + dbName;
+
+//        String query2 = "CREATE TABLE IF NOT EXISTS Topics ("
+//                + "ID INTEGER PRIMARY KEY,"
+//                + "Name STRING NOT NULL, "
+//                + ")";
+
+//        String query3 = "CREATE TABLE IF NOT EXISTS Benutzer ("
+//                + "ID INTEGER PRIMARY KEY,"
+//                + "Benutzername STRING NOT NULL, "
+//                + "Name STRING NOT NULL,"
+//                + "Vorname STRING NOT NULL,"
+//                + "Email STRING NOT NULL,"
+//                + "istLehrer BOOLEAN NOT NULL,"
+//                + ")";
+
+        Statement stmt = null;
+        try {
+            conn.setAutoCommit(false);
+            stmt = conn.createStatement();
+            //stmt.addBatch(query0);
+            stmt.addBatch(query1);
+            stmt.addBatch(query2);
+            stmt.addBatch(query3);
+            stmt.executeBatch();
+            conn.commit();
+            stmt.close();
+            System.out.println("Database successfully created or just existing");
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+//        try (Statement stm = Database.conn.createStatement()) {
+//            stm.execute(sql1);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
 }
