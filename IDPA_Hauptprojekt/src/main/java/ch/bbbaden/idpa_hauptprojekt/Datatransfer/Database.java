@@ -69,7 +69,7 @@ public class Database {
     private static void connect() {
         if (conn == null) {
             try {
-                String url = "jdbc:sqlite:C:.\\" + "wiqiDB.db";
+                String url = "jdbc:sqlite:C:.\\" + "wiqiDB";
                 Class.forName("org.sqlite.JDBC");
                 conn = DriverManager.getConnection(url);
             } catch (SQLException | ClassNotFoundException e) {
@@ -166,16 +166,22 @@ public class Database {
     public void createDBStructure() {
         String dbName = "wiqiDB";
         
-        //String query0 = "create database if not exists wiqiDB";
-        
-        String query1 = "use wiqiDB";
-        
+//        String query0 = "create database if not exists wiqiDB";
+//        
+//        String query1 = "use wiqiDB";
+//        
         String query2 = "create table if not exists Topics ("
                 + "id integer primary key,"
-                + "name string not null,"
+                + "name string not null"
                 + ")";
         
-        String query3 = "create table if not exists benutzer ( id integer primary key, Benutzername string not null, Name string not null, vorname string not null, email string not null, istLehrer boolean not null,)";
+        String query3 = "create table if not exists benutzer ( id integer primary key, "
+                + "Benutzername string not null, "
+                + "Name string not null, "
+                + "vorname string not null, "
+                + "email string not null, "
+                + "istLehrer boolean not null"
+                + ")";
         //String query0 = "CREATE DATABASE IF NOT EXISTS " + dbName;
 
         //String query1 = "USE " + dbName;
@@ -198,8 +204,8 @@ public class Database {
         try {
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
-            //stmt.addBatch(query0);
-            stmt.addBatch(query1);
+//            stmt.addBatch(query0);
+//            stmt.addBatch(query1);
             stmt.addBatch(query2);
             stmt.addBatch(query3);
             stmt.executeBatch();
