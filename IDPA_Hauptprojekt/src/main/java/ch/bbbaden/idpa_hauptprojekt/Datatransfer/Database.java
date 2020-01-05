@@ -55,7 +55,7 @@ public class Database {
 
     public void addTopic(String topic) {
 
-        final String sqlInsert = "INSERT INTO Topics (ID, Name) VALUES (?,?)";
+        final String sqlInsert = "INSERT INTO Topics (ID, Name) VALUES (?)";
 
         try (Statement stm = Database.conn.createStatement()) {
             PreparedStatement ps = conn.prepareStatement(sqlInsert);

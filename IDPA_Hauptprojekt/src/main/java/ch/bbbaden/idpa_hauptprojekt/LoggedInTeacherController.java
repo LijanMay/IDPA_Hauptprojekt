@@ -61,7 +61,6 @@ public class LoggedInTeacherController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-                Brain.getInstance().getDt().addTopic("test");
         Brain.getInstance().setLit(this);
        //updateTopics();
         listviewTeacher.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
