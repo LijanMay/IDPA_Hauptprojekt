@@ -55,10 +55,10 @@ public class Database {
 
     public void addTopic(String topic) {
 
-        final String sqlInsert = "INSERT INTO Topics (ID, Name) VALUES (?)";
+        final String sqlInsert = "INSERT INTO Topics (Name) VALUES (?)";
 
         try (Statement stm = Database.conn.createStatement()) {
-            PreparedStatement ps = conn.prepareStatement(sqlInsert);
+            PreparedStatement ps = conn.prepareStatement(sqlInsert);            
             ps.setString(1, topic);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -109,7 +109,7 @@ public class Database {
 
         while (rs.next()) {
             for (int i = 1; i < columns; i++) {
-                t.add(rs.getString(i));
+                t.add(rs.getString("name"));
             }
         }
 
@@ -164,15 +164,23 @@ public class Database {
     }
 
     public void createDBStructure() {
-        String dbName = "wiqiDB";
+        
+        /*
+        https://www.sqlitetutorial.net/sqlite-java/sqlite-jdbc-driver/
+        https://javabeginners.de/Datenbanken/MySQL_Datenbank_erzeugen.php
+        */
+//        tring dbName = "wiqiDB";
         
 //        String query0 = "create database if not exists wiqiDB";
 //        
 //        String query1 = "use wiqiDB";
-//        
+
+        String query1 = "drop table topics";
+        String query0 = "drop table benutzer";
+
         String query2 = "create table if not exists Topics ("
                 + "id integer primary key,"
-                + "name string not null"
+                + "Name string not null"
                 + ")";
         
         String query3 = "create table if not exists benutzer ( id integer primary key, "
