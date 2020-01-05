@@ -170,18 +170,54 @@ public class Database {
 //        
 //        String query1 = "use wiqiDB";
 //        
-        String query2 = "create table if not exists Topics ("
+        String query2 = "create table if not exists Thema ("
                 + "id integer primary key,"
-                + "name string not null"
+                + "Benutzer id foreign key,"
+                + "Name string not null"
                 + ")";
         
-        String query3 = "create table if not exists benutzer ( id integer primary key, "
+        String query3 = "create table if not exists Benutzer (" 
+                + "id integer primary key, "
                 + "Benutzername string not null, "
                 + "Name string not null, "
-                + "vorname string not null, "
-                + "email string not null, "
+                + "Vorname string not null, "
+                + "Email string not null, "
+                + "Passwort string not null, "
                 + "istLehrer boolean not null"
                 + ")";
+        
+        String query4 = "create table if not exists Satzantwort ("
+                + "id integer primary key, "
+                + "Fragen id foreign key, "
+                + "Satzantwort string not null"
+                + ")";
+        
+        String query5 = "create table if not exists RichtigFalsch ("
+                + "id integer primary key, "
+                + "Fragen id foreign key, "
+                + "Antwort boolean not null"
+                + ")";
+        
+        String query6 = "create table if not exists MultipleChoice ("
+                + "id integer primary key, "
+                + "Fragen id foreign key, "
+                + "Richtig string not null, "
+                + "Falsch1 string not null, "
+                + "Falsch2 string not null, "
+                + "Falsch3 string not null"
+                + ")";
+        
+        String query7 = "create table if not exists Fragen2Thema ("
+                + "id integer primary key, "
+                + "Fragen id foreign key, "
+                + "Thema id foreign key"
+                + ")";
+        
+        String query8 = "create table if not exists Fragen ("
+                + "id integer primary key, "
+                + "Frage id string not null "
+                + ")";
+        
         //String query0 = "CREATE DATABASE IF NOT EXISTS " + dbName;
 
         //String query1 = "USE " + dbName;
