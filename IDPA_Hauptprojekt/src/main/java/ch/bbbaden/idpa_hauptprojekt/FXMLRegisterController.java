@@ -13,7 +13,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -32,7 +34,7 @@ public class FXMLRegisterController implements Initializable {
     private String email;
     private String password;
     private String confirmpassword;
-    private String autouser;
+    private boolean isTeacher = false;
     int length;
 
     @FXML
@@ -53,6 +55,10 @@ public class FXMLRegisterController implements Initializable {
     private TextField mail;
     @FXML
     private TextField surname;
+    @FXML
+    private RadioButton rbTeacher;
+    @FXML
+    private RadioButton rbStudent;
 
     /**
      * Initializes the controller class.
@@ -63,7 +69,10 @@ public class FXMLRegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+        ToggleGroup group = new ToggleGroup();
+        rbStudent.setToggleGroup(group);
+        rbStudent.setSelected(true);
+        rbTeacher.setToggleGroup(group);
     }
 
     @FXML
@@ -77,6 +86,8 @@ public class FXMLRegisterController implements Initializable {
         length = pswd.getText().length();
 
         filter();
+
+        Brain.getInstance().getDt().createUser(username, sname, pname, email, password, isTeacher);
     }
 
     private void showAlert(String trigger) {
@@ -107,6 +118,7 @@ public class FXMLRegisterController implements Initializable {
             }
         }
 
+
     }
 
     @FXML
@@ -128,6 +140,17 @@ public class FXMLRegisterController implements Initializable {
     @FXML
     private void handleWritepname(KeyEvent event) {
         username();
+    }
+
+
+    @FXML
+    private void handleTeacher(ActionEvent event) {
+        isTeacher = true;
+    }
+
+    @FXML
+    private void handleStudent(ActionEvent event) {
+        isTeacher = false;
     }
 
 }
