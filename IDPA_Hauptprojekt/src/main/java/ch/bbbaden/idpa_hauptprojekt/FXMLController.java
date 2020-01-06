@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -154,5 +155,9 @@ public class FXMLController implements Initializable {
             Brain.getInstance().closeLoggedInLehrer();
         }
 
+    }
+
+    @FXML
+    private void changecolor(DragEvent event) {
     }
 }

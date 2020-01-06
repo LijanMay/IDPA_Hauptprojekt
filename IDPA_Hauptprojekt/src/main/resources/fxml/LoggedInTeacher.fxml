@@ -13,12 +13,18 @@
       <Button fx:id="chooseTopic" layoutX="81.0" layoutY="546.0" mnemonicParsing="false" onAction="#handleChooseTopic" prefHeight="26.0" prefWidth="325.0" style="-fx-background-color: #376E6F;" text="Frage zu ... hinzufügen" textFill="WHITE" />
       <Button fx:id="newTopic" layoutX="19.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleNewTopic" style="-fx-background-color: #376E6F;" text="Neues Themengebiet" textFill="WHITE" />
       <Label fx:id="topicLabel" layoutX="17.0" layoutY="115.0" text="Wählen Sie das Tehmengebiet aus, welches Sie erweitern möchten:" textFill="WHITE" />
+
+
       <Label fx:id="WIQI" layoutX="393.0" layoutY="14.0" text="WIQI" textFill="#da7b93">
          <font>
             <Font size="39.0" />
          </font>
       </Label>
+
       <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleCreateQuiz" text="Quiz Zusammenstellen" />
       <Button layoutX="218.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleLogout" text="Ausloggen" />
+
+      <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleCreateQuiz" text="Quiz Zusammenstellen" />
+
    </children>
 </AnchorPane>

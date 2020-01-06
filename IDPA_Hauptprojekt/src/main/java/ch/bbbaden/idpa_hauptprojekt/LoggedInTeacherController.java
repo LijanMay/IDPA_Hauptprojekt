@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.DragEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javax.swing.JOptionPane;
@@ -154,7 +155,7 @@ public class LoggedInTeacherController implements Initializable {
     private void handleLogout(ActionEvent event) {
         Stage stage = (Stage) chooseTopic.getScene().getWindow();
         Brain.getInstance().hideController(false);
-        stage.close();
-    }
+ 
 
+}
 }

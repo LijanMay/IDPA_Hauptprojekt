@@ -20,6 +20,7 @@
       <Button fx:id="createQuestion" layoutX="67.0" layoutY="303.0" mnemonicParsing="false" onAction="#hanldeCreateQuestion" text="Frage erstellen" />
       <Spinner fx:id="spinner" layoutX="161.0" layoutY="88.0" prefHeight="18.0" prefWidth="105.0" />
       <Label layoutX="157.0" layoutY="70.0" text="Mit wie vielen Antworten" />
+
       <Label fx:id="WIQI" layoutX="706.0" layoutY="20.0" text="WIQI" textFill="#d87b94">
 
          <font>

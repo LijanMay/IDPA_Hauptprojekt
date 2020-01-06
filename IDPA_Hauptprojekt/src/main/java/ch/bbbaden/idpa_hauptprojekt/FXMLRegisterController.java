@@ -54,7 +54,6 @@ public class FXMLRegisterController implements Initializable {
     private RadioButton rbTeacher;
     @FXML
     private RadioButton rbStudent;
-
     /**
      * Initializes the controller class.
      *

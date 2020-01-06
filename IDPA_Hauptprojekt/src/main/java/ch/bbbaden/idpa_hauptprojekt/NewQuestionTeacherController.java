@@ -18,6 +18,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javax.swing.JOptionPane;
+import javafx.scene.input.DragEvent;
 
 /**
  * FXML Controller class
@@ -161,5 +162,6 @@ public class NewQuestionTeacherController implements Initializable {
     private void hideButton(boolean hide) {
         createQuestion.setVisible(hide);
     }
+
 
 }
