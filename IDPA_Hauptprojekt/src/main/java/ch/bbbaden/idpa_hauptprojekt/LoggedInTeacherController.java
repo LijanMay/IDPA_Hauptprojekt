@@ -7,8 +7,11 @@ package ch.bbbaden.idpa_hauptprojekt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -52,20 +55,19 @@ public class LoggedInTeacherController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Brain.getInstance().setLit(this);
         updateTopics();
-        listviewTeacher.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                // Your action here
-                chooseTopic.setText("Frage zu " + newValue + " hinzufügen");
-                windowName = newValue;
-            }
+        Brain.getInstance().setLit(this);
+       //updateTopics();
+        listviewTeacher.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            // Your action here
+            chooseTopic.setText("Frage zu " + newValue + " hinzufügen");
+            windowName = newValue;
         });
 
     }
@@ -137,7 +139,11 @@ public class LoggedInTeacherController implements Initializable {
     }
 
     private void updateTopics() {
-        items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
+        try {
+            items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
+        } catch (SQLException ex) {
+            Logger.getLogger(LoggedInTeacherController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         listviewTeacher.setItems(items);
         listviewTeacher.setOrientation(Orientation.VERTICAL);
 
