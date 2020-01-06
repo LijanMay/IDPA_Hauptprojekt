@@ -121,8 +121,8 @@ public class Database {
         return conn;
     }
 
-    public ArrayList<String> getUser() throws SQLException {
-        ArrayList<String> t = new ArrayList<>();
+    public ArrayList<ArrayList<String>> getUser() throws SQLException {
+        ArrayList<ArrayList<String>> t = new ArrayList<>();
 
         String query = "SELECT * FROM Benutzer";
         Statement stm = conn.createStatement();
@@ -131,7 +131,11 @@ public class Database {
 
         while (rs.next()) {
             for (int i = 1; i < columns; i++) {
-                t.add(rs.getString(i));
+                ArrayList<String> s = new ArrayList<>();
+                s.add(rs.getString("Username"));
+                s.add(rs.getString("email"));
+                s.add(rs.getString("password"));
+                t.add(s);
             }
         }
 
