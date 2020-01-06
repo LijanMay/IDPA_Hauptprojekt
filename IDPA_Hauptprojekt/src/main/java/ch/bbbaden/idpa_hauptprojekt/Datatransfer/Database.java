@@ -176,8 +176,9 @@ public class Database {
                 + "Thema id foreign key"
 */
         String query0 = "create table if not exists Thema ("
-                + "id integer primary key,"
-                + "Name string not null"
+                + "id integer primary key, "
+                + "Benutzer_id integer, "
+                + "Name string not null "
                 + ")";
         
         String query1 = "create table if not exists Benutzer (" 
@@ -186,35 +187,39 @@ public class Database {
                 + "Name string not null, "
                 + "Vorname string not null, "
                 + "Email string not null, "
-                + "Passwort string not null, "
-                + "istLehrer boolean not null"
+                + "Passwort string not null "
                 + ")";
         
         String query2 = "create table if not exists Satzantwort ("
                 + "id integer primary key, "
-                + "Satzantwort string not null"
+                + "Fragen_id integer, "
+                + "Satzantwort string not null "
                 + ")";
         
         String query3 = "create table if not exists RichtigFalsch ("
                 + "id integer primary key, "
-                + "Antwort boolean not null"
+                + "Fragen_id integer, "
+                + "Antwort boolean not null "
                 + ")";
         
         String query4 = "create table if not exists MultipleChoice ("
                 + "id integer primary key, "
+                + "Fragen_id integer, "
                 + "Richtig string not null, "
                 + "Falsch1 string not null, "
                 + "Falsch2 string not null, "
-                + "Falsch3 string not null"
+                + "Falsch3 string not null "
                 + ")";
         
         String query5 = "create table if not exists Fragen2Thema ("
-                + "id integer primary key "
+                + "id integer primary key, "
+                + "Fragen_id integer, "
+                + "Thema_id integer "
                 + ")";
         
         String query6 = "create table if not exists Fragen ("
                 + "id integer primary key, "
-                + "Frage id string not null "
+                + "Frage_id string not null "
                 + ")";
         
 
