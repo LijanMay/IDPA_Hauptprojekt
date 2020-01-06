@@ -54,6 +54,7 @@ public class FXMLRegisterController implements Initializable {
     private RadioButton rbTeacher;
     @FXML
     private RadioButton rbStudent;
+
     /**
      * Initializes the controller class.
      *
@@ -72,9 +73,9 @@ public class FXMLRegisterController implements Initializable {
     @FXML
     private void handleRegister(ActionEvent event) {
         length = pswd.getText().length();
-
+        filter();
         if (errors) {
-            filter();
+
         } else if (!errors) {
             filter();
             Brain.getInstance().getDt().createUser(user.getText(), surname.getText(), prename.getText(), mail.getText(), pswd.getText(), isTeacher);
@@ -98,22 +99,27 @@ public class FXMLRegisterController implements Initializable {
 
     private void filter() {
         String[] fields = {prename.getText(), surname.getText(), user.getText(), mail.getText(), pswd.getText(), pswd2.getText()};
-
+        boolean noerror = true;
         for (int i = 0; i < fields.length; i++) {
             if (fields[i].isEmpty()) {
                 showAlert("empty");
+                noerror = false;
                 break;
             }
             if (length < 6) {
                 showAlert("length");
+                noerror = false;
                 break;
             }
             if (pswd2.getText().equals(pswd.getText()) == false) {
                 showAlert("confirmpassword");
+                noerror = false;
                 break;
             }
         }
-        errors = false;
+        if (noerror) {
+            errors = false;
+        }
     }
 
     @FXML
