@@ -6,6 +6,7 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,8 +33,7 @@ public class FXMLRegisterController implements Initializable {
     private String password;
     private String confirmpassword;
     private String autouser;
-    boolean confirmcorrect = true;
-    boolean isempty = false;
+    int length;
 
     @FXML
     private Button register;
@@ -74,59 +74,37 @@ public class FXMLRegisterController implements Initializable {
         email = mail.getText();
         password = pswd.getText();
         confirmpassword = pswd2.getText();
+        length = pswd.getText().length();
 
-        boolean namecorrect = true;
-        boolean passcorrect = true;
-
-        if (surname.getText().isEmpty()) {
-            isempty = true;
-            showAlert("Name");
-        } else if (surname.getText().length() > 20) {
-            showAlert("Name");
-        } else if (prename.getText().isEmpty()) {
-            isempty = true;
-            showAlert("Vorname");
-        } else if (prename.getText().length() > 20) {
-            showAlert("Vorname");
-        } else if (user.getText().isEmpty()) {
-            isempty = true;
-            showAlert("Benutzername");
-        } else if (user.getText().length() > 20) {
-            showAlert("Benutzername");
-        } else if (mail.getText().isEmpty()) {
-            isempty = true;
-            showAlert("Email");
-        } else if (mail.getText().length() > 30) {
-            showAlert("Email");
-        } else if (pswd.getText().isEmpty()) {
-            isempty = true;
-            showAlert("Passwort");
-        } else if (pswd.getText().length() > 100) {
-            showAlert("Passwort");
-        }
-
-        if (confirmpassword.equals(password) == false) {
-            confirmcorrect = false;
-            showAlert("Passwort");
-        }
-//        try {
-//            sa.InitSocket("84.74.61.42", 1757);
-//            sa.send("register:" + namefield.getText() + ";" + BCrypt.hashpw(passwordfield.getText(), BCrypt.gensalt(12)));// send username and hashed password to server
-//            check();
-//        } catch (IOException ex) {
-//            System.out.println("Not connected to server! Please try using a VPN.");
-//        }
+        filter();
     }
 
-    private void showAlert(String name) {
-        if (isempty = true) {
-            JOptionPane.showMessageDialog(null, name + " muss ausgefüllt werden");
-            isempty = false;
-        } else {
-            JOptionPane.showMessageDialog(null, name + " entspricht nicht den Voraussetzungen");
+    private void showAlert(String trigger) {
+        if (trigger == "length") {
+            JOptionPane.showMessageDialog(null, "Das Passwort muss mehr als 5 Zeichen beinhalten");
+        } else if (trigger == "confirmpassword") {
+            JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein");
+        } else if (trigger == "empty") {
+            JOptionPane.showMessageDialog(null, "Alle Pflichtfelder müssen ausgefüllt werden");
         }
-        if (confirmcorrect = false) {
-            JOptionPane.showMessageDialog(null, name + " stimmt nicht überein");
+    }
+
+    private void filter() {
+        String[] fields = {prename.getText(), surname.getText(), user.getText(), mail.getText(), pswd.getText(), pswd2.getText()};
+
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i].isEmpty()) {
+                showAlert("empty");
+                break;
+            }
+            if (length < 6) {
+                showAlert("length");
+                break;
+            }
+            if (confirmpassword.equals(password) == false) {
+                showAlert("confirmpassword");
+                break;
+            }
         }
 
     }
