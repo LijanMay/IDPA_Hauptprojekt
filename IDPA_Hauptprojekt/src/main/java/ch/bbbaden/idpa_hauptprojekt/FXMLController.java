@@ -137,6 +137,7 @@ public class FXMLController implements Initializable {
         } else {
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.show();
+            username.setText(Brain.getInstance().currentUsername);
         }
 
     }
