@@ -163,20 +163,14 @@ public class Database {
         return t;
     }
 
-    public void createDBStructure() {
-        String dbName = "wiqiDB";
-        
-//        String query0 = "create database if not exists wiqiDB";
-//        
-//        String query1 = "use wiqiDB";
-//        
-        String query2 = "create table if not exists Thema ("
+    public void createDBStructure() {        
+        String query0 = "create table if not exists Thema ("
                 + "id integer primary key,"
                 + "Benutzer id foreign key,"
                 + "Name string not null"
                 + ")";
         
-        String query3 = "create table if not exists Benutzer (" 
+        String query1 = "create table if not exists Benutzer (" 
                 + "id integer primary key, "
                 + "Benutzername string not null, "
                 + "Name string not null, "
@@ -186,19 +180,19 @@ public class Database {
                 + "istLehrer boolean not null"
                 + ")";
         
-        String query4 = "create table if not exists Satzantwort ("
+        String query2 = "create table if not exists Satzantwort ("
                 + "id integer primary key, "
                 + "Fragen id foreign key, "
                 + "Satzantwort string not null"
                 + ")";
         
-        String query5 = "create table if not exists RichtigFalsch ("
+        String query3 = "create table if not exists RichtigFalsch ("
                 + "id integer primary key, "
                 + "Fragen id foreign key, "
                 + "Antwort boolean not null"
                 + ")";
         
-        String query6 = "create table if not exists MultipleChoice ("
+        String query4 = "create table if not exists MultipleChoice ("
                 + "id integer primary key, "
                 + "Fragen id foreign key, "
                 + "Richtig string not null, "
@@ -207,43 +201,29 @@ public class Database {
                 + "Falsch3 string not null"
                 + ")";
         
-        String query7 = "create table if not exists Fragen2Thema ("
+        String query5 = "create table if not exists Fragen2Thema ("
                 + "id integer primary key, "
                 + "Fragen id foreign key, "
                 + "Thema id foreign key"
                 + ")";
         
-        String query8 = "create table if not exists Fragen ("
+        String query6 = "create table if not exists Fragen ("
                 + "id integer primary key, "
                 + "Frage id string not null "
                 + ")";
         
-        //String query0 = "CREATE DATABASE IF NOT EXISTS " + dbName;
-
-        //String query1 = "USE " + dbName;
-
-//        String query2 = "CREATE TABLE IF NOT EXISTS Topics ("
-//                + "ID INTEGER PRIMARY KEY,"
-//                + "Name STRING NOT NULL, "
-//                + ")";
-
-//        String query3 = "CREATE TABLE IF NOT EXISTS Benutzer ("
-//                + "ID INTEGER PRIMARY KEY,"
-//                + "Benutzername STRING NOT NULL, "
-//                + "Name STRING NOT NULL,"
-//                + "Vorname STRING NOT NULL,"
-//                + "Email STRING NOT NULL,"
-//                + "istLehrer BOOLEAN NOT NULL,"
-//                + ")";
 
         Statement stmt = null;
         try {
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
-//            stmt.addBatch(query0);
-//            stmt.addBatch(query1);
+            stmt.addBatch(query0);
+            stmt.addBatch(query1);
             stmt.addBatch(query2);
             stmt.addBatch(query3);
+            stmt.addBatch(query4);
+            stmt.addBatch(query5);
+            stmt.addBatch(query6);
             stmt.executeBatch();
             conn.commit();
             stmt.close();
@@ -253,10 +233,5 @@ public class Database {
             e.printStackTrace();
         }
 
-//        try (Statement stm = Database.conn.createStatement()) {
-//            stm.execute(sql1);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 }
