@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="631.0" prefWidth="496.0" style="-fx-background-color: #363636;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.LoggedInTeacherController">
+<AnchorPane id="AnchorPane" prefHeight="631.0" prefWidth="496.0" style="-fx-background-color: #363636;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.LoggedInTeacherController">
 
    <children>
       <ListView fx:id="listviewTeacher" layoutX="17.0" layoutY="141.0" prefHeight="398.0" prefWidth="462.0" style="-fx-background-color: #C2CAD0;" />
@@ -19,5 +19,6 @@
          </font>
       </Label>
       <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleCreateQuiz" text="Quiz Zusammenstellen" />
+      <Button layoutX="218.0" layoutY="591.0" mnemonicParsing="false" onAction="#handleLogout" text="Ausloggen" />
    </children>
 </AnchorPane>

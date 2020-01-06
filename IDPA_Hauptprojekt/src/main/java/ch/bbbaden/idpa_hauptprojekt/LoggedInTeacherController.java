@@ -144,4 +144,11 @@ public class LoggedInTeacherController implements Initializable {
         // list.getSelectionModel().selectedItemProperty()
     }
 
+    @FXML
+    private void handleLogout(ActionEvent event) {
+        Stage stage = (Stage) chooseTopic.getScene().getWindow();
+        Brain.getInstance().hideController(false);
+        stage.close();
+    }
+
 }
