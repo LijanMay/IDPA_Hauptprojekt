@@ -36,7 +36,7 @@ public class Database {
             ps.setString(3, prename);
             ps.setString(4, email);
             ps.setString(5, password);
-            ps.setString(2, (isTeacher ? "1" : "0"));
+            ps.setString(6, (isTeacher ? "1" : "0"));
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,7 +55,7 @@ public class Database {
 
     public void addTopic(String topic) {
 
-        final String sqlInsert = "INSERT INTO Topics (Name) VALUES (?)";
+        final String sqlInsert = "INSERT INTO Thema (Name) VALUES (?)";
 
         try (Statement stm = Database.conn.createStatement()) {
             PreparedStatement ps = conn.prepareStatement(sqlInsert);            
@@ -102,7 +102,7 @@ public class Database {
     public ArrayList<String> getTopics() throws SQLException {
 
         ArrayList<String> t = new ArrayList<>();
-        String query = "SELECT * FROM Topics";
+        String query = "SELECT * FROM Thema";
         Statement stm = conn.createStatement();
         ResultSet rs = stm.executeQuery(query);
         int columns = rs.getMetaData().getColumnCount();
@@ -156,27 +156,27 @@ public class Database {
                 t.add(rs.getString(i));
             }
         }
-        t.add("fuck");
-        t.add("my");
-        t.add("life");
-
         return t;
     }
 
 
 
     public void createDBStructure() {  
-                
-        /*
-        https://www.sqlitetutorial.net/sqlite-java/sqlite-jdbc-driver/
-        https://javabeginners.de/Datenbanken/MySQL_Datenbank_erzeugen.php
-        */
-//    String query1 = "drop table topics";
-//        String query0 = "drop table benutzer";   
+/*
+    String query1 = "drop table topics";
+        String query0 = "drop table benutzer";   
+            batch 0            + "Benutzer id foreign key,"
+        
+        
+        batch 2        + "Fragen id foreign key, "
+        batch 3    + "Fragen id foreign key, "
+        
+        batch 4  + "Fragen id foreign key, "
+        batch 5  + "Fragen id foreign key, "
+                + "Thema id foreign key"
+*/
         String query0 = "create table if not exists Thema ("
                 + "id integer primary key,"
-                + "Benutzer id foreign key,"
-
                 + "Name string not null"
                 + ")";
         
@@ -192,19 +192,16 @@ public class Database {
         
         String query2 = "create table if not exists Satzantwort ("
                 + "id integer primary key, "
-                + "Fragen id foreign key, "
                 + "Satzantwort string not null"
                 + ")";
         
         String query3 = "create table if not exists RichtigFalsch ("
                 + "id integer primary key, "
-                + "Fragen id foreign key, "
                 + "Antwort boolean not null"
                 + ")";
         
         String query4 = "create table if not exists MultipleChoice ("
                 + "id integer primary key, "
-                + "Fragen id foreign key, "
                 + "Richtig string not null, "
                 + "Falsch1 string not null, "
                 + "Falsch2 string not null, "
@@ -212,9 +209,7 @@ public class Database {
                 + ")";
         
         String query5 = "create table if not exists Fragen2Thema ("
-                + "id integer primary key, "
-                + "Fragen id foreign key, "
-                + "Thema id foreign key"
+                + "id integer primary key "
                 + ")";
         
         String query6 = "create table if not exists Fragen ("
