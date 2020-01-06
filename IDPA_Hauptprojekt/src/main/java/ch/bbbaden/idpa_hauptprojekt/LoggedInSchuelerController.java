@@ -44,7 +44,7 @@ public class LoggedInSchuelerController implements Initializable {
 
         try {
             // TODO
-            items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
+            items = FXCollections.observableArrayList(Brain.getInstance().getDt().getQuizes());
         } catch (SQLException ex) {
             Logger.getLogger(LoggedInSchuelerController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -53,6 +53,7 @@ public class LoggedInSchuelerController implements Initializable {
 
     @FXML
     private void handleStartQuiz(ActionEvent event) {
+        
     }
 
     @FXML
