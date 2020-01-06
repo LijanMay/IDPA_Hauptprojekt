@@ -28,12 +28,6 @@ import javax.swing.JOptionPane;
  */
 public class FXMLRegisterController implements Initializable {
 
-    private String pname;
-    private String sname;
-    private String username;
-    private String email;
-    private String password;
-    private String confirmpassword;
     private boolean isTeacher = false;
     int length;
     private boolean errors = true;
@@ -78,19 +72,13 @@ public class FXMLRegisterController implements Initializable {
 
     @FXML
     private void handleRegister(ActionEvent event) {
-        pname = prename.getText();
-        sname = surname.getText();
-        username = user.getText();
-        email = mail.getText();
-        password = pswd.getText();
-        confirmpassword = pswd2.getText();
         length = pswd.getText().length();
 
         if (errors) {
             filter();
         } else if (!errors) {
             filter();
-            Brain.getInstance().getDt().createUser(username, sname, pname, email, password, isTeacher);
+            Brain.getInstance().getDt().createUser(user.getText(), surname.getText(), prename.getText(), mail.getText(), pswd.getText(), isTeacher);
             Brain.getInstance().hideController(false);
             Stage st = (Stage) surname.getScene().getWindow();
             st.close();
@@ -120,7 +108,7 @@ public class FXMLRegisterController implements Initializable {
                 showAlert("length");
                 break;
             }
-            if (confirmpassword.equals(password) == false) {
+            if (pswd2.getText().equals(pswd.getText()) == false) {
                 showAlert("confirmpassword");
                 break;
             }
