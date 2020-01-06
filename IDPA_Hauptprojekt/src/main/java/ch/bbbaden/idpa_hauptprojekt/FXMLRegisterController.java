@@ -91,6 +91,10 @@ public class FXMLRegisterController implements Initializable {
         } else if (!errors) {
             filter();
             Brain.getInstance().getDt().createUser(username, sname, pname, email, password, isTeacher);
+            Brain.getInstance().hideController(false);
+            Stage st = (Stage) surname.getScene().getWindow();
+            st.close();
+
         }
     }
 

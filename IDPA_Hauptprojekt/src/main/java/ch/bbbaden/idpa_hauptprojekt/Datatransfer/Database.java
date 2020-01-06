@@ -58,7 +58,7 @@ public class Database {
         final String sqlInsert = "INSERT INTO Thema (Name) VALUES (?)";
 
         try (Statement stm = Database.conn.createStatement()) {
-            PreparedStatement ps = conn.prepareStatement(sqlInsert);            
+            PreparedStatement ps = conn.prepareStatement(sqlInsert);
             ps.setString(1, topic);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -159,10 +159,8 @@ public class Database {
         return t;
     }
 
-
-
-    public void createDBStructure() {  
-/*
+    public void createDBStructure() {
+        /*
     String query1 = "drop table topics";
         String query0 = "drop table benutzer";   
             batch 0            + "Benutzer id foreign key,"
@@ -174,13 +172,16 @@ public class Database {
         batch 4  + "Fragen id foreign key, "
         batch 5  + "Fragen id foreign key, "
                 + "Thema id foreign key"
-*/
+         */
+
+        String query10 = "drop table topics";
+        String query00 = "drop table benutzer";
         String query0 = "create table if not exists Thema ("
                 + "id integer primary key,"
                 + "Name string not null"
                 + ")";
-        
-        String query1 = "create table if not exists Benutzer (" 
+
+        String query1 = "create table if not exists Benutzer ("
                 + "id integer primary key, "
                 + "Benutzername string not null, "
                 + "Name string not null, "
@@ -189,17 +190,17 @@ public class Database {
                 + "Passwort string not null, "
                 + "istLehrer boolean not null"
                 + ")";
-        
+
         String query2 = "create table if not exists Satzantwort ("
                 + "id integer primary key, "
                 + "Satzantwort string not null"
                 + ")";
-        
+
         String query3 = "create table if not exists RichtigFalsch ("
                 + "id integer primary key, "
                 + "Antwort boolean not null"
                 + ")";
-        
+
         String query4 = "create table if not exists MultipleChoice ("
                 + "id integer primary key, "
                 + "Richtig string not null, "
@@ -207,21 +208,22 @@ public class Database {
                 + "Falsch2 string not null, "
                 + "Falsch3 string not null"
                 + ")";
-        
+
         String query5 = "create table if not exists Fragen2Thema ("
                 + "id integer primary key "
                 + ")";
-        
+
         String query6 = "create table if not exists Fragen ("
                 + "id integer primary key, "
                 + "Frage id string not null "
                 + ")";
-        
 
         Statement stmt = null;
         try {
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
+//             stmt.addBatch(query10);
+//              stmt.addBatch(query00);
             stmt.addBatch(query0);
             stmt.addBatch(query1);
             stmt.addBatch(query2);
