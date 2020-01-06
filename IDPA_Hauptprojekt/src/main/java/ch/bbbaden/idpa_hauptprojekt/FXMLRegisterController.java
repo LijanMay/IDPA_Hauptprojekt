@@ -36,6 +36,7 @@ public class FXMLRegisterController implements Initializable {
     private String confirmpassword;
     private boolean isTeacher = false;
     int length;
+    private boolean errors = true;
 
     @FXML
     private Button register;
@@ -85,9 +86,12 @@ public class FXMLRegisterController implements Initializable {
         confirmpassword = pswd2.getText();
         length = pswd.getText().length();
 
-        filter();
-
-        Brain.getInstance().getDt().createUser(username, sname, pname, email, password, isTeacher);
+        if (errors) {
+            filter();
+        } else if (!errors) {
+            filter();
+            Brain.getInstance().getDt().createUser(username, sname, pname, email, password, isTeacher);
+        }
     }
 
     private void showAlert(String trigger) {
@@ -117,8 +121,7 @@ public class FXMLRegisterController implements Initializable {
                 break;
             }
         }
-
-
+        errors = false;
     }
 
     @FXML
@@ -141,7 +144,6 @@ public class FXMLRegisterController implements Initializable {
     private void handleWritepname(KeyEvent event) {
         username();
     }
-
 
     @FXML
     private void handleTeacher(ActionEvent event) {
