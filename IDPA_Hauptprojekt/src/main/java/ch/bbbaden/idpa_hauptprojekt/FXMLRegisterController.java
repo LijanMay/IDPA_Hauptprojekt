@@ -118,6 +118,7 @@ public class FXMLRegisterController implements Initializable {
             }
         }
 
+
     }
 
     @FXML
@@ -140,6 +141,7 @@ public class FXMLRegisterController implements Initializable {
     private void handleWritepname(KeyEvent event) {
         username();
     }
+
 
     @FXML
     private void handleTeacher(ActionEvent event) {
