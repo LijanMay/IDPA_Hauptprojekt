@@ -19,6 +19,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javax.swing.JOptionPane;
 import javafx.scene.input.DragEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -26,7 +27,7 @@ import javafx.scene.input.DragEvent;
  * @author Dennis
  */
 public class NewQuestionTeacherController implements Initializable {
-
+    
     @FXML
     private Button createQuestion;
     @FXML
@@ -59,11 +60,12 @@ public class NewQuestionTeacherController implements Initializable {
         spinner.setValueFactory(valueFactory);
         spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);
     }
-
+    
     @FXML
     private void hanldeCreateQuestion(ActionEvent event) {
         //Brain.getInstance().getDt().addQuestion(String, int, ArrayList) String ist die Frage int 0 = multiple choice frage; int 1 = true false frage
         //int 2 = Frage mit eingabe vom Benutzer int 3 = irgendwas ging schief
+        boolean close = false;
         if (textarea.getText().trim().equals("")) {
         } else {
             if (multipleChoice.selectedProperty().get()) {
@@ -91,8 +93,9 @@ public class NewQuestionTeacherController implements Initializable {
                 }
                 if (writeInDB) {
                     Brain.getInstance().getDt().addQuestion(textarea.getText(), 0, answers, topic);
+                    close = true;
                 }
-
+                
             } else if (trueFalse.selectedProperty().get()) {
                 answers.clear();
                 boolean writeInDB = true;
@@ -118,6 +121,7 @@ public class NewQuestionTeacherController implements Initializable {
                 }
                 if (writeInDB) {
                     Brain.getInstance().getDt().addQuestion(textarea.getText(), 1, answers, topic);
+                    close = true;
                 }
             } else if (insertAnswer.selectedProperty().get()) {
                 answers.clear();
@@ -133,36 +137,41 @@ public class NewQuestionTeacherController implements Initializable {
                 if (input != null) {
                     answers.add(input);
                     Brain.getInstance().getDt().addQuestion(textarea.getText(), 2, answers, topic);
+                    close = true;
                 }
-
+                
             }
         }
+        if (close) {
+            Stage stage = (Stage) createQuestion.getScene().getWindow();
+            stage.close();
+            Brain.getInstance().getLit().setHide(false);
+        }
     }
-
+    
     @FXML
     private void handleMultipleChoice(ActionEvent event) {
         insertAnswer.setSelected(false);
         trueFalse.setSelected(false);
         hideButton(true);
     }
-
+    
     @FXML
     private void hanldeInserAnswer(ActionEvent event) {
         multipleChoice.setSelected(false);
         trueFalse.setSelected(false);
         hideButton(true);
     }
-
+    
     @FXML
     private void handleTrueFalse(ActionEvent event) {
         insertAnswer.setSelected(false);
         multipleChoice.setSelected(false);
         hideButton(true);
     }
-
+    
     private void hideButton(boolean hide) {
         createQuestion.setVisible(hide);
     }
-
-
+    
 }

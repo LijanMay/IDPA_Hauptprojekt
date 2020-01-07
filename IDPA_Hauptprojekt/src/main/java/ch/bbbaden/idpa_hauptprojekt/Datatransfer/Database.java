@@ -98,39 +98,88 @@ public class Database {
     }
 
     public void addQuestion(String question, int type, ArrayList<String> answers, String topic) {
+        final String sqlInsert = "INSERT INTO Fragen (Frage, Antwort) VALUES (?, ?)";
+        final String sqlInsert2 = "insert into Fragen2Thema (Fragen_id, Thema_id) VALUES (?, ?)";
+        final String query1 = "SELECT * FROM Thema";
+        final String query2 = "SELECT * FROM Fragen";
+        int topicid = 0;
+        int questionid = 0;
+        try {
+            Statement stm1 = conn.createStatement();
+            ResultSet rs = stm1.executeQuery(query1);
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                for (int i = 1; i < columns; i++) {
+                    if (topic.equals(rs.getString("name"))) {
+                        topicid = rs.getInt("id");
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         switch (type) {
             case 0:
                 //multiple choice
-
-                break;
-            case 1:
-                //true false
-
-                break;
-            case 2:
-                //frage mit antwort von benutzer
-                final String sqlInsert = "INSERT INTO Fragen (Frage, Antwort) VALUES (?, ?)";
-                final String sqlInsert2 = "insert into Fragen2Thema (Fragen_id, Thema_id) VALUES (?, ?)";
-
-                String query1 = "SELECT " + topic + " FROM Thema";
-                try {
-                    Statement stm1 = conn.createStatement();
-                    ResultSet rs = stm1.executeQuery(query1);
-                    System.out.println(rs.getString("id"));
-                } catch (Exception e) {
-
+                String wronganswers = "Falsch1";
+                String values = "?";
+                for (int i = 2; i < answers.size(); i++) {
+                    wronganswers += ", Falsch" + i;
+                    values += ", ?";
                 }
-
+                final String sqlInsert31 = "insert into MultipleChoice (Fragen_id, Richtig, " + wronganswers + ") VALUES (?, ?, " + values + ")";
                 try (Statement stm = Database.conn.createStatement()) {
-                    PreparedStatement ps1 = conn.prepareStatement(sqlInsert2);
+                    PreparedStatement ps1 = conn.prepareStatement(sqlInsert);
                     ps1.setString(1, question);
                     ps1.setString(2, answers.get(0));
                     ps1.executeUpdate();
 
-                    PreparedStatement ps = conn.prepareStatement(sqlInsert);
-                    ps.setString(1, question);
-                    ps.setString(2, answers.get(0));
-                    ps.executeUpdate();
+                    PreparedStatement ps2 = conn.prepareStatement(sqlInsert31);
+                    ps2.setInt(1, questionid);
+                    ps2.setString(2, answers.get(0));
+                    for (int d = 1; d < answers.size(); d++) {
+                        ps2.setString(d+2, answers.get(d));
+                    }
+                    ps2.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                break;
+            case 1:
+                //true false
+                final String sqlInsert32 = "insert into RichtigFalsch (Fragen_id, Richtig, Falsch) VALUES (?, ?, ?)";
+                try (Statement stm = Database.conn.createStatement()) {
+                    PreparedStatement ps1 = conn.prepareStatement(sqlInsert);
+                    ps1.setString(1, question);
+                    ps1.setString(2, answers.get(0));
+                    ps1.executeUpdate();
+
+                    PreparedStatement ps2 = conn.prepareStatement(sqlInsert32);
+                    ps2.setInt(1, questionid);
+                    ps2.setString(2, answers.get(0));
+                    ps2.setString(3, answers.get(1));
+                    ps2.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                break;
+            case 2:
+                //frage mit antwort von benutzer
+                final String sqlInsert33 = "insert into Satzantwort (Fragen_id, satzantwort) VALUES (?, ?)";
+                try (Statement stm = Database.conn.createStatement()) {
+                    PreparedStatement ps1 = conn.prepareStatement(sqlInsert);
+                    ps1.setString(1, question);
+                    ps1.setString(2, answers.get(0));
+                    ps1.executeUpdate();
+
+                    PreparedStatement ps2 = conn.prepareStatement(sqlInsert33);
+                    ps2.setInt(1, questionid);
+                    ps2.setString(2, answers.get(0));
+                    ps2.executeUpdate();
                 } catch (SQLException ex) {
                     Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -139,6 +188,27 @@ public class Database {
             default:
                 JOptionPane.showMessageDialog(null, "Irgendetwas ging schief");
         }
+        try {
+            //get questionid
+            Statement stm2 = conn.createStatement();
+            ResultSet rs1 = stm2.executeQuery(query2);
+            int columns1 = rs1.getMetaData().getColumnCount();
+            while (rs1.next()) {
+                for (int i = 1; i < columns1; i++) {
+                    if (question.equals(rs1.getString("frage"))) {
+                        questionid = rs1.getInt("id");
+                    }
+                }
+            }
+            //connect topic with question
+            PreparedStatement ps = conn.prepareStatement(sqlInsert2);
+            ps.setInt(1, questionid);
+            ps.setInt(2, topicid);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public ArrayList<String> getTopics() throws SQLException {
@@ -233,9 +303,9 @@ public class Database {
         String query99 = "drop table RichtigFalsch";
         String query77 = "drop table MultipleChoice";
         String query66 = "drop table Quizes";
+
         String query0 = "create table if not exists Thema ("
                 + "id integer primary key, "
-                + "Benutzer_id integer, "
                 + "Name string not null "
                 + ")";
 
@@ -251,14 +321,15 @@ public class Database {
 
         String query2 = "create table if not exists Satzantwort ("
                 + "id integer primary key, "
-                + "Fragen_id integer, "
+                + "Fragen_id integer not null, "
                 + "Satzantwort string not null "
                 + ")";
 
         String query3 = "create table if not exists RichtigFalsch ("
                 + "id integer primary key, "
                 + "Fragen_id integer, "
-                + "Antwort boolean not null "
+                + "Richtig String not null,"
+                + "Falsch String not null "
                 + ")";
 
         String query4 = "create table if not exists MultipleChoice ("
@@ -267,7 +338,13 @@ public class Database {
                 + "Richtig string not null, "
                 + "Falsch1 string not null, "
                 + "Falsch2 string not null, "
-                + "Falsch3 string not null "
+                + "Falsch3 string, "
+                + "Falsch4 string, "
+                + "Falsch5 string, "
+                + "Falsch6 string, "
+                + "Falsch7 string, "
+                + "Falsch8 string, "
+                + "Falsch9 string "
                 + ")";
 
         String query5 = "create table if not exists Fragen2Thema ("
