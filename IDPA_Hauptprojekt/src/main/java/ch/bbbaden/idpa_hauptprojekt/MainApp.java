@@ -14,16 +14,17 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        createNewDatabase();
+        Database d = new Database();
+        d.createDBStructure();
+        Brain.getInstance().setDt(d);
+
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreateQuiz.fxml"));
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         stage.setTitle("Login Wirtschaftsquiz");
 
-        createNewDatabase();
-        Database d = new Database();
-        d.createDBStructure();
-        Brain.getInstance().setDt(d);
         stage.setScene(scene);
         stage.show();
     }
