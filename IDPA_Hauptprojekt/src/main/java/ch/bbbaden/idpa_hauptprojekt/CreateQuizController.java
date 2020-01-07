@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+<<<<<<< Updated upstream
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+=======
+>>>>>>> Stashed changes
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -68,8 +71,27 @@ public class CreateQuizController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+<<<<<<< Updated upstream
 //        Brain.getInstance().getDt().addTopic("test");
         updateTopics();
+=======
+        brain.getDt().addTopic("test");
+        ArrayList topics = null;
+        try {
+            topics = brain.getDt().getTopics();
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateQuizController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        ArrayList topics = db.getTopics();
+        try {
+            for (Object o : topics) {
+                LVTG.getItems().add(o);
+            }
+        } catch (Exception e) {
+            System.out.println("Error while adding topics to ListView: " + e);
+        }
+
+>>>>>>> Stashed changes
     }
 
 //    adds question to ListViewFragen
