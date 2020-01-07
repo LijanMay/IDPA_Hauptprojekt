@@ -8,6 +8,7 @@ package ch.bbbaden.idpa_hauptprojekt;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,6 +56,9 @@ public class FXMLRegisterController implements Initializable {
     @FXML
     private RadioButton rbStudent;
 
+    
+    ArrayList<ArrayList<String>> t = new ArrayList<>();
+    //t.get(1);Username,email,password
     /**
      * Initializes the controller class.
      *
@@ -73,9 +77,10 @@ public class FXMLRegisterController implements Initializable {
     @FXML
     private void handleRegister(ActionEvent event) {
         length = pswd.getText().length();
-        filter();
-        if (errors) {
 
+        filter();
+
+        if (errors) {
         } else if (!errors) {
             filter();
             Brain.getInstance().getDt().createUser(user.getText(), surname.getText(), prename.getText(), mail.getText(), pswd.getText(), isTeacher);
@@ -83,7 +88,6 @@ public class FXMLRegisterController implements Initializable {
             Brain.getInstance().hideController(false);
             Stage st = (Stage) surname.getScene().getWindow();
             st.close();
-
         }
     }
 
@@ -94,6 +98,8 @@ public class FXMLRegisterController implements Initializable {
             JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein");
         } else if (trigger == "empty") {
             JOptionPane.showMessageDialog(null, "Alle Pflichtfelder müssen ausgefüllt werden");
+        } else if (trigger == "mail") {
+            JOptionPane.showMessageDialog(null, "Die Email entspricht nicht den Voraussetzungen");
         }
     }
 
@@ -116,10 +122,28 @@ public class FXMLRegisterController implements Initializable {
                 noerror = false;
                 break;
             }
+            if (!isValid(mail.getText())) {
+                showAlert("mail");
+                noerror = false;
+                break;
+            }
         }
         if (noerror) {
             errors = false;
         }
+    }
+
+    public static boolean isValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
+                + "[a-zA-Z0-9_+&*-]+)*@"
+                + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+                + "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null) {
+            return false;
+        }
+        return pat.matcher(email).matches();
     }
 
     @FXML
