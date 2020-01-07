@@ -145,12 +145,12 @@ public class FXMLRegisterController implements Initializable {
 
     @FXML
     private void handleTeacher(ActionEvent event) {
-        isTeacher = true;
+        isTeacher = false;
     }
 
     @FXML
     private void handleStudent(ActionEvent event) {
-        isTeacher = false;
+        isTeacher = true;
     }
 
 }

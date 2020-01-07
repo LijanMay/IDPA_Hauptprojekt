@@ -32,11 +32,11 @@ public class Database {
 
         try (Statement stm = Database.conn.createStatement()) {
             PreparedStatement ps = conn.prepareStatement(sqlInsert);
-            ps.setString(1, username);
+            ps.setString(1, prename);
             ps.setString(2, surname);
-            ps.setString(3, prename);
-            ps.setString(4, email);
-            ps.setString(5, password);
+            ps.setString(3, username);
+            ps.setString(4, password);
+            ps.setString(5, email);
             ps.setString(6, (isTeacher ? "1" : "0"));
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -131,12 +131,13 @@ public class Database {
         int columns = rs.getMetaData().getColumnCount();
 
         while (rs.next()) {
-            for (int i = 1; i < columns; i++) {
-                s.put("username",rs.getString("Username"));
+            for (int i = 1; i < columns + 1; i++) {
+                s.put("username", rs.getString("benutzername"));
                 s.put("email", rs.getString("email"));
-                s.put("password", rs.getString("password"));
-                t.add(s);
+                s.put("password", rs.getString("passwort"));
+                s.put("status", rs.getString("istLehrer"));
             }
+            t.add(s);
         }
 
         return t;
@@ -150,7 +151,7 @@ public class Database {
     public ArrayList<String> getQuizes() throws SQLException {
         ArrayList<String> t = new ArrayList();
 
-        String query = "SELECT Topic FROM Quizes";
+        String query = "SELECT name FROM Quizes";
         Statement stm = conn.createStatement();
         ResultSet rs = stm.executeQuery(query);
         int columns = rs.getMetaData().getColumnCount();
@@ -160,6 +161,9 @@ public class Database {
                 t.add(rs.getString(i));
             }
         }
+
+        t.add("gay");
+        t.add("aight imma kms");
         return t;
     }
 
@@ -178,7 +182,7 @@ public class Database {
                 + "Thema id foreign key"
          */
 
-        String query10 = "drop table topics";
+        String query10 = "drop table thema";
         String query00 = "drop table benutzer";
         String query0 = "create table if not exists Thema ("
                 + "id integer primary key, "
@@ -192,7 +196,8 @@ public class Database {
                 + "Name string not null, "
                 + "Vorname string not null, "
                 + "Email string not null, "
-                + "Passwort string not null "
+                + "Passwort string not null,"
+                + "istLehrer boolean not null "
                 + ")";
 
         String query2 = "create table if not exists Satzantwort ("
@@ -227,12 +232,17 @@ public class Database {
                 + "Frage_id string not null "
                 + ")";
 
+        String query7 = "create table if not exists Quizes ("
+                + "id integer primary key, "
+                + "name string not null "
+                + ")";
+
         Statement stmt = null;
         try {
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
-//             stmt.addBatch(query10);
-//              stmt.addBatch(query00);
+            //       stmt.addBatch(query10);
+            //      stmt.addBatch(query00);
             stmt.addBatch(query0);
             stmt.addBatch(query1);
             stmt.addBatch(query2);
@@ -240,6 +250,7 @@ public class Database {
             stmt.addBatch(query4);
             stmt.addBatch(query5);
             stmt.addBatch(query6);
+            stmt.addBatch(query7);
             stmt.executeBatch();
             conn.commit();
             stmt.close();

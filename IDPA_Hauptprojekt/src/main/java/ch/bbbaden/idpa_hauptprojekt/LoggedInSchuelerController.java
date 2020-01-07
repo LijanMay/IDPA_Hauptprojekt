@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,9 +37,12 @@ public class LoggedInSchuelerController implements Initializable {
     private Label WIQI;
 
     private ObservableList<String> items;
+    
+    private String windowName;
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -52,11 +56,19 @@ public class LoggedInSchuelerController implements Initializable {
             Logger.getLogger(LoggedInSchuelerController.class.getName()).log(Level.SEVERE, null, ex);
         }
         listQuizes.setItems(items);
+        listQuizes.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            // Your action here
+            startQuiz.setText("Quiz " + newValue + " starten");
+            windowName = newValue;
+        });
     }
 
     @FXML
     private void handleStartQuiz(ActionEvent event) {
-        
+        if(windowName != null){
+            
+        }
+
     }
 
     @FXML

@@ -5,8 +5,12 @@ import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Textfile;
 import static java.awt.Color.red;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,20 +50,26 @@ public class FXMLController implements Initializable {
         username.setText(Brain.getInstance().currentUsername);
     }
 
-    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<HashMap<String, String>> users = new ArrayList<>();
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         password.clear();
         Brain.getInstance().currentUsername = username.getText();
+        try {
+            users = Brain.getInstance().getDt().getUser();
+            System.out.println(users);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         //Status 0 = Lehrer 1 = Schüler
         int status = 3;
         //Mit Klasse und liste oder nur Liste arbeiten tendenzielle nur Liste
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equals(username.getText()) || users.get(i).getEmail().equals(username.getText())) {
-                if (users.get(i).getPassword().equals(password.getText())) {
-                    status = users.get(i).getStatus();
+            if (users.get(i).get("username").equals(username.getText()) || users.get(i).get("email").equals(username.getText())) {
+                if (users.get(i).get("password").equals(password.getText())) {
+                    status = Integer.parseInt(users.get(i).get("status"));
                 }
             }
         }
