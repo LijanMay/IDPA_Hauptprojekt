@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -121,9 +122,9 @@ public class Database {
         return conn;
     }
 
-    public ArrayList<ArrayList<String>> getUser() throws SQLException {
-        ArrayList<ArrayList<String>> t = new ArrayList<>();
-
+    public ArrayList<HashMap<String, String>> getUser() throws SQLException {
+        ArrayList<HashMap<String, String>> t = new ArrayList<>();
+        HashMap<String, String> s = new HashMap<>();
         String query = "SELECT * FROM Benutzer";
         Statement stm = conn.createStatement();
         ResultSet rs = stm.executeQuery(query);
@@ -131,10 +132,9 @@ public class Database {
 
         while (rs.next()) {
             for (int i = 1; i < columns; i++) {
-                ArrayList<String> s = new ArrayList<>();
-                s.add(rs.getString("Username"));
-                s.add(rs.getString("email"));
-                s.add(rs.getString("password"));
+                s.put("username",rs.getString("Username"));
+                s.put("email", rs.getString("email"));
+                s.put("password", rs.getString("password"));
                 t.add(s);
             }
         }
