@@ -56,20 +56,26 @@ public class CreateQuizController implements Initializable {
 //   Done
     @FXML
     private Button BFAddAll;
-    
+
     Database db = new Database();
     Brain brain = Brain.getInstance();
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {      
-        ArrayList topics = db.getTopics();
-        for (Object o : topics) {
+    public void initialize(URL url, ResourceBundle rb) {
+        brain.getDt().addTopic("test");
+        ArrayList topics = brain.getDt().getTopics();
+//        ArrayList topics = db.getTopics();
+        try {
+            for (Object o : topics) {
                 LVTG.getItems().add(o);
             }
+        } catch (Exception e) {
+            System.out.println("Error while adding topics to ListView: " + e);
+        }
+
     }
 
 //    adds question to ListViewFragen
-
     @FXML
     private void addTG(ActionEvent event) {
         try {
