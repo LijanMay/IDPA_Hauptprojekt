@@ -124,14 +124,17 @@ public class Database {
 
     public ArrayList<HashMap<String, String>> getUser() throws SQLException {
         ArrayList<HashMap<String, String>> t = new ArrayList<>();
-        HashMap<String, String> s = new HashMap<>();
         String query = "SELECT * FROM Benutzer";
         Statement stm = conn.createStatement();
         ResultSet rs = stm.executeQuery(query);
         int columns = rs.getMetaData().getColumnCount();
 
         while (rs.next()) {
+            
+        HashMap<String, String> s = new HashMap<>();
             for (int i = 1; i < columns + 1; i++) {
+                s.put("prename", rs.getString("vorname"));
+                s.put("surname", rs.getString("name"));
                 s.put("username", rs.getString("benutzername"));
                 s.put("email", rs.getString("email"));
                 s.put("password", rs.getString("passwort"));

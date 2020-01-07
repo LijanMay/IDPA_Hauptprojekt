@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class FXMLRegisterController implements Initializable {
 
-    private boolean isTeacher = false;
+    private boolean isStudent = true;
     int length;
     private boolean errors = true;
 
@@ -78,7 +78,7 @@ public class FXMLRegisterController implements Initializable {
 
         } else if (!errors) {
             filter();
-            Brain.getInstance().getDt().createUser(user.getText(), surname.getText(), prename.getText(), mail.getText(), pswd.getText(), isTeacher);
+            Brain.getInstance().getDt().createUser(user.getText(), surname.getText(), prename.getText(), mail.getText(), pswd.getText(), isStudent);
             Brain.getInstance().currentUsername = user.getText();
             Brain.getInstance().hideController(false);
             Stage st = (Stage) surname.getScene().getWindow();
@@ -145,12 +145,12 @@ public class FXMLRegisterController implements Initializable {
 
     @FXML
     private void handleTeacher(ActionEvent event) {
-        isTeacher = false;
+        isStudent = false;
     }
 
     @FXML
     private void handleStudent(ActionEvent event) {
-        isTeacher = true;
+        isStudent = true;
     }
 
 }

@@ -154,6 +154,7 @@ public class LoggedInTeacherController implements Initializable {
     @FXML
     private void handleLogout(ActionEvent event) {
         Stage stage = (Stage) chooseTopic.getScene().getWindow();
+        stage.close();
         Brain.getInstance().hideController(false);
  
 

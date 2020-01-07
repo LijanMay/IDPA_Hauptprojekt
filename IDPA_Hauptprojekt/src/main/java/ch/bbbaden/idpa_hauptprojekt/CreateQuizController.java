@@ -7,8 +7,11 @@ package ch.bbbaden.idpa_hauptprojekt;
 
 import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -62,16 +65,21 @@ public class CreateQuizController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        brain.getDt().addTopic("test");
-        ArrayList topics = brain.getDt().getTopics();
-//        ArrayList topics = db.getTopics();
-        try {
-            for (Object o : topics) {
-                LVTG.getItems().add(o);
-            }
-        } catch (Exception e) {
-            System.out.println("Error while adding topics to ListView: " + e);
-        }
+//        brain.getDt().addTopic("test");
+//        ArrayList topics;
+//        try {
+//            topics = brain.getDt().getTopics();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CreateQuizController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+////        ArrayList topics = db.getTopics();
+//        try {
+//            for (Object o : topics) {
+//                LVTG.getItems().add(o);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Error while adding topics to ListView: " + e);
+//        }
 
     }
 

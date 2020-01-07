@@ -54,11 +54,8 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
-        password.clear();
-        Brain.getInstance().currentUsername = username.getText();
         try {
-            users = Brain.getInstance().getDt().getUser();
-            System.out.println(users);
+            users = Brain.getInstance().getDt().getUser();      
         } catch (SQLException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,13 +64,18 @@ public class FXMLController implements Initializable {
         int status = 3;
         //Mit Klasse und liste oder nur Liste arbeiten tendenzielle nur Liste
         for (int i = 0; i < users.size(); i++) {
+            System.out.println("prename: " +users.get(i).get("prename"));
+            System.out.println(users.get(i).get("surname"));
             if (users.get(i).get("username").equals(username.getText()) || users.get(i).get("email").equals(username.getText())) {
+                System.out.println(password.getText());
                 if (users.get(i).get("password").equals(password.getText())) {
                     status = Integer.parseInt(users.get(i).get("status"));
                 }
             }
         }
 
+        password.clear();
+        Brain.getInstance().currentUsername = username.getText();
         //für Testzwecke
         if (username.getText().equals("admin")) {
             status = 0;
