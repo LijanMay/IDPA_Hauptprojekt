@@ -6,9 +6,12 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,7 +79,11 @@ public class FXMLRegisterController implements Initializable {
     @FXML
     private void handleRegister(ActionEvent event) {
         length = pswd.getText().length();
-        //t.add(Brain.getInstance().getDt().getUser());
+        try {
+            t = Brain.getInstance().getDt().getUser();
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         filter();
 
