@@ -56,6 +56,7 @@ public class LoggedInTeacherController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -64,7 +65,7 @@ public class LoggedInTeacherController implements Initializable {
         // TODO
         updateTopics();
         Brain.getInstance().setLit(this);
-       //updateTopics();
+        //updateTopics();
         listviewTeacher.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             // Your action here
             chooseTopic.setText("Frage zu " + newValue + " hinzufügen");
@@ -153,12 +154,10 @@ public class LoggedInTeacherController implements Initializable {
 
     @FXML
     private void handleLogout(ActionEvent event) {
-       Brain.getInstance().getController().handleLogoutTeacher();
- 
+        Brain.getInstance().getController().handleLogoutTeacher();
+    }
 
-}
-    
-    public String getChoosenTopic(){
+    public String getChoosenTopic() {
         return currentTopic;
     }
 }

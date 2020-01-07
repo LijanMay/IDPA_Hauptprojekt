@@ -5,11 +5,12 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="663.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.LoggedInSchuelerController">
+<AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="663.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.LoggedInSchuelerController">
    <children>
       <ListView fx:id="listQuizes" layoutX="232.0" layoutY="131.0" prefHeight="200.0" prefWidth="200.0" />
       <Button fx:id="startQuiz" layoutX="306.0" layoutY="366.0" mnemonicParsing="false" onAction="#handleStartQuiz" text="Quiz Starten" />
       <Button fx:id="insertQuiz" layoutX="96.0" layoutY="366.0" mnemonicParsing="false" onAction="#handleInsertQuiz" text="Quiz Einfügen" />
       <Label fx:id="WIQI" layoutX="491.0" layoutY="37.0" text="WIQI" />
+      <Button layoutX="29.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleLogoutStudent" text="Ausloggen" />
    </children>
 </AnchorPane>

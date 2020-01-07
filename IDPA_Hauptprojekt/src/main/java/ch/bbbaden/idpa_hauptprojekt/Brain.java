@@ -31,9 +31,20 @@ public class Brain {
     private Database dt;
     private LoggedInTeacherController lit;
     private LoggedInSchuelerController lis;
+    private AnswerQuizController aqc;
     private FXMLController controller;
     //Am anfang aus lastLogin von Datenbank lesen um Nutzername automatisch einzufügen für angenehmeres Login
-    public String currentUsername = "admin";
+    public String currentUsername = "user";
+
+    public AnswerQuizController getAqc() {
+        return aqc;
+    }
+
+    public void setAqc(AnswerQuizController aqc) {
+        this.aqc = aqc;
+    }
+    
+    
 
     public Stage getLoggedInStudent() {
         return loggedInStudent;
@@ -78,6 +89,10 @@ public class Brain {
 
     public void hideLit(boolean hide) {
         lit.setHide(hide);
+    }
+    
+    public void hideLis(boolean hide){
+        lis.setHide(hide);
     }
 
     public FXMLController getController() {

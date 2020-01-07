@@ -275,7 +275,16 @@ public class Database {
                 t.add(rs.getString(i));
             }
         }
+        t.add("test");
         return t;
+    }
+    public ArrayList<String[]> getQuestionsforQuiz(String quiz){
+           ArrayList<String[]> t = new ArrayList();
+           String[] s = new String[2];
+           s[0] = "question";
+           s[1] = "answer";
+           t.add(s);
+           return t;
     }
 
     public ArrayList<String> getQuestionsToTopic(String topic) throws SQLException {
