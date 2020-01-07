@@ -7,6 +7,7 @@ package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
@@ -17,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -28,10 +28,6 @@ import javax.swing.JOptionPane;
  * @author denni
  */
 public class FXMLRegisterController implements Initializable {
-
-    private boolean isStudent = true;
-    int length;
-    private boolean errors = true;
 
     @FXML
     private Button register;
@@ -56,9 +52,12 @@ public class FXMLRegisterController implements Initializable {
     @FXML
     private RadioButton rbStudent;
 
-    
-    ArrayList<ArrayList<String>> t = new ArrayList<>();
-    //t.get(1);Username,email,password
+    //Variablen
+    private boolean isStudent = true;
+    int length;
+    private boolean errors = true;
+    ArrayList<HashMap<String, String>> t = new ArrayList<>();
+
     /**
      * Initializes the controller class.
      *
@@ -77,6 +76,7 @@ public class FXMLRegisterController implements Initializable {
     @FXML
     private void handleRegister(ActionEvent event) {
         length = pswd.getText().length();
+        //t.add(Brain.getInstance().getDt().getUser());
 
         filter();
 
@@ -92,26 +92,58 @@ public class FXMLRegisterController implements Initializable {
     }
 
     private void showAlert(String trigger) {
-        if (trigger == "length") {
-            JOptionPane.showMessageDialog(null, "Das Passwort muss mehr als 5 Zeichen beinhalten");
-        } else if (trigger == "confirmpassword") {
-            JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein");
-        } else if (trigger == "empty") {
-            JOptionPane.showMessageDialog(null, "Alle Pflichtfelder müssen ausgefüllt werden");
-        } else if (trigger == "mail") {
-            JOptionPane.showMessageDialog(null, "Die Email entspricht nicht den Voraussetzungen");
+        if (null != trigger) {
+            switch (trigger) {
+                case "empty":
+                    JOptionPane.showMessageDialog(null, "Alle Pflichtfelder müssen ausgefüllt werden");
+                    break;
+                case "mail":
+                    JOptionPane.showMessageDialog(null, "Die Email entspricht nicht den Voraussetzungen");
+                    break;
+                case "existinguser":
+                    JOptionPane.showMessageDialog(null, "Der Benutzername existiert bereits");
+                    break;
+                case "existingmail":
+                    JOptionPane.showMessageDialog(null, "Die eingegebene Email wird bereits verwendet");
+                    break;
+                case "length":
+                    JOptionPane.showMessageDialog(null, "Das Passwort muss mehr als 5 Zeichen beinhalten");
+                    break;
+                case "confirmpassword":
+                    JOptionPane.showMessageDialog(null, "Passwörter stimmen nicht überein");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     private void filter() {
         String[] fields = {prename.getText(), surname.getText(), user.getText(), mail.getText(), pswd.getText(), pswd2.getText()};
         boolean noerror = true;
-        for (int i = 0; i < fields.length; i++) {
-            if (fields[i].isEmpty()) {
+        for (String field : fields) {
+            if (field.isEmpty()) {
                 showAlert("empty");
                 noerror = false;
                 break;
             }
+            if (!isValid(mail.getText())) {
+                showAlert("mail");
+                noerror = false;
+                break;
+            }
+            for (int i = 0; i < t.size(); i++) {
+                System.out.println(t.get(i).get("username"));
+                if (t.get(i).get("username").equals(user.getText())) {
+                    showAlert("existinguser");
+                    noerror = false;
+                }
+                if (t.get(i).get("mail").equals(mail.getText())) {
+                    showAlert("existingmail");
+                    noerror = false;
+                }
+            }
+
             if (length < 6) {
                 showAlert("length");
                 noerror = false;
@@ -119,11 +151,6 @@ public class FXMLRegisterController implements Initializable {
             }
             if (pswd2.getText().equals(pswd.getText()) == false) {
                 showAlert("confirmpassword");
-                noerror = false;
-                break;
-            }
-            if (!isValid(mail.getText())) {
-                showAlert("mail");
                 noerror = false;
                 break;
             }
