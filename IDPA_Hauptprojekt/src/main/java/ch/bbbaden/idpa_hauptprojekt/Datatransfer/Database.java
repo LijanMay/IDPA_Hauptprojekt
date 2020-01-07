@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -96,8 +97,48 @@ public class Database {
         }
     }
 
-    public void addQuestion(String question, int type, ArrayList<String> answers) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addQuestion(String question, int type, ArrayList<String> answers, String topic) {
+        switch (type) {
+            case 0:
+                //multiple choice
+
+                break;
+            case 1:
+                //true false
+
+                break;
+            case 2:
+                //frage mit antwort von benutzer
+                final String sqlInsert = "INSERT INTO Fragen (Frage, Antwort) VALUES (?, ?)";
+                final String sqlInsert2 = "insert into Fragen2Thema (Fragen_id, Thema_id) VALUES (?, ?)";
+
+                String query1 = "SELECT " + topic + " FROM Thema";
+                try {
+                    Statement stm1 = conn.createStatement();
+                    ResultSet rs = stm1.executeQuery(query1);
+                    System.out.println(rs.getString("id"));
+                } catch (Exception e) {
+
+                }
+
+                try (Statement stm = Database.conn.createStatement()) {
+                    PreparedStatement ps1 = conn.prepareStatement(sqlInsert2);
+                    ps1.setString(1, question);
+                    ps1.setString(2, answers.get(0));
+                    ps1.executeUpdate();
+
+                    PreparedStatement ps = conn.prepareStatement(sqlInsert);
+                    ps.setString(1, question);
+                    ps.setString(2, answers.get(0));
+                    ps.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Irgendetwas ging schief");
+        }
     }
 
     public ArrayList<String> getTopics() throws SQLException {
@@ -130,8 +171,8 @@ public class Database {
         int columns = rs.getMetaData().getColumnCount();
 
         while (rs.next()) {
-            
-        HashMap<String, String> s = new HashMap<>();
+
+            HashMap<String, String> s = new HashMap<>();
             for (int i = 1; i < columns + 1; i++) {
                 s.put("prename", rs.getString("vorname"));
                 s.put("surname", rs.getString("name"));
@@ -184,9 +225,14 @@ public class Database {
         batch 5  + "Fragen id foreign key, "
                 + "Thema id foreign key"
          */
-
+        String query88 = "drop table Fragen2Thema";
         String query10 = "drop table thema";
         String query00 = "drop table benutzer";
+        String query8 = "drop table Fragen";
+        String query9 = "drop table Satzantwort";
+        String query99 = "drop table RichtigFalsch";
+        String query77 = "drop table MultipleChoice";
+        String query66 = "drop table Quizes";
         String query0 = "create table if not exists Thema ("
                 + "id integer primary key, "
                 + "Benutzer_id integer, "
@@ -232,7 +278,8 @@ public class Database {
 
         String query6 = "create table if not exists Fragen ("
                 + "id integer primary key, "
-                + "Frage_id string not null "
+                + "Frage string not null, "
+                + "Antwort string not null "
                 + ")";
 
         String query7 = "create table if not exists Quizes ("
@@ -244,8 +291,14 @@ public class Database {
         try {
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
-            //       stmt.addBatch(query10);
-            //      stmt.addBatch(query00);
+//            stmt.addBatch(query88);
+//            stmt.addBatch(query00);
+//            stmt.addBatch(query66);
+//            stmt.addBatch(query77);
+//            stmt.addBatch(query99);
+//            stmt.addBatch(query9);
+//            stmt.addBatch(query8);
+//            stmt.addBatch(query10);
             stmt.addBatch(query0);
             stmt.addBatch(query1);
             stmt.addBatch(query2);

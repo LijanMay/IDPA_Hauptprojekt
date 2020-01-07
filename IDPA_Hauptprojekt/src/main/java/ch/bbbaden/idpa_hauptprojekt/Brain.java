@@ -31,7 +31,7 @@ public class Brain {
     private LoggedInTeacherController lit;
     private FXMLController controller;
     //Am anfang aus lastLogin von Datenbank lesen um Nutzername automatisch einzufügen für angenehmeres Login
-    public String currentUsername = "Marin.Hirschi";
+    public String currentUsername = "admin";
 
     public Stage getDatatransferinterface() {
         return datatransferinterface;

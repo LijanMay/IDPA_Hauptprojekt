@@ -23,7 +23,7 @@ import javafx.scene.input.DragEvent;
 /**
  * FXML Controller class
  *
- * @author natalie1703
+ * @author Dennis
  */
 public class NewQuestionTeacherController implements Initializable {
 
@@ -41,8 +41,8 @@ public class NewQuestionTeacherController implements Initializable {
     private Label WIQI;
     @FXML
     private Spinner<Integer> spinner;
-
-    ArrayList<String> answers = new ArrayList<>();
+    private String topic;
+    private ArrayList<String> answers = new ArrayList<>();
 
     /**
      * Initializes the controller class.
@@ -53,8 +53,9 @@ public class NewQuestionTeacherController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        topic = Brain.getInstance().getLit().getChoosenTopic();
         hideButton(false);
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 3);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(3, 10, 3);
         spinner.setValueFactory(valueFactory);
         spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);
     }
@@ -89,7 +90,7 @@ public class NewQuestionTeacherController implements Initializable {
                     answers.add(input);
                 }
                 if (writeInDB) {
-                    Brain.getInstance().getDt().addQuestion(textarea.getText(), 0, answers);
+                    Brain.getInstance().getDt().addQuestion(textarea.getText(), 0, answers, topic);
                 }
 
             } else if (trueFalse.selectedProperty().get()) {
@@ -116,7 +117,7 @@ public class NewQuestionTeacherController implements Initializable {
                     answers.add(input);
                 }
                 if (writeInDB) {
-                    Brain.getInstance().getDt().addQuestion(textarea.getText(), 1, answers);
+                    Brain.getInstance().getDt().addQuestion(textarea.getText(), 1, answers, topic);
                 }
             } else if (insertAnswer.selectedProperty().get()) {
                 answers.clear();
@@ -131,7 +132,7 @@ public class NewQuestionTeacherController implements Initializable {
                 } while (input.trim().equals(""));
                 if (input != null) {
                     answers.add(input);
-                    Brain.getInstance().getDt().addQuestion(textarea.getText(), 2, answers);
+                    Brain.getInstance().getDt().addQuestion(textarea.getText(), 2, answers, topic);
                 }
 
             }

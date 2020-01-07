@@ -10,8 +10,8 @@
 
    <children>
       <ListView fx:id="listviewTeacher" layoutX="17.0" layoutY="141.0" prefHeight="398.0" prefWidth="462.0" style="-fx-background-color: #C2CAD0;" />
-      <Button fx:id="chooseTopic" layoutX="81.0" layoutY="546.0" mnemonicParsing="false" onAction="#handleChooseTopic" prefHeight="26.0" prefWidth="325.0" style="-fx-background-color: #376E6F;" text="Frage zu ... hinzufügen" textFill="WHITE" />
-      <Button fx:id="newTopic" layoutX="19.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleNewTopic" style="-fx-background-color: #376E6F;" text="Neues Themengebiet" textFill="WHITE" />
+      <Button fx:id="chooseTopic" layoutX="81.0" layoutY="546.0" mnemonicParsing="false" onAction="#handleChooseTopic" prefHeight="26.0" prefWidth="325.0" stylesheets="@../styles/Styles.css" text="Frage zu ... hinzufügen" textFill="WHITE" />
+      <Button fx:id="newTopic" layoutX="19.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleNewTopic" stylesheets="@../styles/Styles.css" text="Neues Themengebiet" textFill="WHITE" />
       <Label fx:id="topicLabel" layoutX="17.0" layoutY="115.0" text="Wählen Sie das Tehmengebiet aus, welches Sie erweitern möchten:" textFill="WHITE" />
 
 

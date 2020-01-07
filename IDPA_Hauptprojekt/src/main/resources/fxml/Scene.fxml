@@ -9,8 +9,8 @@
 
 <AnchorPane id="AnchorPane" prefHeight="459.0" prefWidth="490.0" style="-fx-background-color: #363636;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.FXMLController">
     <children>
-        <Button fx:id="loginButton" layoutX="190.0" layoutY="296.0" onAction="#handleLogin" onDragOver="#changecolor" prefHeight="26.0" prefWidth="110.0" text="Einloggen" />
-      <Button fx:id="registerButton" layoutX="190.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleRegister" onDragOver="#changecolor" prefHeight="18.0" prefWidth="110.0" text="Registrieren" />
+        <Button fx:id="loginButton" layoutX="190.0" layoutY="296.0" onAction="#handleLogin" prefHeight="26.0" prefWidth="110.0" text="Einloggen" />
+      <Button fx:id="registerButton" layoutX="190.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="18.0" prefWidth="110.0" text="Registrieren" />
       <TextField fx:id="username" layoutX="135.0" layoutY="158.0" prefHeight="40.0" prefWidth="220.0" promptText="Benutzername" style="-fx-background-color: #C2CAD0;" />
       <PasswordField fx:id="password" layoutX="135.0" layoutY="230.0" prefHeight="40.0" prefWidth="220.0" promptText="Passwort" style="-fx-background-color: #C2CAD0;" />
       <Label fx:id="WIQI" layoutX="370.0" layoutY="24.0" text="WIQI" textFill="#f8f4f5">

@@ -1,23 +1,18 @@
-
 .button{
     -fx-background-color:#2b2b2b;
     fx-font-weight: bold;
-   
+
     -fx-text-fill: white;    
     -fx-border-color:white;
-   
 }
-.button:hover{
-   
-    -fx-background-color:#4f4f4f;
-     
-  
- 
 
+.button:hover{
+
+    -fx-background-color:#4f4f4f;
 
 }
 button.ex1:hover, a.ex1:active {
-  color: red;
+    color: red;
 }
 
 
@@ -31,16 +26,18 @@ button.ex1:hover, a.ex1:active {
 
 }
 #WIQI {
- -fx-text-fill:	#4deeea;
- -fx-font-size:39px;
--fx-font:system;
+    -fx-text-fill:	#4deeea;
+    -fx-font-size:39px;
+    -fx-font:system;
 
 
 
-   
-   }
-   
-   .radiobutton{
-       -fx-text-fill:white;
-       
-   }
+
+}
+
+
+
+.radio-button {
+    -fx-text-fill:white;
+
+}

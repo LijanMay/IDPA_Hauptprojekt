@@ -169,7 +169,14 @@ public class FXMLController implements Initializable {
 
     }
 
-    @FXML
-    private void changecolor(DragEvent event) {
+    public void handleLogoutTeacher(){
+                String[] options = new String[]{"Ausloggen", "Abbrechen"};
+        int response = JOptionPane.showOptionDialog(null, "Wollen Sie sich wirklich ausloggen?", "Logout",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        if(response == 0) {
+            Brain.getInstance().closeLoggedInLehrer();
+            Brain.getInstance().hideController(false);
+        }
     }
 }

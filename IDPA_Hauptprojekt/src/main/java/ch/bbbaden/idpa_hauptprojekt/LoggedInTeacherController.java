@@ -52,7 +52,7 @@ public class LoggedInTeacherController implements Initializable {
     private Label WIQI;
 
     private ObservableList<String> items;
-    private String windowName;
+    private String currentTopic;
 
     /**
      * Initializes the controller class.
@@ -68,7 +68,7 @@ public class LoggedInTeacherController implements Initializable {
         listviewTeacher.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             // Your action here
             chooseTopic.setText("Frage zu " + newValue + " hinzufügen");
-            windowName = newValue;
+            currentTopic = newValue;
         });
 
     }
@@ -81,7 +81,7 @@ public class LoggedInTeacherController implements Initializable {
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add("/styles/Styles.css");
-            window.setTitle("Frage zu " + windowName + " hinzufügen");
+            window.setTitle("Frage zu " + currentTopic + " hinzufügen");
             window.setScene(scene);
             window.setOnCloseRequest(event1 -> {
                 Brain.getInstance().hideLit(false);
@@ -153,10 +153,12 @@ public class LoggedInTeacherController implements Initializable {
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        Stage stage = (Stage) chooseTopic.getScene().getWindow();
-        stage.close();
-        Brain.getInstance().hideController(false);
+       Brain.getInstance().getController().handleLogoutTeacher();
  
 
 }
+    
+    public String getChoosenTopic(){
+        return currentTopic;
+    }
 }
