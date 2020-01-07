@@ -58,6 +58,7 @@ public class CreateQuizController implements Initializable {
     private Button BFAddAll;
     
     Database db = new Database();
+    Brain brain = Brain.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {      
