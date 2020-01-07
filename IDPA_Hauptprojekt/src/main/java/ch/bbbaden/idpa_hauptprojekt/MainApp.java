@@ -18,8 +18,7 @@ public class MainApp extends Application {
         Database d = new Database();
         d.createDBStructure();
         Brain.getInstance().setDt(d);
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreateQuiz.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
