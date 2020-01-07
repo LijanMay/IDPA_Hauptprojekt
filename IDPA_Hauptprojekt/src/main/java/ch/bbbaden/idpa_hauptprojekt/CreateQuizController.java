@@ -7,11 +7,17 @@ package ch.bbbaden.idpa_hauptprojekt;
 
 import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -58,21 +64,12 @@ public class CreateQuizController implements Initializable {
     private Button BFAddAll;
 
     Database db = new Database();
-    Brain brain = Brain.getInstance();
+    private ObservableList<String> items;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        brain.getDt().addTopic("test");
-        ArrayList topics = brain.getDt().getTopics();
-//        ArrayList topics = db.getTopics();
-        try {
-            for (Object o : topics) {
-                LVTG.getItems().add(o);
-            }
-        } catch (Exception e) {
-            System.out.println("Error while adding topics to ListView: " + e);
-        }
-
+//        Brain.getInstance().getDt().addTopic("test");
+        updateTopics();
     }
 
 //    adds question to ListViewFragen
@@ -128,6 +125,16 @@ public class CreateQuizController implements Initializable {
             lv1.getItems().remove(o);
         }
 
+    }
+    
+    private void updateTopics(){
+        try {
+            items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
+        } catch (SQLException ex) {
+            Logger.getLogger(LoggedInTeacherController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        LVTG.setItems(items);
+        LVTG.setOrientation(Orientation.VERTICAL);
     }
 
 }
