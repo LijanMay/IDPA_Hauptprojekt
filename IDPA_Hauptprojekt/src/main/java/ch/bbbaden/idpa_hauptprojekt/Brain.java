@@ -18,6 +18,7 @@ public class Brain {
 
     private Brain() {
     }
+
     public static Brain getInstance() {
         if (Brain.instance == null) {
             Brain.instance = new Brain();
@@ -25,17 +26,31 @@ public class Brain {
         return Brain.instance;
     }
 
-    private Stage datatransferinterface;
     private Stage loggedInLehrer;
+    private Stage loggedInStudent;
     private Database dt;
     private LoggedInTeacherController lit;
+    private LoggedInSchuelerController lis;
     private FXMLController controller;
     //Am anfang aus lastLogin von Datenbank lesen um Nutzername automatisch einzufügen für angenehmeres Login
     public String currentUsername = "admin";
 
-    public Stage getDatatransferinterface() {
-        return datatransferinterface;
+    public Stage getLoggedInStudent() {
+        return loggedInStudent;
     }
+
+    public void setLoggedInStudent(Stage loggedInStudent) {
+        this.loggedInStudent = loggedInStudent;
+    }
+
+    public LoggedInSchuelerController getLis() {
+        return lis;
+    }
+
+    public void setLis(LoggedInSchuelerController lis) {
+        this.lis = lis;
+    }
+    
 
     public Stage getLoggedInLehrer() {
         return loggedInLehrer;
@@ -45,8 +60,6 @@ public class Brain {
         this.loggedInLehrer = loggedInLehrer;
     }
 
-    
-    
     public Database getDt() {
         return dt;
     }
@@ -62,8 +75,8 @@ public class Brain {
     public void setLit(LoggedInTeacherController lit) {
         this.lit = lit;
     }
-    
-    public void hideLit(boolean hide){
+
+    public void hideLit(boolean hide) {
         lit.setHide(hide);
     }
 
@@ -74,13 +87,17 @@ public class Brain {
     public void setController(FXMLController controller) {
         this.controller = controller;
     }
-    
-    public void hideController(boolean hide){
+
+    public void hideController(boolean hide) {
         controller.setHide(hide);
     }
-    
-    public void closeLoggedInLehrer(){
+
+    public void closeLoggedInLehrer() {
         loggedInLehrer.close();
+    }
+
+    public void closeLoggedInStudent() {
+        loggedInStudent.close();
     }
 
 }

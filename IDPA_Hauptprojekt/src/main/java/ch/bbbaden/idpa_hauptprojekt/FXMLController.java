@@ -55,7 +55,7 @@ public class FXMLController implements Initializable {
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         try {
-            users = Brain.getInstance().getDt().getUser();      
+            users = Brain.getInstance().getDt().getUser();
         } catch (SQLException ex) {
             Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,7 +64,7 @@ public class FXMLController implements Initializable {
         int status = 3;
         //Mit Klasse und liste oder nur Liste arbeiten tendenzielle nur Liste
         for (int i = 0; i < users.size(); i++) {
-            System.out.println("prename: " +users.get(i).get("prename"));
+            System.out.println("prename: " + users.get(i).get("prename"));
             System.out.println(users.get(i).get("surname"));
             if (users.get(i).get("username").equals(username.getText()) || users.get(i).get("email").equals(username.getText())) {
                 System.out.println(password.getText());
@@ -110,6 +110,13 @@ public class FXMLController implements Initializable {
             scene.getStylesheets().add("/styles/Styles.css");
             window.setTitle("Schüler");
             window.setScene(scene);
+
+            Brain.getInstance().setLoggedInStudent(window);
+            window.setOnCloseRequest(event1 -> {
+                handleCloseStudent();
+                event1.consume();
+                //   event.consume();
+            });
 
             window.show();
 
@@ -160,21 +167,44 @@ public class FXMLController implements Initializable {
         int response = JOptionPane.showOptionDialog(null, "Wie wollen Sie Beenden?", "Beenden",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options, options[0]);
-        if(response == 0) {
+        if (response == 0) {
             Brain.getInstance().closeLoggedInLehrer();
             Brain.getInstance().hideController(false);
-        }else if(response == 1){
+        } else if (response == 1) {
             Brain.getInstance().closeLoggedInLehrer();
         }
-
     }
 
-    public void handleLogoutTeacher(){
-                String[] options = new String[]{"Ausloggen", "Abbrechen"};
+    public void handleCloseStudent() {
+        String[] options = new String[]{"Ausloggen", "Beenden", "Abbrechen"};
+        int response = JOptionPane.showOptionDialog(null, "Wie wollen Sie Beenden?", "Beenden",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        if (response == 0) {
+            Brain.getInstance().closeLoggedInStudent();
+            Brain.getInstance().hideController(false);
+        } else if (response == 1) {
+            Brain.getInstance().closeLoggedInStudent();
+        }
+    }
+
+    public void handleLogoutStudent() {
+        String[] options = new String[]{"Ausloggen", "Abbrechen"};
         int response = JOptionPane.showOptionDialog(null, "Wollen Sie sich wirklich ausloggen?", "Logout",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options, options[0]);
-        if(response == 0) {
+        if (response == 0) {
+            Brain.getInstance().closeLoggedInStudent();
+            Brain.getInstance().hideController(false);
+        }
+    }
+
+    public void handleLogoutTeacher() {
+        String[] options = new String[]{"Ausloggen", "Abbrechen"};
+        int response = JOptionPane.showOptionDialog(null, "Wollen Sie sich wirklich ausloggen?", "Logout",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+        if (response == 0) {
             Brain.getInstance().closeLoggedInLehrer();
             Brain.getInstance().hideController(false);
         }

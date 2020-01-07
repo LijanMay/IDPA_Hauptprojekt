@@ -26,7 +26,7 @@ import javafx.scene.control.ListView;
  * @author denni
  */
 public class LoggedInSchuelerController implements Initializable {
-
+    
     @FXML
     private ListView<String> listQuizes;
     @FXML
@@ -35,7 +35,7 @@ public class LoggedInSchuelerController implements Initializable {
     private Button insertQuiz;
     @FXML
     private Label WIQI;
-
+    
     private ObservableList<String> items;
     
     private String windowName;
@@ -48,7 +48,7 @@ public class LoggedInSchuelerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        Brain.getInstance().setLis(this);
         try {
             // TODO
             items = FXCollections.observableArrayList(Brain.getInstance().getDt().getQuizes());
@@ -62,18 +62,18 @@ public class LoggedInSchuelerController implements Initializable {
             windowName = newValue;
         });
     }
-
+    
     @FXML
     private void handleStartQuiz(ActionEvent event) {
-        if(windowName != null){
+        if (windowName != null) {
             
         }
-
+        
     }
-
+    
     @FXML
     private void handleInsertQuiz(ActionEvent event) {
         Brain.getInstance().getDt().insertQuiz();
     }
-
+    
 }

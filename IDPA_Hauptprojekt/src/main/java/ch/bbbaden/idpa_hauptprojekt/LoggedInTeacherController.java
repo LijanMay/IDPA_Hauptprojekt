@@ -114,7 +114,7 @@ public class LoggedInTeacherController implements Initializable {
     @FXML
     private void handleCreateQuiz(ActionEvent event) throws IOException {
         Stage window = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource(""));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CreateQuiz.fxml"));
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");

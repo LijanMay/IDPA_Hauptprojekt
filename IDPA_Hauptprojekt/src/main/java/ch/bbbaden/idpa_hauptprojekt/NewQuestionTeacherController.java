@@ -55,7 +55,6 @@ public class NewQuestionTeacherController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         topic = Brain.getInstance().getLit().getChoosenTopic();
-        hideButton(false);
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(3, 10, 3);
         spinner.setValueFactory(valueFactory);
         spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_VERTICAL);
@@ -153,25 +152,20 @@ public class NewQuestionTeacherController implements Initializable {
     private void handleMultipleChoice(ActionEvent event) {
         insertAnswer.setSelected(false);
         trueFalse.setSelected(false);
-        hideButton(true);
     }
     
     @FXML
     private void hanldeInserAnswer(ActionEvent event) {
         multipleChoice.setSelected(false);
         trueFalse.setSelected(false);
-        hideButton(true);
     }
     
     @FXML
     private void handleTrueFalse(ActionEvent event) {
         insertAnswer.setSelected(false);
         multipleChoice.setSelected(false);
-        hideButton(true);
     }
     
-    private void hideButton(boolean hide) {
-        createQuestion.setVisible(hide);
-    }
+
     
 }
