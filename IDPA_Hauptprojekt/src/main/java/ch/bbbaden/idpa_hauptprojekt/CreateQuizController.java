@@ -125,12 +125,12 @@ public class CreateQuizController implements Initializable {
 
 //    submits the quiz to the DB
     @FXML
-    private void quizFertig(ActionEvent event) {
-        
-        String name;
+    private void quizFertig(ActionEvent event) throws SQLException {
+
+        String name = TFQN.getText();
         ObservableList<String> questionsO = null;
 
-        if (TFQN.getText() != null && LVDF.getItems().isEmpty() == false) {
+        if (TFQN.getText() != null && LVDF.getItems().isEmpty() == false && !checkIfDouble(name)) {
             name = TFQN.getText();
             questionsO = LVDF.getItems();
             ArrayList<String> questions = new ArrayList<String>(questionsO);
@@ -138,7 +138,7 @@ public class CreateQuizController implements Initializable {
         } else {
             Component frame = null;
             JOptionPane.showMessageDialog(frame,
-                    "Ein Quiz braucht einen Namen und wenigstens eine Frage",
+                    "Ein Quiz braucht einen Namen und wenigstens eine Frage, und darf nicht gleich heissen wie ein anderes Quiz",
                     "Das geht nicht",
                     JOptionPane.PLAIN_MESSAGE);
         }
@@ -162,6 +162,12 @@ public class CreateQuizController implements Initializable {
         }
         LVTG.setItems(items);
         LVTG.setOrientation(Orientation.VERTICAL);
+    }
+
+//    checks if a quiz with the name already exists
+    private boolean checkIfDouble(String name) throws SQLException {
+        ArrayList<String> quizNames = Brain.getInstance().getDt().getQuizes();
+        return quizNames.stream().anyMatch((n) -> (name == null ? n == null : name.equals(n)));
     }
 
 }
