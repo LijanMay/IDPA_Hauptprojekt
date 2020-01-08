@@ -70,12 +70,6 @@ public class FXMLController implements Initializable {
 
         password.clear();
         Brain.getInstance().currentUsername = username.getText();
-        //für Testzwecke
-        if (username.getText().equals("admin")) {
-            status = 0;
-        } else if (username.getText().equals("user")) {
-            status = 1;
-        }
 
         if (status == 0) {
             Stage window = new Stage();

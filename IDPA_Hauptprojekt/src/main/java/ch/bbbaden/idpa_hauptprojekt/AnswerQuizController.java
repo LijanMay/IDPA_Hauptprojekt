@@ -149,7 +149,6 @@ public class AnswerQuizController implements Initializable {
                     }
                 }
 
-            //    Random rnd = new Random();
                 String[] options = new String[ques.size()-1];
                 for(int i = 0; i< ques.size()-1;i++){
                     options[i] = ques.get(i+1);

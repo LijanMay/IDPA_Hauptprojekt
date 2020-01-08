@@ -145,10 +145,7 @@ public class FXMLRegisterController implements Initializable {
                     showAlert("existinguser");
                     noerror = false;
                 }
-                if (t.get(i).get("mail").equals(mail.getText())) {
-                    showAlert("existingmail");
-                    noerror = false;
-                }
+
             }
 
             if (length < 6) {
