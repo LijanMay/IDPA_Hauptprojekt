@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,6 +49,9 @@ public class AnswerQuizController implements Initializable {
     private int solvedCorrectly = 0;
     private int solvedIncorrectly = 0;
     private boolean firstRound = true;
+    private ObservableList<String> items;
+    private ArrayList<String> rounds = new ArrayList<>();
+    private int round = 0;
 
     /**
      * Initializes the controller class.
@@ -138,27 +144,27 @@ public class AnswerQuizController implements Initializable {
                     int ca = 0;
                     boolean first0 = true;
                     ArrayList<String> ques = new ArrayList<>();
-                    for(int d = 0;d<s.length-2;d++ ){
+                    for (int d = 0; d < s.length - 2; d++) {
                         ques.add(s[d]);
                     }
                     String[] options = new String[ques.size()];
-                    for (int i = ques.size(); i >=0; i--) {
+                    for (int i = ques.size(); i >= 0; i--) {
                         Random rnd = new Random();
                         int get = rnd.nextInt(i);
                         options[i] = ques.get(get);
-                        ques.remove(get);   
-                        if(get == 0){
-                            if(first0){
+                        ques.remove(get);
+                        if (get == 0) {
+                            if (first0) {
                                 ca = i;
                             }
                         }
                     }
-                    
+
                     int response2 = JOptionPane.showOptionDialog(null, s[1], "Frage",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                             null, options, options[0]);
-                    
-                    if(response2 == ca){
+
+                    if (response2 == ca) {
                         solvedcorrectly = true;
                     }
 
@@ -179,22 +185,32 @@ public class AnswerQuizController implements Initializable {
             }
             updateQuestionCount();
         } catch (Exception e) {
+            round++;
+            rounds.add("Runde " + round + ": Richtig beantwortet: " + solvedCorrectly + " | Falsch beantwortet: " + solvedIncorrectly);
+            items = FXCollections.observableArrayList(rounds);
+            listRounds.setItems(items);
+
             firstRound = false;
             String[] options = new String[]{"Falsch beantwortete Fragen wiederholen", "Alle Fragen wiederholen", "Quiz Beenden"};
             int response = JOptionPane.showOptionDialog(null, "Wollen Sie sich wirklich ausloggen?", "Logout",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                     null, options, options[0]);
             quizStarted = false;
+            solvedCorrectly = 0;
+            solvedIncorrectly = 0;
+
             if (response == 0) {
                 for (int i = 0; i < wrongFinishedQuestions.size(); i++) {
                     questions.add(wrongFinishedQuestions.get(i));
                 }
                 wrongFinishedQuestions.clear();
+                question = questions.size();
             } else if (response == 1) {
                 for (int i = 0; i < finishedQuestions.size(); i++) {
                     questions.add(finishedQuestions.get(i));
                 }
                 finishedQuestions.clear();
+                question = questions.size();
             } else {
                 Brain.getInstance().hideLis(false);
                 Stage stage = (Stage) nextQuestion.getScene().getWindow();
@@ -207,8 +223,8 @@ public class AnswerQuizController implements Initializable {
     private void updateQuestionCount() {
         int toSolve = question - solvedCorrectly - solvedIncorrectly;
         questionCount.setText("Noch zu beantwortende Fragen: " + toSolve);
-        correctlySolvedQuestions.setText("" + solvedCorrectly);
-        incorrectlySolvedQuestions.setText("" + solvedIncorrectly);
+        correctlySolvedQuestions.setText("Richtig beantwortet: " + solvedCorrectly);
+        incorrectlySolvedQuestions.setText("Falsch beantwortet: " + solvedIncorrectly);
     }
 
 }
