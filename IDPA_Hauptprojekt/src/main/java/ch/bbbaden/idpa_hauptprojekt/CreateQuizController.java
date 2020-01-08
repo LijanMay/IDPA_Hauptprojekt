@@ -22,6 +22,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -130,11 +131,14 @@ public class CreateQuizController implements Initializable {
         String name = TFQN.getText();
         ObservableList<String> questionsO = null;
 
-        if (TFQN.getText() != null && LVDF.getItems().isEmpty() == false && !checkIfDouble(name)) {
-            name = TFQN.getText();
+        if (!name.trim().equals("") && LVDF.getItems().isEmpty() == false && !checkIfDouble(name)) {
             questionsO = LVDF.getItems();
             ArrayList<String> questions = new ArrayList<String>(questionsO);
             Brain.getInstance().getDt().createQuiz(name, questions);
+            Brain.getInstance().getLit().setHide(false);
+            Stage stage = (Stage) BDone.getScene().getWindow();
+            stage.close();
+
         } else {
             Component frame = null;
             JOptionPane.showMessageDialog(frame,

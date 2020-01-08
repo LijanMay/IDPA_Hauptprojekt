@@ -53,7 +53,7 @@ public class Database {
         final String query2 = "select * from Fragen";
         int quizid = 0;
         int questionid = 0;
-        try (Statement stm = Database.conn.createStatement()) {
+        try (Statement stm = Database.conn.createStatement  ()) {
             PreparedStatement ps = conn.prepareStatement(sqlInsert1);
             ps.setString(1, name);
             ps.executeUpdate();
