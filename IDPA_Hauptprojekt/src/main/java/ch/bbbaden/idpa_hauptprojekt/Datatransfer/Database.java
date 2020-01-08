@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class Database {
 
+    private boolean firstOpen = true;
     private static Connection conn;
 
     public void createUser(String prename, String surname, String username, String password, String email, boolean isTeacher) {
@@ -53,7 +54,7 @@ public class Database {
         final String query2 = "select * from Fragen";
         int quizid = 0;
         int questionid = 0;
-        try (Statement stm = Database.conn.createStatement  ()) {
+        try (Statement stm = Database.conn.createStatement()) {
             PreparedStatement ps = conn.prepareStatement(sqlInsert1);
             ps.setString(1, name);
             ps.executeUpdate();
@@ -488,7 +489,7 @@ public class Database {
                 s[0] = answers.get(0);
                 s[1] = answers.get(1);
                 s[2] = answers.get(2);
-                for (int d = 0; d < wrongAnswers-1; d++) {
+                for (int d = 0; d < wrongAnswers - 1; d++) {
                     s[d + 3] = answers.get(d + 3);
                 }
 
@@ -629,6 +630,21 @@ public class Database {
         String query66 = "drop table Quizes";
         String query666 = "drop table Fragen2Quiz";
 
+        final String sqlInsert = "INSERT INTO Benutzer (Benutzername, Name, Vorname, Email, Passwort) VALUES (?, ?, ?, ?, ?)";
+
+        try (Statement stm = Database.conn.createStatement()) {
+            PreparedStatement ps = conn.prepareStatement(sqlInsert);
+            ps.setString(1, "djsf");
+            ps.setString(2, "dfjkf");
+            ps.setString(3, "dffs");
+            ps.setString(4, "sddssds");
+            ps.setString(5, "hudfsuf");
+            ps.executeUpdate();
+            firstOpen = false;
+        } catch (SQLException ex) {
+
+        }
+
         String query0 = "create table if not exists Thema ("
                 + "id integer primary key, "
                 + "Name string not null "
@@ -724,6 +740,49 @@ public class Database {
             conn.setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        if (firstOpen) {
+            addTopic("BWL und VWL");
+            ArrayList<String> t1 = new ArrayList<>();
+            t1.add("Verkäufer");
+            t1.add("Unternehmer");
+            t1.add("Kunden");
+            t1.add("Arbeitnehmer");
+            t1.add("Konsumenten");
+            addQuestion("Personen, die etwas verkaufen, nennt man?", 0, t1, "BWL und VWL");
+            
+            ArrayList<String> t2 = new ArrayList<>();
+            t2.add("Kunden");
+            t2.add("Unternehmer");
+            t2.add("Konsumenten");
+            t2.add("Arbeitnehmer");
+            t2.add("Verkäufer");            
+            addQuestion("Personen, die etwas kaufen möchten, nennt man?", 0, t2, "BWL und VWL");
+            
+            ArrayList<String> t3 = new ArrayList<>();
+            t3.add("Unternehmer");
+            t3.add("Konsumenten");
+            t3.add("Kunden");
+            t3.add("Arbeitnehmer");
+            t3.add("Verkäufer");            
+            addQuestion("Personen, die ihr eigenes Unternehmen führen und Mitarbeiter beschäftigen können, nennt man", 0, t3, "BWL und VWL");
+            
+            ArrayList<String> t4 = new ArrayList<>();
+            t4.add("Konsumenten");
+            t4.add("Unternehmer");
+            t4.add("Kunden");
+            t4.add("Arbeitnehmer");
+            t4.add("Verkäufer");            
+            addQuestion("Personen, die etwas verbrauchen (z. B. ein Eis essen), nennt man?", 0, t4, "BWL und VWL");
+            
+            ArrayList<String> t5 = new ArrayList<>();
+            t5.add("Arbeitnehmer");
+            t5.add("Unternehmer");
+            t5.add("Kunden");
+            t5.add("Konsumenten");
+            t5.add("Verkäufer");            
+            addQuestion("Personen, die eine Arbeitsstelle haben, nennt man?", 0, t5, "BWL und VWL");
         }
 
     }
