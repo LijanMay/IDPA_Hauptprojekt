@@ -6,6 +6,7 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
 import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
+import java.awt.Component;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -64,7 +66,7 @@ public class CreateQuizController implements Initializable {
     @FXML
     private Button BFAddAll;
 //    alle Fragen hinzufügen
-    
+
     Database db = new Database();
     private ObservableList<String> items;
 
@@ -80,8 +82,8 @@ public class CreateQuizController implements Initializable {
         ArrayList<String> questions = new ArrayList<>();
         questions = Brain.getInstance().getDt().getQuestionsToTopic(topic);
         for (String o : questions) {
-                LVF.getItems().add(o);
-            }
+            LVF.getItems().add(o);
+        }
         LVTG.getItems().remove(topic);
 
     }
@@ -120,13 +122,26 @@ public class CreateQuizController implements Initializable {
             System.out.println("nothing to remove");
         }
     }
-    
+
 //    submits the quiz to the DB
     @FXML
-    private void quizFertig(ActionEvent event) {
+    private void quizFertig(ActionEvent event) throws SQLException {
+
         String name = TFQN.getText();
-        ArrayList<String> questions = (ArrayList<String>) LVDF.getItems();
-        Brain.getInstance().getDt().createQuiz(name, questions);
+        ObservableList<String> questionsO = null;
+
+        if (TFQN.getText() != null && LVDF.getItems().isEmpty() == false && !checkIfDouble(name)) {
+            name = TFQN.getText();
+            questionsO = LVDF.getItems();
+            ArrayList<String> questions = new ArrayList<String>(questionsO);
+            Brain.getInstance().getDt().createQuiz(name, questions);
+        } else {
+            Component frame = null;
+            JOptionPane.showMessageDialog(frame,
+                    "Ein Quiz braucht einen Namen und wenigstens eine Frage, und darf nicht gleich heissen wie ein anderes Quiz",
+                    "Das geht nicht",
+                    JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
 //    move an entry from one listview to another
@@ -137,7 +152,7 @@ public class CreateQuizController implements Initializable {
         }
 
     }
-    
+
 //    updates LVTG to have all the topics in the DB
     private void updateTopics() {
         try {
@@ -147,6 +162,12 @@ public class CreateQuizController implements Initializable {
         }
         LVTG.setItems(items);
         LVTG.setOrientation(Orientation.VERTICAL);
+    }
+
+//    checks if a quiz with the name already exists
+    private boolean checkIfDouble(String name) throws SQLException {
+        ArrayList<String> quizNames = Brain.getInstance().getDt().getQuizes();
+        return quizNames.stream().anyMatch((n) -> (name == null ? n == null : name.equals(n)));
     }
 
 }

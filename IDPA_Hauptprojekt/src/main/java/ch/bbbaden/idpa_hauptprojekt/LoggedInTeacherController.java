@@ -95,7 +95,7 @@ public class LoggedInTeacherController implements Initializable {
 
     //Themengebiete = uebergebiete   Fragen = untergeordnet zu Themengebiete
     @FXML
-    private void handleNewTopic(ActionEvent event) {
+    private void handleNewTopic(ActionEvent event) throws SQLException {
         String input;
         do {
             input = JOptionPane.showInputDialog(null, "Geben Sie den Namen des Themengebietes ein",
@@ -105,7 +105,7 @@ public class LoggedInTeacherController implements Initializable {
                 break;
             }
         } while (input.trim().equals(""));
-        if (input != null) {
+        if (input != null && !checkIfDouble(input)) {
             Brain.getInstance().getDt().addTopic(input);
             updateTopics();
         }
@@ -159,5 +159,11 @@ public class LoggedInTeacherController implements Initializable {
 
     public String getChoosenTopic() {
         return currentTopic;
+    }
+
+    //    checks if a topic with the name already exists
+    private boolean checkIfDouble(String name) throws SQLException {
+        ArrayList<String> topicNames = Brain.getInstance().getDt().getTopics();
+        return topicNames.stream().anyMatch((n) -> (name == null ? n == null : name.equals(n)));
     }
 }
