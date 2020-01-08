@@ -172,6 +172,17 @@ public class Database {
                     ps1.setString(2, answers.get(0));
                     ps1.setInt(3, type);
                     ps1.executeUpdate();
+                    //get questionid
+                    Statement stm2 = conn.createStatement();
+                    ResultSet rs1 = stm2.executeQuery(query2);
+                    int columns1 = rs1.getMetaData().getColumnCount();
+                    while (rs1.next()) {
+                        for (int i = 1; i < columns1; i++) {
+                            if (question.equals(rs1.getString("frage"))) {
+                                questionid = rs1.getInt("id");
+                            }
+                        }
+                    }
 
                     PreparedStatement ps2 = conn.prepareStatement(sqlInsert31);
                     ps2.setInt(1, questionid);
@@ -194,6 +205,17 @@ public class Database {
                     ps1.setString(2, answers.get(0));
                     ps1.setInt(3, type);
                     ps1.executeUpdate();
+                    //get questionid
+                    Statement stm2 = conn.createStatement();
+                    ResultSet rs1 = stm2.executeQuery(query2);
+                    int columns1 = rs1.getMetaData().getColumnCount();
+                    while (rs1.next()) {
+                        for (int i = 1; i < columns1; i++) {
+                            if (question.equals(rs1.getString("frage"))) {
+                                questionid = rs1.getInt("id");
+                            }
+                        }
+                    }
 
                     PreparedStatement ps2 = conn.prepareStatement(sqlInsert32);
                     ps2.setInt(1, questionid);
@@ -214,7 +236,17 @@ public class Database {
                     ps1.setString(2, answers.get(0));
                     ps1.setInt(3, type);
                     ps1.executeUpdate();
-
+                    //get questionid
+                    Statement stm2 = conn.createStatement();
+                    ResultSet rs1 = stm2.executeQuery(query2);
+                    int columns1 = rs1.getMetaData().getColumnCount();
+                    while (rs1.next()) {
+                        for (int i = 1; i < columns1; i++) {
+                            if (question.equals(rs1.getString("frage"))) {
+                                questionid = rs1.getInt("id");
+                            }
+                        }
+                    }
                     PreparedStatement ps2 = conn.prepareStatement(sqlInsert33);
                     ps2.setInt(1, questionid);
                     ps2.setString(2, answers.get(0));
@@ -228,17 +260,6 @@ public class Database {
                 JOptionPane.showMessageDialog(null, "Irgendetwas ging schief");
         }
         try {
-            //get questionid
-            Statement stm2 = conn.createStatement();
-            ResultSet rs1 = stm2.executeQuery(query2);
-            int columns1 = rs1.getMetaData().getColumnCount();
-            while (rs1.next()) {
-                for (int i = 1; i < columns1; i++) {
-                    if (question.equals(rs1.getString("frage"))) {
-                        questionid = rs1.getInt("id");
-                    }
-                }
-            }
             //connect topic with question
             PreparedStatement ps = conn.prepareStatement(sqlInsert2);
             ps.setInt(1, questionid);
@@ -348,8 +369,8 @@ public class Database {
             while (rs2.next()) {
                 HashMap<Integer, Integer> q = new HashMap<>();
                 for (int i = 1; i < columns2; i++) {
-                    q.put(1, Integer.parseInt(rs.getString("Thema_id")));
-                    q.put(2, Integer.parseInt(rs.getString("Fragen_id")));
+                    q.put(1, Integer.parseInt(rs2.getString("Quiz_id")));
+                    q.put(2, Integer.parseInt(rs2.getString("Fragen_id")));
                 }
                 if (quizid == q.get(1)) {
                     questionsid.add(q.get(2));
@@ -361,7 +382,7 @@ public class Database {
             int columns3 = rs3.getMetaData().getColumnCount();
             while (rs3.next()) {
                 HashMap<String, String> q = new HashMap<>();
-                for (int i = 1; i < columns2; i++) {
+                for (int i = 0; i < columns2; i++) {
                     q.put("questionid", rs3.getString("id"));
                     q.put("type", rs3.getString("Art"));
                     q.put("question", rs3.getString("frage"));
@@ -397,6 +418,7 @@ public class Database {
                             q.put("ID", rs.getString("id"));
                             q.put("answer", rs.getString("satzantwort"));
                         }
+
                         if (Integer.parseInt(q.get("ID")) == questionID) {
                             s[0] = "Satzantwort";
                             s[1] = questions.get(i).get(3);
@@ -416,8 +438,8 @@ public class Database {
                     while (rs.next()) {
                         HashMap<String, String> q = new HashMap<>();
                         for (int k = 1; k < columns; k++) {
-                            q.put("ID", rs.getString("Fragen_id"));
-                            q.put("answer", rs.getString("satzantwort"));
+                            q.put("ID", rs.getString("Fragen_Id"));
+                            q.put("answer", rs.getString("richtig"));
                             q.put("wronganswer", rs.getString("falsch"));
                         }
                         if (Integer.parseInt(q.get("ID")) == questionID) {
@@ -444,13 +466,14 @@ public class Database {
                         for (int k = 1; k < columns; k++) {
                             int l = k - 3;
                             q.put("ID", rs.getString("Fragen_id"));
-                            q.put("question", rs.getString("frage"));
-                            q.put("answer", rs.getString("satzantwort"));
-                            q.put("wronganswer" + k, rs.getString("Falsch" + l));
+                            q.put("answer", rs.getString("richtig"));
+                            if (l >= 1) {
+                                q.put("wronganswer" + k, rs.getString("Falsch" + l));
+                            }
 
                         }
                         if (Integer.parseInt(q.get("ID")) == questionID) {
-                            answers.add("Satzantwort");
+                            answers.add("multiplechoice");
                             answers.add(questions.get(i).get(3));
                             answers.add(q.get("answer"));
                             for (int l = 1; l < columns - 3; l++) {
@@ -461,12 +484,11 @@ public class Database {
                 } catch (SQLException ex) {
                     Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
                 s = new String[wrongAnswers + 3];
                 s[0] = answers.get(0);
                 s[1] = answers.get(1);
                 s[2] = answers.get(2);
-                for (int d = 0; d < wrongAnswers; d++) {
+                for (int d = 0; d < wrongAnswers-1; d++) {
                     s[d + 3] = answers.get(d + 3);
                 }
 
@@ -549,7 +571,7 @@ public class Database {
 
             }
         } catch (SQLException ex) {
-
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return ausgabe;

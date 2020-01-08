@@ -118,72 +118,71 @@ public class AnswerQuizController implements Initializable {
     private void askQuestion() {
         boolean solvedcorrectly = false;
         try {
-            String[] s = questions.get(0);
-            switch (s[0].toLowerCase()) {
-                case "satzantwort":
-                    String eingabe = JOptionPane.showInputDialog(null, s[1],
-                            "Frage",
-                            JOptionPane.PLAIN_MESSAGE);
-                    if (eingabe.trim().toLowerCase().equals(s[2].toLowerCase())) {
-                        solvedcorrectly = true;
-                    }
-                    break;
-                case "richtigfalsch":
-                    String[] options1 = new String[]{s[2], s[3]};
-                    int response = JOptionPane.showOptionDialog(null, s[1], "Frage",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                            null, options1, options1[0]);
-                    System.out.println(response);
-                    if (response == 0) {
-                        solvedcorrectly = true;
-                    }
+        String[] s = questions.get(0);
+        switch (s[0].toLowerCase()) {
+            case "satzantwort":
+                String eingabe = JOptionPane.showInputDialog(null, s[1],
+                        "Frage",
+                        JOptionPane.PLAIN_MESSAGE);
+                if (eingabe.trim().toLowerCase().equals(s[2].toLowerCase())) {
+                    solvedcorrectly = true;
+                }
+                break;
+            case "richtigfalsch":
+                String[] options1 = new String[]{s[2], s[3]};
+                int response = JOptionPane.showOptionDialog(null, s[1], "Frage",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, options1, options1[0]);
+                if (response == 0) {
+                    solvedcorrectly = true;
+                }
 
-                    break;
-                case "multiplechoice":
-                    //randomize Questions
-                    int ca = 0;
-                    boolean first0 = true;
-                    ArrayList<String> ques = new ArrayList<>();
-                    for (int d = 0; d < s.length - 2; d++) {
+                break;
+            case "multiplechoice":
+                //randomize Questions
+                int ca = 0;
+                boolean first0 = true;
+                ArrayList<String> ques = new ArrayList<>();
+                for (int d = 0; d < s.length - 2; d++) {
+                    if (s[d] != null) {
                         ques.add(s[d]);
                     }
-                    String[] options = new String[ques.size()];
-                    for (int i = ques.size(); i >= 0; i--) {
-                        Random rnd = new Random();
-                        int get = rnd.nextInt(i);
-                        options[i] = ques.get(get);
-                        ques.remove(get);
-                        if (get == 0) {
-                            if (first0) {
-                                ca = i;
-                            }
-                        }
-                    }
+                }
 
-                    int response2 = JOptionPane.showOptionDialog(null, s[1], "Frage",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
-                            null, options, options[0]);
+            //    Random rnd = new Random();
+                String[] options = new String[ques.size()-1];
+                for(int i = 0; i< ques.size()-1;i++){
+                    options[i] = ques.get(i+1);
+                }
 
-                    if (response2 == ca) {
-                        solvedcorrectly = true;
-                    }
+                for (int d = 0; d < options.length; d++) {
+                    System.out.println(options[d]);
+                }
 
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+                int response2 = JOptionPane.showOptionDialog(null, s[1], "Frage",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, options, options[0]);
 
-            if (solvedcorrectly) {
-                solvedCorrectly += 1;
-                finishedQuestions.add(s);
-                questions.remove(0);
-            } else {
-                solvedIncorrectly += 1;
-                finishedQuestions.add(s);
-                wrongFinishedQuestions.add(s);
-                questions.remove(0);
-            }
-            updateQuestionCount();
+                if (response2 == ca) {
+                    solvedcorrectly = true;
+                }
+
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+        if (solvedcorrectly) {
+            solvedCorrectly += 1;
+            finishedQuestions.add(s);
+            questions.remove(0);
+        } else {
+            solvedIncorrectly += 1;
+            finishedQuestions.add(s);
+            wrongFinishedQuestions.add(s);
+            questions.remove(0);
+        }
+        updateQuestionCount();
         } catch (Exception e) {
             round++;
             rounds.add("Runde " + round + ": Richtig beantwortet: " + solvedCorrectly + " | Falsch beantwortet: " + solvedIncorrectly);
