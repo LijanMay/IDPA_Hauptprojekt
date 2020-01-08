@@ -6,8 +6,11 @@
 package ch.bbbaden.idpa_hauptprojekt;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -142,6 +145,13 @@ public class NewQuestionTeacherController implements Initializable {
             }
         }
         if (close) {
+            ArrayList<String> test = new ArrayList<>();
+            try {
+                test = Brain.getInstance().getDt().getQuestionsToTopic(topic);
+                System.out.println(test);
+            } catch (SQLException ex) {
+                Logger.getLogger(NewQuestionTeacherController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Stage stage = (Stage) createQuestion.getScene().getWindow();
             stage.close();
             Brain.getInstance().getLit().setHide(false);

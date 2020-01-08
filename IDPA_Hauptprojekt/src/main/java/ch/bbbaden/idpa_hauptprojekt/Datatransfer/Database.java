@@ -224,7 +224,7 @@ public class Database {
                 t.add(rs.getString("name"));
             }
         }
-        
+
         return t;
     }
 
@@ -278,13 +278,36 @@ public class Database {
         t.add("test");
         return t;
     }
-    public ArrayList<String[]> getQuestionsforQuiz(String quiz){
-           ArrayList<String[]> t = new ArrayList();
-           String[] s = new String[2];
-           s[0] = "question";
-           s[1] = "answer";
-           t.add(s);
-           return t;
+
+    public ArrayList<String[]> getQuestionsforQuiz(String quiz) {
+        ArrayList<String[]> t = new ArrayList();
+        String[] s;
+        String questionType = "satzantwort";
+
+        if (questionType.toLowerCase().equals("satzantwort")) {
+            s = new String[3];
+            s[0] = "questiontype";
+            s[1] = "question";
+            s[2] = "answer";
+        } else if (questionType.toLowerCase().equals("richtigfalsch")) {
+            s = new String[4];
+            s[0] = "questiontype";
+            s[1] = "question";
+            s[2] = "answer";
+            s[3] = "wronganswer";
+        } else {
+            int wrongAnswers = 0;
+            s = new String[wrongAnswers + 3];
+            s[0] = "questiontype";
+            s[1] = "question";
+            s[2] = "answer";
+            for(int i = 0; i < wrongAnswers; i++){
+                s[i+3] = "wronganswer" + i;
+            }
+
+        }
+        t.add(s);
+        return t;
     }
 
     public ArrayList<String> getQuestionsToTopic(String topic) throws SQLException {
@@ -301,8 +324,8 @@ public class Database {
         Statement stm2 = conn.createStatement();
         ResultSet rs2 = stm2.executeQuery(query2);
         int columns2 = rs2.getMetaData().getColumnCount();
-        
-         Statement stm3 = conn.createStatement();
+
+        Statement stm3 = conn.createStatement();
         ResultSet rs3 = stm3.executeQuery(query3);
         int columns3 = rs3.getMetaData().getColumnCount();
 
@@ -312,37 +335,35 @@ public class Database {
                 t.add(rs1.getString("id"));
                 t.add(rs1.getString("Name"));
             }
-            if(t.get(1).equals(topic)){
+            if (t.get(1).equals(topic)) {
                 topicId = Integer.parseInt(t.get(0));
             }
         }
-        
-        while (rs2.next()){
+
+        while (rs2.next()) {
             HashMap<String, String> s = new HashMap<>();
-            for(int i = 1; i < columns2; i++){
+            for (int i = 1; i < columns2; i++) {
                 s.put("ThemaID", rs2.getString("thema_id"));
                 s.put("FragenID", rs2.getString("fragen_id"));
             }
-            if(s.get("ThemaID").equals(topicId)){
+            if (Integer.parseInt(s.get("ThemaID")) == topicId) {
                 questionsid.add(s.get("FragenID"));
             }
-            
+
         }
-        
-        while (rs3.next()){
+
+        while (rs3.next()) {
             HashMap<String, String> q = new HashMap<>();
-            for(int i = 1; i < columns3; i++){
+            for (int i = 1; i < columns3; i++) {
                 q.put("ID", rs3.getString("id"));
                 q.put("frage", rs3.getString("frage"));
             }
-            for(int d = 0; d < questionsid.size(); d++){
-                if(questionsid.get(d).equals(q.get("ID"))){
+            for (int d = 0; d < questionsid.size(); d++) {
+                if (questionsid.get(d).equals(q.get("ID"))) {
                     questions.add(q.get("frage"));
                 }
             }
         }
-        
-        
 
         return questions;
     }

@@ -8,13 +8,16 @@ package ch.bbbaden.idpa_hauptprojekt;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -71,8 +74,18 @@ public class AnswerQuizController implements Initializable {
     @FXML
     private void handleRedoWholeQuiz(ActionEvent event) {
         if (quizStarted) {
-            askQuestion();
+            int input = JOptionPane.showConfirmDialog(null, "Wollen Sie das Quiz abbrechen? \nIhr Fortschritt geht dabei verloren.", "Abbrechen",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (input == 0) {
+                for (int i = 0; i < finishedQuestions.size(); i++) {
+                    questions.add(finishedQuestions.get(i));
+                }
+                finishedQuestions.clear();
+                wrongFinishedQuestions.clear();
+                quizStarted = false;
+            }
         }
+
     }
 
     @FXML
@@ -88,17 +101,74 @@ public class AnswerQuizController implements Initializable {
 
     @FXML
     private void handleStartQuiz(ActionEvent event) {
-        quizStarted = true;
-        askQuestion();
+        if (quizStarted) {
+
+        } else {
+            quizStarted = true;
+            askQuestion();
+        }
     }
 
     private void askQuestion() {
         boolean solvedcorrectly = false;
         try {
             String[] s = questions.get(0);
+            switch (s[0].toLowerCase()) {
+                case "satzantwort":
+                    String eingabe = JOptionPane.showInputDialog(null, s[1],
+                            "Frage",
+                            JOptionPane.PLAIN_MESSAGE);
+                    if (eingabe.trim().toLowerCase().equals(s[2].toLowerCase())) {
+                        solvedcorrectly = true;
+                    }
+                    break;
+                case "richtigfalsch":
+                    String[] options1 = new String[]{s[2], s[3]};
+                    int response = JOptionPane.showOptionDialog(null, s[1], "Frage",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                            null, options1, options1[0]);
+                    System.out.println(response);
+                    if (response == 0) {
+                        solvedcorrectly = true;
+                    }
+
+                    break;
+                case "multiplechoice":
+                    //randomize Questions
+                    int ca = 0;
+                    boolean first0 = true;
+                    ArrayList<String> ques = new ArrayList<>();
+                    for(int d = 0;d<s.length-2;d++ ){
+                        ques.add(s[d]);
+                    }
+                    String[] options = new String[ques.size()];
+                    for (int i = ques.size(); i >=0; i--) {
+                        Random rnd = new Random();
+                        int get = rnd.nextInt(i);
+                        options[i] = ques.get(get);
+                        ques.remove(get);   
+                        if(get == 0){
+                            if(first0){
+                                ca = i;
+                            }
+                        }
+                    }
+                    
+                    int response2 = JOptionPane.showOptionDialog(null, s[1], "Frage",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                            null, options, options[0]);
+                    
+                    if(response2 == ca){
+                        solvedcorrectly = true;
+                    }
+
+                    break;
+                default:
+                    throw new AssertionError();
+            }
 
             if (solvedcorrectly) {
-                solvedCorrectly += 1;                
+                solvedCorrectly += 1;
                 finishedQuestions.add(s);
                 questions.remove(0);
             } else {
@@ -114,10 +184,17 @@ public class AnswerQuizController implements Initializable {
             int response = JOptionPane.showOptionDialog(null, "Wollen Sie sich wirklich ausloggen?", "Logout",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                     null, options, options[0]);
+            quizStarted = false;
             if (response == 0) {
-                questions = wrongFinishedQuestions;
+                for (int i = 0; i < wrongFinishedQuestions.size(); i++) {
+                    questions.add(wrongFinishedQuestions.get(i));
+                }
+                wrongFinishedQuestions.clear();
             } else if (response == 1) {
-                questions = finishedQuestions;
+                for (int i = 0; i < finishedQuestions.size(); i++) {
+                    questions.add(finishedQuestions.get(i));
+                }
+                finishedQuestions.clear();
             } else {
                 Brain.getInstance().hideLis(false);
                 Stage stage = (Stage) nextQuestion.getScene().getWindow();
@@ -133,4 +210,5 @@ public class AnswerQuizController implements Initializable {
         correctlySolvedQuestions.setText("" + solvedCorrectly);
         incorrectlySolvedQuestions.setText("" + solvedIncorrectly);
     }
+
 }
