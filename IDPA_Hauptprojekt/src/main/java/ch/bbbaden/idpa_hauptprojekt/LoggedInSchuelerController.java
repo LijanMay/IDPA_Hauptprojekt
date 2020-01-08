@@ -90,7 +90,7 @@ public class LoggedInSchuelerController implements Initializable {
 
     @FXML
     private void handleInsertQuiz(ActionEvent event) {
-        Brain.getInstance().getDt().insertQuiz();
+//        Brain.getInstance().getDt().insertQuiz();
     }
 
     public String getCurrentQuiz() {

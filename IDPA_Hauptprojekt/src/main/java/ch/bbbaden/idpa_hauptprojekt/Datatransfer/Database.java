@@ -46,13 +46,49 @@ public class Database {
 
     }
 
-    public void getData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-    }
-
     public void createQuiz(String name, ArrayList<String> questions) {
-        
+        final String sqlInsert1 = "INSERT INTO Quizes (Name) VALUES (?)";
+        final String sqlInsert2 = "insert into Fragen2Quiz (Fragen_Id, Quiz_Id) VALUES (?, ?)";
+        final String query1 = "select * from quizes";
+        final String query2 = "select * from Fragen";
+        int quizid = 0;
+        int questionid = 0;
+        try (Statement stm = Database.conn.createStatement()) {
+            PreparedStatement ps = conn.prepareStatement(sqlInsert1);
+            ps.setString(1, name);
+            ps.executeUpdate();
+
+            Statement stm1 = conn.createStatement();
+            ResultSet rs = stm1.executeQuery(query1);
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                for (int i = 1; i < columns; i++) {
+                    if (name.equals(rs.getString("name"))) {
+                        quizid = rs.getInt("id");
+                    }
+                }
+            }
+
+            for (int i = 0; i < questions.size(); i++) {
+                Statement stm2 = conn.createStatement();
+                ResultSet rs2 = stm2.executeQuery(query2);
+                int columns2 = rs2.getMetaData().getColumnCount();
+                while (rs2.next()) {
+                    for (int c = 1; c < columns2; c++) {
+                        if (questions.get(i).equals(rs2.getString("name"))) {
+                            questionid = rs2.getInt("id");
+                        }
+                    }
+                }
+                PreparedStatement ps2 = conn.prepareStatement(sqlInsert2);
+                ps2.setInt(1, questionid);
+                ps2.setInt(2, quizid);
+                ps2.executeUpdate();
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void addTopic(String topic) {
@@ -98,7 +134,7 @@ public class Database {
     }
 
     public void addQuestion(String question, int type, ArrayList<String> answers, String topic) {
-        final String sqlInsert = "INSERT INTO Fragen (Frage, Antwort) VALUES (?, ?)";
+        final String sqlInsert = "INSERT INTO Fragen (Frage, Antwort, Art) VALUES (?, ?, ?)";
         final String sqlInsert2 = "insert into Fragen2Thema (Fragen_id, Thema_id) VALUES (?, ?)";
         final String query1 = "SELECT * FROM Thema";
         final String query2 = "SELECT * FROM Fragen";
@@ -134,6 +170,7 @@ public class Database {
                     PreparedStatement ps1 = conn.prepareStatement(sqlInsert);
                     ps1.setString(1, question);
                     ps1.setString(2, answers.get(0));
+                    ps1.setInt(3, type);
                     ps1.executeUpdate();
 
                     PreparedStatement ps2 = conn.prepareStatement(sqlInsert31);
@@ -155,6 +192,7 @@ public class Database {
                     PreparedStatement ps1 = conn.prepareStatement(sqlInsert);
                     ps1.setString(1, question);
                     ps1.setString(2, answers.get(0));
+                    ps1.setInt(3, type);
                     ps1.executeUpdate();
 
                     PreparedStatement ps2 = conn.prepareStatement(sqlInsert32);
@@ -174,6 +212,7 @@ public class Database {
                     PreparedStatement ps1 = conn.prepareStatement(sqlInsert);
                     ps1.setString(1, question);
                     ps1.setString(2, answers.get(0));
+                    ps1.setInt(3, type);
                     ps1.executeUpdate();
 
                     PreparedStatement ps2 = conn.prepareStatement(sqlInsert33);
@@ -257,56 +296,116 @@ public class Database {
         return t;
     }
 
-    public void insertQuiz() {
-        // aus TXT oder so die Statements lesen und in die Datenbank fügen
-    }
-
-    //noch falsch
     public ArrayList<String> getQuizes() throws SQLException {
         ArrayList<String> t = new ArrayList();
 
-        String query = "SELECT name FROM Quizes";
+        String query = "SELECT * FROM Quizes";
         Statement stm = conn.createStatement();
         ResultSet rs = stm.executeQuery(query);
         int columns = rs.getMetaData().getColumnCount();
 
         while (rs.next()) {
             for (int i = 1; i < columns; i++) {
-                t.add(rs.getString(i));
+                t.add(rs.getString("name"));
             }
         }
-        t.add("test");
         return t;
     }
 
     public ArrayList<String[]> getQuestionsforQuiz(String quiz) {
+        //type 2 = satzantwort type 1 = richtigflasch tye 0 = multiplechoice
+
         ArrayList<String[]> t = new ArrayList();
         String[] s;
-        String questionType = "satzantwort";
+        int questionType = 0;
+        int questionID = 0;
+        int quizid = 0;
+        ArrayList<Integer> questionsid = new ArrayList<>();
+        ArrayList<HashMap<Integer, Integer>> questions = new ArrayList<>();
+        final String query1 = "SELECT * FROM Fragen";
+        final String query2 = "select * from Fragen2Quiz";
+        final String query3 = "select * from Quizes";
+        //Fragen_id Quiz_id
 
-        if (questionType.toLowerCase().equals("satzantwort")) {
-            s = new String[3];
-            s[0] = "questiontype";
-            s[1] = "question";
-            s[2] = "answer";
-        } else if (questionType.toLowerCase().equals("richtigfalsch")) {
-            s = new String[4];
-            s[0] = "questiontype";
-            s[1] = "question";
-            s[2] = "answer";
-            s[3] = "wronganswer";
-        } else {
-            int wrongAnswers = 0;
-            s = new String[wrongAnswers + 3];
-            s[0] = "questiontype";
-            s[1] = "question";
-            s[2] = "answer";
-            for(int i = 0; i < wrongAnswers; i++){
-                s[i+3] = "wronganswer" + i;
+        try {
+            Statement stm1 = conn.createStatement();
+            ResultSet rs = stm1.executeQuery(query3);
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                HashMap<String, String> q = new HashMap<>();
+                for (int i = 1; i < columns; i++) {
+                    q.put("name", rs.getString("name"));
+                    q.put("ID", rs.getString("id"));
+                }
+                if (quiz.equals(q.get("name"))) {
+                    quizid = Integer.parseInt(q.get("ID"));
+                }
             }
 
+            Statement stm2 = conn.createStatement();
+            ResultSet rs2 = stm2.executeQuery(query2);
+            int columns2 = rs2.getMetaData().getColumnCount();
+            while (rs2.next()) {
+                HashMap<Integer, Integer> q = new HashMap<>();
+                for (int i = 1; i < columns2; i++) {
+                    q.put(1, Integer.parseInt(rs.getString("Thema_id")));
+                    q.put(2, Integer.parseInt(rs.getString("Fragen_id")));
+                }
+                if (quizid == q.get(1)) {
+                    questionsid.add(q.get(2));
+                }
+            }
+
+            Statement stm3 = conn.createStatement();
+            ResultSet rs3 = stm3.executeQuery(query1);
+            int columns3 = rs3.getMetaData().getColumnCount();
+            while (rs3.next()) {
+                HashMap<String, String> q = new HashMap<>();
+                for (int i = 1; i < columns2; i++) {
+                    q.put("questionid", rs3.getString("id"));
+                    q.put("type", rs3.getString("Art"));
+                }
+                for (int i = 0; i < questionsid.size(); i++) {
+                    if (Integer.parseInt(q.get("questionid")) == questionsid.get(i)) {
+                        HashMap<Integer, Integer> ts = new HashMap<>();
+                        ts.put(1, questionsid.get(i));
+                        ts.put(2, Integer.parseInt(q.get("type")));
+                        questions.add(ts);
+                    }
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
-        t.add(s);
+        for (int i = 0; i < questions.size(); i++) {
+            questionID = questions.get(i).get(1);
+            questionType = questions.get(i).get(2);
+            if (questionType == 2) {
+                s = new String[3];
+                s[0] = "questiontype";
+                s[1] = "question";
+                s[2] = "answer";
+            } else if (questionType == 1) {
+                s = new String[4];
+                s[0] = "questiontype";
+                s[1] = "question";
+                s[2] = "answer";
+                s[3] = "wronganswer";
+            } else {
+                int wrongAnswers = 0;
+                s = new String[wrongAnswers + 3];
+                s[0] = "questiontype";
+                s[1] = "question";
+                s[2] = "answer";
+                for (int d = 0; d < wrongAnswers; d++) {
+                    s[d + 3] = "wronganswer" + d;
+                }
+
+            }
+            t.add(s);
+        }
         return t;
     }
 
@@ -384,7 +483,7 @@ public class Database {
         String query88 = "drop table Fragen2Thema";
         String query10 = "drop table thema";
         String query00 = "drop table benutzer";
-        String query8 = "drop table Fragen";
+        String query89 = "drop table Fragen";
         String query9 = "drop table Satzantwort";
         String query99 = "drop table RichtigFalsch";
         String query77 = "drop table MultipleChoice";
@@ -442,12 +541,19 @@ public class Database {
         String query6 = "create table if not exists Fragen ("
                 + "id integer primary key, "
                 + "Frage string not null, "
-                + "Antwort string not null "
+                + "Antwort string not null, "
+                + "Art integer not null "
                 + ")";
 
         String query7 = "create table if not exists Quizes ("
                 + "id integer primary key, "
                 + "name string not null "
+                + ")";
+
+        String query8 = "create table if not exists Fragen2Quiz ("
+                + "id integer primary key, "
+                + "Fragen_id integer, "
+                + "Quiz_id integer "
                 + ")";
 
         Statement stmt = null;
@@ -460,7 +566,7 @@ public class Database {
 //            stmt.addBatch(query77);
 //            stmt.addBatch(query99);
 //            stmt.addBatch(query9);
-//            stmt.addBatch(query8);
+//            stmt.addBatch(query89);
 //            stmt.addBatch(query10);
             stmt.addBatch(query0);
             stmt.addBatch(query1);
@@ -470,6 +576,7 @@ public class Database {
             stmt.addBatch(query5);
             stmt.addBatch(query6);
             stmt.addBatch(query7);
+            stmt.addBatch(query8);
             stmt.executeBatch();
             conn.commit();
             stmt.close();
