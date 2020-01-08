@@ -52,7 +52,7 @@ public class Database {
     }
 
     public void createQuiz(String name, ArrayList<String> questions) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     public void addTopic(String topic) {
