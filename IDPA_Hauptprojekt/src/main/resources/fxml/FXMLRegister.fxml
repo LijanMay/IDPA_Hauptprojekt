@@ -7,25 +7,25 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="442.0" prefWidth="600.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.FXMLRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.bbbaden.idpa_hauptprojekt.FXMLRegisterController">
    <children>
-      <Button fx:id="register" layoutX="240.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="26.0" prefWidth="120.0" text="Registrieren" />
-      <Button fx:id="cancel" layoutX="240.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="26.0" prefWidth="120.0" text="Abbrechen" />
-      <Label fx:id="WIQI" layoutX="480.0" layoutY="43.0" text="WIQI" />
-      <Label layoutX="140.0" layoutY="156.0" prefWidth="125.0" text="Benutzername:" />
-      <Label layoutX="140.0" layoutY="213.0" text="*Passwort:" />
-      <TextField fx:id="surname" layoutX="140.0" layoutY="122.0" onKeyReleased="#handleWritesname" prefWidth="150.0" promptText="Name" />
-      <TextField fx:id="prename" layoutX="310.0" layoutY="122.0" onKeyReleased="#handleWritepname" prefWidth="150.0" promptText="Vorname" />
-      <TextField fx:id="user" layoutX="140.0" layoutY="176.0" prefWidth="150.0" promptText="Benutzername" />
-      <TextField fx:id="mail" layoutX="310.0" layoutY="176.0" prefWidth="150.0" promptText="Email" />
-      <PasswordField fx:id="pswd" layoutX="140.0" layoutY="233.0" prefWidth="150.0" promptText="Passwort" />
-      <PasswordField fx:id="pswd2" layoutX="310.0" layoutY="233.0" prefWidth="150.0" promptText="Passwort bestätigen" />
-      <RadioButton fx:id="rbStudent" layoutX="229.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleStudent" text="Schüler" textFill="WHITE" />
-      <RadioButton fx:id="rbTeacher" layoutX="310.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleTeacher" text="Lehrer" textFill="WHITE" />
-      <Label layoutX="140.0" layoutY="103.0" text="*Name:" />
-      <Label layoutX="310.0" layoutY="103.0" text="*Vorname:" />
-      <Label layoutX="310.0" layoutY="156.0" text="*Email:" />
-      <Label layoutX="310.0" layoutY="213.0" text="*Passwort bestätigen:" />
-      <Label layoutX="14.0" layoutY="400.0" text="* Pflichtfelder" />
+      <Button fx:id="register" layoutX="340.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="26.0" prefWidth="120.0" text="Registrieren" />
+      <Button fx:id="cancel" layoutX="340.0" layoutY="385.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="26.0" prefWidth="120.0" text="Abbrechen" />
+      <Label fx:id="WIQI" layoutX="688.0" layoutY="24.0" text="WIQI" />
+      <Label layoutX="240.0" layoutY="163.0" prefWidth="125.0" text="Benutzername:" />
+      <Label layoutX="240.0" layoutY="220.0" text="*Passwort:" />
+      <TextField fx:id="surname" layoutX="240.0" layoutY="129.0" onKeyReleased="#handleWritesname" prefWidth="150.0" promptText="Name" />
+      <TextField fx:id="prename" layoutX="410.0" layoutY="129.0" onKeyReleased="#handleWritepname" prefWidth="150.0" promptText="Vorname" />
+      <TextField fx:id="user" layoutX="240.0" layoutY="183.0" prefWidth="150.0" promptText="Benutzername" />
+      <TextField fx:id="mail" layoutX="410.0" layoutY="183.0" prefWidth="150.0" promptText="Email" />
+      <PasswordField fx:id="pswd" layoutX="240.0" layoutY="240.0" prefWidth="150.0" promptText="Passwort" />
+      <PasswordField fx:id="pswd2" layoutX="410.0" layoutY="240.0" prefWidth="150.0" promptText="Passwort bestätigen" />
+      <RadioButton fx:id="rbStudent" layoutX="326.0" layoutY="294.0" mnemonicParsing="false" onAction="#handleStudent" text="Schüler" textFill="WHITE" />
+      <RadioButton fx:id="rbTeacher" layoutX="413.0" layoutY="294.0" mnemonicParsing="false" onAction="#handleTeacher" text="Lehrer" textFill="WHITE" />
+      <Label layoutX="240.0" layoutY="110.0" text="*Name:" />
+      <Label layoutX="410.0" layoutY="110.0" text="*Vorname:" />
+      <Label layoutX="410.0" layoutY="163.0" text="*Email:" />
+      <Label layoutX="410.0" layoutY="220.0" text="*Passwort bestätigen:" />
+      <Label layoutX="17.0" layoutY="465.0" text="* Pflichtfelder" />
    </children>
 </AnchorPane>

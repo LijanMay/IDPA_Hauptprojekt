@@ -27,6 +27,7 @@ public class MainApp extends Application {
         stage.setTitle("Login Wirtschaftsquiz");
 
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

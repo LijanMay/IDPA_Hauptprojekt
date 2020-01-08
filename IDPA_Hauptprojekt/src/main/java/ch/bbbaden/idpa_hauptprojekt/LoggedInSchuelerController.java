@@ -37,8 +37,6 @@ public class LoggedInSchuelerController implements Initializable {
     @FXML
     private Button startQuiz;
     @FXML
-    private Button insertQuiz;
-    @FXML
     private Label WIQI;
 
     private ObservableList<String> items;
@@ -78,6 +76,7 @@ public class LoggedInSchuelerController implements Initializable {
             scene.getStylesheets().add("/styles/Styles.css");
             window.setTitle("Quiz Beantworten");
             window.setScene(scene);
+            window.setResizable(false);
             window.setOnCloseRequest(event1 -> {
                 Brain.getInstance().hideLis(false);
             });
@@ -88,10 +87,6 @@ public class LoggedInSchuelerController implements Initializable {
 
     }
 
-    @FXML
-    private void handleInsertQuiz(ActionEvent event) {
-//        Brain.getInstance().getDt().insertQuiz();
-    }
 
     public String getCurrentQuiz() {
         return currentQuiz;

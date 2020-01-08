@@ -85,6 +85,7 @@ public class FXMLController implements Initializable {
             scene.getStylesheets().add("/styles/Styles.css");
             window.setTitle("Lehrer");
             window.setScene(scene);
+            window.setResizable(false);
             Brain.getInstance().setLoggedInLehrer(window);
             window.setOnCloseRequest(event1 -> {
                 handleCloseTeacher();
@@ -104,6 +105,7 @@ public class FXMLController implements Initializable {
             scene.getStylesheets().add("/styles/Styles.css");
             window.setTitle("Schüler");
             window.setScene(scene);
+            window.setResizable(false);
 
             Brain.getInstance().setLoggedInStudent(window);
             window.setOnCloseRequest(event1 -> {
@@ -134,6 +136,7 @@ public class FXMLController implements Initializable {
         scene.getStylesheets().add("/styles/Styles.css");
         window.setTitle("Registrierung");
         window.setScene(scene);
+        window.setResizable(false);
 
         window.setOnCloseRequest(event1 -> {
             Brain.getInstance().hideController(false);

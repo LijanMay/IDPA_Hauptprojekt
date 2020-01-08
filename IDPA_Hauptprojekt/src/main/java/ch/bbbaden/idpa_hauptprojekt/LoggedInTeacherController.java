@@ -84,6 +84,7 @@ public class LoggedInTeacherController implements Initializable {
             scene.getStylesheets().add("/styles/Styles.css");
             window.setTitle("Frage zu " + currentTopic + " hinzufügen");
             window.setScene(scene);
+            window.setResizable(false);
             window.setOnCloseRequest(event1 -> {
                 Brain.getInstance().hideLit(false);
             });
