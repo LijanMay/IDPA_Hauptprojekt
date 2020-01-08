@@ -9,6 +9,7 @@ import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,19 +69,26 @@ public class CreateQuizController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        Brain.getInstance().getDt().addTopic("test");
         updateTopics();
     }
 
-//    adds question to ListViewFragen
+//    adds questions to ListViewFragen
     @FXML
-    private void addTG(ActionEvent event) {
+    private void addTG(ActionEvent event) throws SQLException {
+        String topic = (String) LVTG.getSelectionModel().getSelectedItem();
+        System.out.println("Topic is: " + (String) LVTG.getSelectionModel().getSelectedItem());
+        ArrayList<String> questions = new ArrayList<>();
+        questions = Brain.getInstance().getDt().getQuestionsToTopic(topic);
+        LVF.getItems().addAll(Arrays.asList(questions));
+        System.out.println("added questions from " + topic + " to listview");
+        System.out.println("questions were: " + questions);
         try {
-            Object selected = LVTG.getSelectionModel().getSelectedItem();
-            moveFromTo(LVTG, LVF, selected);
+            System.out.println(questions.get(0));
         } catch (Exception e) {
-            System.out.println("no TG selected");
+            System.out.println("empty");
         }
+        System.out.println("---------");
+
     }
 
 //    adds question to ListViewDeineFragen
@@ -126,8 +134,8 @@ public class CreateQuizController implements Initializable {
         }
 
     }
-    
-    private void updateTopics(){
+
+    private void updateTopics() {
         try {
             items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
         } catch (SQLException ex) {
