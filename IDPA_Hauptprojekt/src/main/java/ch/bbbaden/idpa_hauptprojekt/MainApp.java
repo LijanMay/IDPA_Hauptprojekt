@@ -18,6 +18,7 @@ public class MainApp extends Application {
         Database d = new Database();
         d.createDBStructure();
         Brain.getInstance().setDt(d);
+        Brain.getInstance().currentUsername = Brain.getInstance().getDt().getLastLogin();
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
 

@@ -321,7 +321,7 @@ public class Database {
         int questionID = 0;
         int quizid = 0;
         ArrayList<Integer> questionsid = new ArrayList<>();
-        ArrayList<HashMap<Integer, Integer>> questions = new ArrayList<>();
+        ArrayList<HashMap<Integer, String>> questions = new ArrayList<>();
         final String query1 = "SELECT * FROM Fragen";
         final String query2 = "select * from Fragen2Quiz";
         final String query3 = "select * from Quizes";
@@ -364,12 +364,14 @@ public class Database {
                 for (int i = 1; i < columns2; i++) {
                     q.put("questionid", rs3.getString("id"));
                     q.put("type", rs3.getString("Art"));
+                    q.put("question", rs3.getString("frage"));
                 }
                 for (int i = 0; i < questionsid.size(); i++) {
                     if (Integer.parseInt(q.get("questionid")) == questionsid.get(i)) {
-                        HashMap<Integer, Integer> ts = new HashMap<>();
-                        ts.put(1, questionsid.get(i));
-                        ts.put(2, Integer.parseInt(q.get("type")));
+                        HashMap<Integer, String> ts = new HashMap<>();
+                        ts.put(1, "" + questionsid.get(i));
+                        ts.put(2, q.get("type"));
+                        ts.put(3, q.get("question"));
                         questions.add(ts);
                     }
                 }
@@ -380,27 +382,92 @@ public class Database {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int i = 0; i < questions.size(); i++) {
-            questionID = questions.get(i).get(1);
-            questionType = questions.get(i).get(2);
+            questionID = Integer.parseInt(questions.get(i).get(1));
+            questionType = Integer.parseInt(questions.get(i).get(2));
             if (questionType == 2) {
+                String query7 = "select * from Satzantwort";
                 s = new String[3];
-                s[0] = "questiontype";
-                s[1] = "question";
-                s[2] = "answer";
+                try {
+                    Statement stm = conn.createStatement();
+                    ResultSet rs = stm.executeQuery(query7);
+                    int columns = rs.getMetaData().getColumnCount();
+                    while (rs.next()) {
+                        HashMap<String, String> q = new HashMap<>();
+                        for (int k = 1; k < columns; k++) {
+                            q.put("ID", rs.getString("id"));
+                            q.put("answer", rs.getString("satzantwort"));
+                        }
+                        if (Integer.parseInt(q.get("ID")) == questionID) {
+                            s[0] = "Satzantwort";
+                            s[1] = questions.get(i).get(3);
+                            s[2] = q.get("answer");
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else if (questionType == 1) {
+                String query8 = "select * from RichtigFalsch";
                 s = new String[4];
-                s[0] = "questiontype";
-                s[1] = "question";
-                s[2] = "answer";
-                s[3] = "wronganswer";
+                try {
+                    Statement stm = conn.createStatement();
+                    ResultSet rs = stm.executeQuery(query8);
+                    int columns = rs.getMetaData().getColumnCount();
+                    while (rs.next()) {
+                        HashMap<String, String> q = new HashMap<>();
+                        for (int k = 1; k < columns; k++) {
+                            q.put("ID", rs.getString("Fragen_id"));
+                            q.put("answer", rs.getString("satzantwort"));
+                            q.put("wronganswer", rs.getString("falsch"));
+                        }
+                        if (Integer.parseInt(q.get("ID")) == questionID) {
+                            s[0] = "RichtigFalsch";
+                            s[1] = questions.get(i).get(3);
+                            s[2] = q.get("answer");
+                            s[3] = q.get("wronganswer");
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 int wrongAnswers = 0;
+                String query9 = "select * from MultipleChoice";
+                ArrayList<String> answers = new ArrayList<>();
+                try {
+                    Statement stm = conn.createStatement();
+                    ResultSet rs = stm.executeQuery(query9);
+                    int columns = rs.getMetaData().getColumnCount();
+                    wrongAnswers = columns - 3;
+                    while (rs.next()) {
+                        HashMap<String, String> q = new HashMap<>();
+                        for (int k = 1; k < columns; k++) {
+                            int l = k - 3;
+                            q.put("ID", rs.getString("Fragen_id"));
+                            q.put("question", rs.getString("frage"));
+                            q.put("answer", rs.getString("satzantwort"));
+                            q.put("wronganswer" + k, rs.getString("Falsch" + l));
+
+                        }
+                        if (Integer.parseInt(q.get("ID")) == questionID) {
+                            answers.add("Satzantwort");
+                            answers.add(questions.get(i).get(3));
+                            answers.add(q.get("answer"));
+                            for (int l = 1; l < columns - 3; l++) {
+                                answers.add(q.get("wronganswer" + l));
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 s = new String[wrongAnswers + 3];
-                s[0] = "questiontype";
-                s[1] = "question";
-                s[2] = "answer";
+                s[0] = answers.get(0);
+                s[1] = answers.get(1);
+                s[2] = answers.get(2);
                 for (int d = 0; d < wrongAnswers; d++) {
-                    s[d + 3] = "wronganswer" + d;
+                    s[d + 3] = answers.get(d + 3);
                 }
 
             }
@@ -466,6 +533,56 @@ public class Database {
         return questions;
     }
 
+    public String getLastLogin() {
+        String ausgabe = "";
+        String query1 = "SELECT * FROM lastlogin";
+        Statement stm1;
+        try {
+            stm1 = conn.createStatement();
+            ResultSet rs1 = stm1.executeQuery(query1);
+            int columns1 = rs1.getMetaData().getColumnCount();
+            while (rs1.next()) {
+                HashMap<String, String> s = new HashMap<>();
+                for (int i = 1; i < columns1; i++) {
+                    ausgabe = rs1.getString("name");
+                }
+
+            }
+        } catch (SQLException ex) {
+
+        }
+
+        return ausgabe;
+    }
+
+    public void logout(String name) {
+        try {
+            Statement stmt = conn.createStatement();
+            String query1 = "create table if not exists lastlogin ("
+                    + "name String "
+                    + ")";
+            String query2 = "drop table lastlogin";
+            String query3 = "create table if not exists lastlogin ("
+                    + "name String "
+                    + ")";
+            stmt.addBatch(query1);
+            stmt.addBatch(query2);
+            stmt.addBatch(query3);
+            stmt.executeBatch();
+            conn.commit();
+            stmt.close();
+        } catch (SQLException ex) {
+        }
+        final String sqlInsert1 = "INSERT INTO lastlogin (Name) VALUES (?)";
+        try (Statement stm = Database.conn.createStatement()) {
+            PreparedStatement ps = conn.prepareStatement(sqlInsert1);
+            ps.setString(1, name);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void createDBStructure() {
         /*
     String query1 = "drop table topics";
@@ -484,7 +601,7 @@ public class Database {
         String query10 = "drop table thema";
         String query00 = "drop table benutzer";
         String query89 = "drop table Fragen";
-        String query9 = "drop table Satzantwort";
+        String query97 = "drop table Satzantwort";
         String query99 = "drop table RichtigFalsch";
         String query77 = "drop table MultipleChoice";
         String query66 = "drop table Quizes";
@@ -555,7 +672,6 @@ public class Database {
                 + "Fragen_id integer, "
                 + "Quiz_id integer "
                 + ")";
-
         Statement stmt = null;
         try {
             conn.setAutoCommit(false);
@@ -565,7 +681,7 @@ public class Database {
 //            stmt.addBatch(query66);
 //            stmt.addBatch(query77);
 //            stmt.addBatch(query99);
-//            stmt.addBatch(query9);
+//            stmt.addBatch(query97);
 //            stmt.addBatch(query89);
 //            stmt.addBatch(query10);
             stmt.addBatch(query0);

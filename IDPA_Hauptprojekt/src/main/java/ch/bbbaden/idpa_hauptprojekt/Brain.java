@@ -43,8 +43,6 @@ public class Brain {
     public void setAqc(AnswerQuizController aqc) {
         this.aqc = aqc;
     }
-    
-    
 
     public Stage getLoggedInStudent() {
         return loggedInStudent;
@@ -61,7 +59,6 @@ public class Brain {
     public void setLis(LoggedInSchuelerController lis) {
         this.lis = lis;
     }
-    
 
     public Stage getLoggedInLehrer() {
         return loggedInLehrer;
@@ -90,8 +87,8 @@ public class Brain {
     public void hideLit(boolean hide) {
         lit.setHide(hide);
     }
-    
-    public void hideLis(boolean hide){
+
+    public void hideLis(boolean hide) {
         lis.setHide(hide);
     }
 
@@ -108,10 +105,12 @@ public class Brain {
     }
 
     public void closeLoggedInLehrer() {
+        Brain.instance.dt.logout(currentUsername);
         loggedInLehrer.close();
     }
 
     public void closeLoggedInStudent() {
+        Brain.instance.dt.logout(currentUsername);
         loggedInStudent.close();
     }
 
