@@ -75,7 +75,7 @@ public class Database {
                 int columns2 = rs2.getMetaData().getColumnCount();
                 while (rs2.next()) {
                     for (int c = 1; c < columns2; c++) {
-                        if (questions.get(i).equals(rs2.getString("name"))) {
+                        if (questions.get(i).equals(rs2.getString("frage"))) {
                             questionid = rs2.getInt("id");
                         }
                     }
@@ -605,6 +605,7 @@ public class Database {
         String query99 = "drop table RichtigFalsch";
         String query77 = "drop table MultipleChoice";
         String query66 = "drop table Quizes";
+        String query666 = "drop table Fragen2Quiz";
 
         String query0 = "create table if not exists Thema ("
                 + "id integer primary key, "
@@ -684,6 +685,7 @@ public class Database {
 //            stmt.addBatch(query97);
 //            stmt.addBatch(query89);
 //            stmt.addBatch(query10);
+//            stmt.addBatch(query666);
             stmt.addBatch(query0);
             stmt.addBatch(query1);
             stmt.addBatch(query2);
