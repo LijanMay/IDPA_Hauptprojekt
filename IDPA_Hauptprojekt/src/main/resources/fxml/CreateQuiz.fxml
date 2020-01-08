@@ -16,7 +16,7 @@
       <Label layoutX="232.0" layoutY="128.0" text="Fragen" />
       <Label layoutX="452.0" layoutY="128.0" text="Deine Fragen" />
       <Label layoutX="16.0" layoutY="59.0" text="Name des Quizes" />
-      <Button fx:id="BDone" layoutX="607.0" layoutY="561.0" mnemonicParsing="false" text="Fertig" />    
+      <Button fx:id="BDone" layoutX="607.0" layoutY="561.0" mnemonicParsing="false" onAction="#quizFertig" text="Fertig" />    
       <Button fx:id="BFDel" layoutX="592.0" layoutY="504.0" mnemonicParsing="false" onAction="#deleteFrage" text="Löschen" />
       <Button fx:id="BFAdd" layoutX="354.0" layoutY="504.0" mnemonicParsing="false" onAction="#addFrage" text="Hinzufügen" />
       <Button fx:id="BTGAdd" layoutX="138.0" layoutY="504.0" mnemonicParsing="false" onAction="#addTG" text="Hinzufügen" />

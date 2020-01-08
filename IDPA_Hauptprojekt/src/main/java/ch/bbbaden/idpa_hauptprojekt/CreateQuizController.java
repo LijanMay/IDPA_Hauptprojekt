@@ -9,7 +9,6 @@ import ch.bbbaden.idpa_hauptprojekt.Datatransfer.Database;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,10 +59,12 @@ public class CreateQuizController implements Initializable {
 
     @FXML
     private Button BDone;
-//   Done
+//   Done   
+
     @FXML
     private Button BFAddAll;
-
+//    alle Fragen hinzufügen
+    
     Database db = new Database();
     private ObservableList<String> items;
 
@@ -76,18 +77,12 @@ public class CreateQuizController implements Initializable {
     @FXML
     private void addTG(ActionEvent event) throws SQLException {
         String topic = (String) LVTG.getSelectionModel().getSelectedItem();
-        System.out.println("Topic is: " + (String) LVTG.getSelectionModel().getSelectedItem());
         ArrayList<String> questions = new ArrayList<>();
         questions = Brain.getInstance().getDt().getQuestionsToTopic(topic);
-        LVF.getItems().addAll(Arrays.asList(questions));
-        System.out.println("added questions from " + topic + " to listview");
-        System.out.println("questions were: " + questions);
-        try {
-            System.out.println(questions.get(0));
-        } catch (Exception e) {
-            System.out.println("empty");
-        }
-        System.out.println("---------");
+        for (String o : questions) {
+                LVF.getItems().add(o);
+            }
+        LVTG.getItems().remove(topic);
 
     }
 
@@ -125,6 +120,14 @@ public class CreateQuizController implements Initializable {
             System.out.println("nothing to remove");
         }
     }
+    
+//    submits the quiz to the DB
+    @FXML
+    private void quizFertig(ActionEvent event) {
+        String name = TFQN.getText();
+        ArrayList<String> questions = (ArrayList<String>) LVDF.getItems();
+        Brain.getInstance().getDt().createQuiz(name, questions);
+    }
 
 //    move an entry from one listview to another
     private void moveFromTo(ListView lv1, ListView lv2, Object o) {
@@ -134,7 +137,8 @@ public class CreateQuizController implements Initializable {
         }
 
     }
-
+    
+//    updates LVTG to have all the topics in the DB
     private void updateTopics() {
         try {
             items = FXCollections.observableArrayList(Brain.getInstance().getDt().getTopics());
