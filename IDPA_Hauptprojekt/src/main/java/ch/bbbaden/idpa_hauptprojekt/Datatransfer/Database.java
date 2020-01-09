@@ -108,7 +108,7 @@ public class Database {
     private static void connect() {
         if (conn == null) {
             try {
-                String url = "jdbc:sqlite:C:.\\" + "wiqiDB";
+                String url = "jdbc:sqlite:C:.\\" + "WiqiDB";
                 Class.forName("org.sqlite.JDBC");
                 conn = DriverManager.getConnection(url);
             } catch (SQLException | ClassNotFoundException e) {
@@ -572,7 +572,6 @@ public class Database {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return ausgabe;
@@ -630,19 +629,14 @@ public class Database {
         String query66 = "drop table Quizes";
         String query666 = "drop table Fragen2Quiz";
 
-        final String sqlInsert = "INSERT INTO Benutzer (Benutzername, Name, Vorname, Email, Passwort) VALUES (?, ?, ?, ?, ?)";
+        final String sqlquery = "SELECT * FROM Fragen";
 
         try (Statement stm = Database.conn.createStatement()) {
-            PreparedStatement ps = conn.prepareStatement(sqlInsert);
-            ps.setString(1, "djsf");
-            ps.setString(2, "dfjkf");
-            ps.setString(3, "dffs");
-            ps.setString(4, "sddssds");
-            ps.setString(5, "hudfsuf");
-            ps.executeUpdate();
+             Statement stm1 = conn.createStatement();
+            ResultSet rs1 = stm1.executeQuery(sqlquery);
+            int columns1 = rs1.getMetaData().getColumnCount();
             firstOpen = false;
-        } catch (SQLException ex) {
-
+        } catch (SQLException ex) { 
         }
 
         String query0 = "create table if not exists Thema ("
@@ -715,15 +709,15 @@ public class Database {
         try {
             conn.setAutoCommit(false);
             stmt = conn.createStatement();
-//            stmt.addBatch(query88);
+//            stmt.addBatch(query97);
+//            stmt.addBatch(query99);
+//            stmt.addBatch(query77);
+//            stmt.addBatch(query10);
 //            stmt.addBatch(query00);
 //            stmt.addBatch(query66);
-//            stmt.addBatch(query77);
-//            stmt.addBatch(query99);
-//            stmt.addBatch(query97);
 //            stmt.addBatch(query89);
-//            stmt.addBatch(query10);
 //            stmt.addBatch(query666);
+//            stmt.addBatch(query88);
             stmt.addBatch(query0);
             stmt.addBatch(query1);
             stmt.addBatch(query2);
@@ -766,7 +760,7 @@ public class Database {
             t3.add("Kunden");
             t3.add("Arbeitnehmer");
             t3.add("Verkäufer");            
-            addQuestion("Personen, die ihr eigenes Unternehmen führen und Mitarbeiter beschäftigen können, nennt man", 0, t3, "BWL und VWL");
+            addQuestion("Personen, die ihr eigenes Unternehmen führen und Mitarbeiter beschäftigen können, nennt man?", 0, t3, "BWL und VWL");
             
             ArrayList<String> t4 = new ArrayList<>();
             t4.add("Konsumenten");
@@ -783,6 +777,16 @@ public class Database {
             t5.add("Konsumenten");
             t5.add("Verkäufer");            
             addQuestion("Personen, die eine Arbeitsstelle haben, nennt man?", 0, t5, "BWL und VWL");
+            
+            ArrayList<String> quest = new ArrayList<>();
+            quest.add("Personen, die etwas verkaufen, nennt man?");
+            quest.add("Personen, die etwas kaufen möchten, nennt man?");
+            quest.add("Personen, die ihr eigenes Unternehmen führen und Mitarbeiter beschäftigen können, nennt man?");
+            quest.add("Personen, die etwas verbrauchen (z. B. ein Eis essen), nennt man?");
+            quest.add("Personen, die eine Arbeitsstelle haben, nennt man?");
+            
+            createQuiz("BWL und VWL",quest);
+            
         }
 
     }

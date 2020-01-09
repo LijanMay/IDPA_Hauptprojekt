@@ -140,7 +140,6 @@ public class FXMLRegisterController implements Initializable {
                 break;
             }
             for (int i = 0; i < t.size(); i++) {
-                System.out.println(t.get(i).get("username"));
                 if (t.get(i).get("username").equals(user.getText())) {
                     showAlert("existinguser");
                     noerror = false;
